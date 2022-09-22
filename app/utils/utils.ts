@@ -1,0 +1,1 @@
+export const clsx = <T extends unknown>(...args: T[]) => args.reduce((p,c) => !c ? p : p ? p+=` ${c}` : c+'', '')

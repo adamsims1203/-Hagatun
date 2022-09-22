@@ -1,0 +1,90 @@
+.card {
+	--card-radius: var(--radius-conditional-3);
+}
+
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--card-radius);
+	background-color: var(--surface-2);
+	overflow: hidden;
+}
+
+.card--horizontal {
+	flex-flow: row nowrap;
+}
+
+.card--vertical {
+	flex-flow: column nowrap;
+}
+
+.card > div {
+	display: flex;
+	height: -webkit-fill-available;
+	flex-direction: column;
+}
+
+.card__thumbnail {
+	object-fit: cover;
+}
+
+.card__thumbnail:has(img) {
+	display: flex;
+	place-content: center;
+}
+
+.card__thumbnail img {
+	object-fit: contain;
+}
+
+.card--horizontal .card__thumbnail,
+.card--horizontal .card__thumbnail {
+	max-width: 200px;
+}
+
+.card--vertical .card__thumbnail {
+	max-width: 100%;
+}
+
+.card__header {
+	position: relative;
+	z-index: 1;
+	flex-shrink: 0;
+	padding: var(--size-3);
+}
+
+.card__header .card__title + .card__subtitle, 
+.card__header .card__subtitle + .card__subtitle {
+	margin-top: var(--size-2);
+}
+
+.card__body {
+	padding: var(--size-3);
+	flex: 1 1 auto;
+}
+
+.card__actions {
+	display: flex;
+	flex-shrink: 0;
+	flex-basis: auto;
+	gap: var(--size-2);
+	padding: var(--size-3);
+	margin-top: auto;
+}
+
+.card__actions--horizontal {
+	flex-flow: row nowrap;
+}
+
+.card__actions--vertical {
+	flex-flow: column nowrap;
+}
+
+.card__actions--start {
+	justify-content: flex-start;
+}
+
+.card__actions--end {
+	justify-content: flex-end;
+}

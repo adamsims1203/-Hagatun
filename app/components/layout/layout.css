@@ -1,0 +1,18 @@
+main > section {
+	max-width: 1300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+main > section + section {
+	margin-block-start: var(--size-11)
+}
+
+main > section > h1,
+main > section > h2,
+main > section > h3,
+main > section > h4,
+main > section > h5,
+main > section > h6 {
+  margin-block-end: var(--size-10);
+}

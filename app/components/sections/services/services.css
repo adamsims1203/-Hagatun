@@ -1,0 +1,31 @@
+.services {
+	--services-template-columns: 1fr;
+}
+
+.services > h2 {
+	text-align: center;
+	max-inline-size: none;
+}
+
+.services > div {
+	display: grid;
+	grid-template-columns: var(--services-template-columns);
+	grid-auto-rows: 1fr;
+	grid-gap: var(--size-1);
+}
+
+@media (min-width: /* var(--size-md) */ 768px) {
+	.services {
+		--services-template-columns:  repeat(2, 1fr);
+	}
+}
+
+@media (min-width: /* var(--size-lg) */ 1024px) {
+	.services {
+		--services-template-columns: repeat(3, 1fr);
+	}
+}
+
+.services .card .card__thumbnail img {
+	max-height: var(--size-13);
+}
