@@ -2,12 +2,12 @@ import Card, { links as cardLinks } from "~/components/core/card/card";
 
 import stylesUrl from "./services.css";
 
-import annualReportPath from '~/assets/illustrations/annual-report.png'
-import exchangeRatePath from '~/assets/illustrations/exchange-rate.png'
-import allocationPath from '~/assets/illustrations/allocation-rate.png'
-import personalPath from '~/assets/illustrations/personal.png'
-import benchmarkPath from '~/assets/illustrations/benchmark.png'
-import contactUsPath from '~/assets/illustrations/contact-us.png'
+import annualReportPath from '~/assets/illustrations/services/annual-report.png'
+import exchangeRatePath from '~/assets/illustrations/services/exchange-rate.png'
+import allocationPath from '~/assets/illustrations/services/allocation.png'
+import personalPath from '~/assets/illustrations/services/personal.png'
+import benchmarkPath from '~/assets/illustrations/services/benchmark.png'
+import contactUsPath from '~/assets/illustrations/services/contact-us.png'
 
 import type { LinksFunction } from "@remix-run/node";
 
@@ -62,154 +62,30 @@ function Services() {
 		<section className="services">
 			<h2>Tjänster</h2>
 			<div>
-				<Card orientation="horizontal">
-					<Card.Image src="https://store-images.s-microsoft.com/image/apps.29972.14474337564596307.6c783b22-9460-4205-938c-2969961ed85c.aa21aff2-b2b2-411b-88bb-158187c6e238?mode=scale&q=90&h=1080&w=1920" />
-					<Card.Header>
-						<Card.Title>Coffee with friends</Card.Title>
-						<Card.Subtitle>
-							<span className="reviews">
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span className="k-icon k-i-star-outline" />
-								<div>4/5 (681)</div>
-							</span>
-						</Card.Subtitle>
-					</Card.Header>
-					<Card.Body>
-						<p>
-							The right place to be if you're in love with high quality
-							espresso or tea. We offer wide range to top coffee brands as
-							Davidoff Cafe, Lavazza, Tchibo, Illy.
-						</p>
-					</Card.Body>
-					<Card.Actions>
-						<button className="button-primary">
-							Review
-						</button>
-					</Card.Actions>
-				</Card>
-        <Card orientation="vertical">
-          <Card.Image src="https://store-images.s-microsoft.com/image/apps.29972.14474337564596307.6c783b22-9460-4205-938c-2969961ed85c.aa21aff2-b2b2-411b-88bb-158187c6e238?mode=scale&q=90&h=1080&w=1920" />
-          
-					<Card.Header>
-						<Card.Title>Coffee with friends</Card.Title>
-						<Card.Subtitle>
-							<span className="reviews">
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span className="k-icon k-i-star-outline" />
-								<div>4/5 (681)</div>
-							</span>
-						</Card.Subtitle>
-					</Card.Header>
-					<Card.Body>
-						<p>
-							The right place to be if you're in love with high quality
-							espresso or tea. We offer wide range to top coffee brands as
-							Davidoff Cafe, Lavazza, Tchibo, Illy.
-						</p>
-					</Card.Body>
-					<Card.Actions>
-						<button className="button-primary">
-							Review
-						</button>
-					</Card.Actions>
-        </Card>
-        <Card orientation="vertical">
-          <Card.Thumbnail>
-						<img src={exchangeRatePath} />
-					</Card.Thumbnail>
-          
-					<Card.Header>
-						<Card.Title>Coffee with friends</Card.Title>
-						<Card.Subtitle>
-							<span className="reviews">
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span
-									className="k-icon k-i-star"
-									style={{
-										color: "#ffce2a",
-									}}
-								/>
-								<span className="k-icon k-i-star-outline" />
-								<div>4/5 (681)</div>
-							</span>
-						</Card.Subtitle>
-					</Card.Header>
-					<Card.Body>
-						<p>
-							The right place to be if you're in love with high quality
-							espresso or tea. We offer wide range to top coffee brands as
-							Davidoff Cafe, Lavazza, Tchibo, Illy.
-						</p>
-					</Card.Body>
-					<Card.Actions>
-						<button className="button-primary">
-							Review
-						</button>
-					</Card.Actions>
-        </Card>
+				{actions.map(action => (
+					<Card orientation="vertical">
+						<Card.Image src="https://store-images.s-microsoft.com/image/apps.29972.14474337564596307.6c783b22-9460-4205-938c-2969961ed85c.aa21aff2-b2b2-411b-88bb-158187c6e238?mode=scale&q=90&h=1080&w=1920" />
+						<Card.Header>
+							<Card.Title>Coffee with friends</Card.Title>
+							<Card.Subtitle>
+								4/5 (681)
+							</Card.Subtitle>
+						</Card.Header>
+						<Card.Body>
+							<p>
+								The right place to be if you're in love with high quality
+								espresso or tea. We offer wide range to top coffee brands as
+								Davidoff Cafe, Lavazza, Tchibo, Illy.
+							</p>
+						</Card.Body>
+						<Card.Actions>
+							<button className="button-primary">
+								Review
+							</button>
+						</Card.Actions>
+					</Card>
+				))}
+				
 			</div>
 		</section>
 	)

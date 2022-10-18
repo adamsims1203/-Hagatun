@@ -1,5 +1,24 @@
 .card {
 	--card-radius: var(--radius-conditional-3);
+	--card-padding: var(--size-3);
+	--card-item-gap: var(--size-2);
+	--card-orientation: ;
+	--card-action-orientation: ;
+	--card-action-placement: start;
+
+
+	--card-color: var(--surface-2);
+	--card-color-title: var(--gray-2);
+	--card-color-subtitle: var(--gray-5);
+	--card-color-body: var(--gray-4);
+}
+
+.card.card--horizontal {
+	--card-orientation: row;
+}
+
+.card.card--vertical {
+	--card-orientation: column;
 }
 
 .card {
@@ -7,16 +26,10 @@
 	display: flex;
 	flex-direction: column;
 	border-radius: var(--card-radius);
-	background-color: var(--surface-2);
+	background-color: var(--card-color);
 	overflow: hidden;
-}
-
-.card--horizontal {
-	flex-flow: row nowrap;
-}
-
-.card--vertical {
-	flex-flow: column nowrap;
+	flex-direction: var(--card-orientation);
+	flex-wrap: nowrap;
 }
 
 .card > div {
@@ -51,16 +64,26 @@
 	position: relative;
 	z-index: 1;
 	flex-shrink: 0;
-	padding: var(--size-3);
+	padding: var(--card-padding);
 }
 
 .card__header .card__title + .card__subtitle, 
 .card__header .card__subtitle + .card__subtitle {
-	margin-top: var(--size-2);
+	margin-top: var(--card-item-gap);
+}
+
+.card__title  {
+	font-family: var(--font-serif);
+	color: var(--card-color-title);
+}
+
+.card__subtitle {
+	color: var(--card-color-subtitle);
 }
 
 .card__body {
-	padding: var(--size-3);
+	padding: var(--card-padding);
+	color: var(--card-color-body);
 	flex: 1 1 auto;
 }
 
@@ -68,23 +91,30 @@
 	display: flex;
 	flex-shrink: 0;
 	flex-basis: auto;
-	gap: var(--size-2);
-	padding: var(--size-3);
+	gap: var(--card-item-gap);
+	padding: var(--card-padding);
 	margin-top: auto;
+	flex-direction: var(--card-action-orientation);
+	flex-wrap: nowrap;
+	justify-content: var(--card-action-placement);
 }
 
-.card__actions--horizontal {
-	flex-flow: row nowrap;
+.card .card__actions.card__actions--horizontal {
+	--card-action-orientation: row;
 }
 
-.card__actions--vertical {
-	flex-flow: column nowrap;
+.card .card__actions.card__actions--vertical {
+	--card-action-orientation: column;
 }
 
 .card__actions--start {
-	justify-content: flex-start;
+	--card-action-placement: flex-start;
+}
+
+.card__actions--center {
+	--card-action-placement: flex-start;
 }
 
 .card__actions--end {
-	justify-content: flex-end;
+	--card-action-placement: flex-end;
 }

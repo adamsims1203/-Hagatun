@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { MapPin, Phone, EnvelopeSimple } from 'phosphor-react'
 
-import { LocationIcon, PhoneIcon, MailIcon } from '~/components/icons/icons'
-
-import stylesUrl from "./Hero.css";
+import stylesUrl from "./hero.css";
 
 import image from '~/assets/images/hero-background.jpeg'
 
 import type { LinksFunction } from "@remix-run/node";
+import { ModuleProps } from '..';
+import { THEME } from '~/utils/theme-provider';
 
 export const links: LinksFunction = () => {
   return [
@@ -31,9 +31,12 @@ const INFO = {
 	]
 }
 
-function Hero() {
+
+
+function Hero({ data }: ModuleProps) {
+	
 	return (
-		<section className="hero">
+		<section className="hero" color-scheme={THEME.light}>
 			<div className="hero-content">
 				<h1 className="hero-title">Lorem ipsum dolor sit amet.</h1>
 				<p className="hero-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -43,19 +46,19 @@ function Hero() {
 					<div>
 						<div>
 							<h3>Plats</h3>
-							<address>
-								{INFO.location.map(v => <p key={v}>{v} <LocationIcon /></p>)}
-							</address>
+							<div>
+								{INFO.location.map(v => <p key={v}>{v} <MapPin /></p>)}
+							</div>
 						</div>
 						<hr/>
 						<div>
 							<h3>Telefon</h3>
-							<address>
-								{INFO.phone.map(v => <p key={v}><a href={`tel:${v}`}>{v}</a> <PhoneIcon /></p>)}
-							</address>
+							<div>
+								{INFO.phone.map(v => <p key={v}><a href={`tel:${v}`}>{v}</a> <Phone mirrored /></p>)}
+							</div>
 						</div>
 						<hr/>
-						<button className="primary"><MailIcon />info@hagatun.se</button>
+						<button className="primary"><EnvelopeSimple />info@hagatun.se</button>
 					</div>
 				</div>
 			</div>

@@ -1,9 +1,16 @@
-:root {
+.hero {
+	/* Light */
+	--hero-image-brightness-filter-light: brightness(100%);
+
+	/* Dark */
+	--hero-image-brightness-filter-dark: brightness(85%);
+
+	/* General */
 	--hero-min-height: 600px;
 	--hero-padding: var(--size-10) var(--size-6);
 	
-	--hero-image-brightness-filter: brightness(100%);
 	--hero-image-url: url('hero-background-QGPCS7PJ.jpeg');
+	--hero-image-brightness-filter: var(--hero-image-brightness-filter-light);
 	--hero-image-placeholder-color: rgba(216	214	213);
 
 	--hero-title-color: var(--text-1);
@@ -14,7 +21,7 @@
 }
 
 @media (min-width: 768px) {
-	:root {
+	.hero {
 		--hero-min-height: 750px;
 		--hero-padding: var(--size-10);
 
@@ -23,12 +30,9 @@
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--hero-image-brightness-filter: brightness(85%);
-    --hero-title-color: var(--gray-9);
-    --hero-text-color: var(--gray-8);
-	}
+html[color-scheme="dark"] .hero {
+	--hero-image-brightness-filter: var(--hero-image-brightness-filter-dark);
+	--frost-color: var(--frost-color-dark);
 }
 
 .hero {

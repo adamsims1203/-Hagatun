@@ -5,6 +5,7 @@ import { clsx } from '~/utils/utils';
 import stylesUrl from './card.css'
 
 import type { LinksFunction } from "@remix-run/node";
+import { PolymorphicProps } from '~/types/types';
 
 export const links: LinksFunction = () => {
   return [
@@ -86,13 +87,16 @@ function CardHeader(props: CardHeaderProps) {
 Card.Header = CardHeader
 
 
-interface CardTitleProps extends React.HTMLAttributes<HTMLParagraphElement> {
+const DEFAULT_CARD_TITLE_TYPE = 'h2'
+
+type CardTitleProps<E extends typeof DEFAULT_CARD_TITLE_TYPE> = PolymorphicProps<E> & {
 	
 }
 
-function CardTitle(props: CardTitleProps) {
+function CardTitle<E extends typeof DEFAULT_CARD_TITLE_TYPE>({ as, ...props}: CardTitleProps<E>) {
+	const Component = as ?? DEFAULT_CARD_TITLE_TYPE
 	return (
-		<p {...props} className={clsx('card__title', props.className)} />
+		<Component {...props} className={clsx('card__title', props.className)} />
 	)
 }
 Card.Title = CardTitle
