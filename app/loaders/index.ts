@@ -85,6 +85,7 @@ export type Page = {
 				{ 
 					key: string
 					_type: 'menu'
+					title: string
 					items: MenuItem[]
 				} | MenuItem
 			)[]

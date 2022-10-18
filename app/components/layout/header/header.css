@@ -1,0 +1,57 @@
+:root {
+	--header-item-gap: clamp(var(--size-4), 5vw, var(--size-8));
+  --logo-size: var(--size-9);
+  --header-block-padding: 1rem;
+  --header-shadow: var(--shadow-2);
+
+  --header-estimated-height: calc(
+    var(--header-block-padding) * 2 + var(--logo-size)
+  );
+
+  --header-action-height: 2.5rem;
+}
+
+@media (min-width: /* var(--size-md) */ 768px) {
+  :root {
+    --header-block-padding: 2.25rem;
+    --header-logo-size: var(--size-10);
+    --header-action-height: 3.125rem;
+  }
+}
+
+header .navigation {
+  display: flex;
+  gap: var(--header-item-gap);
+  justify-content: space-between;
+  padding-block: var(--header-block-padding);
+  white-space: nowrap;
+}
+
+.navigation .navigation__left,
+.navigation .navigation__right {
+  display: flex;
+  align-items: center;
+  gap: var(--header-item-gap);
+}
+
+.navigation__logo {
+	display: flex;
+	align-items: center;
+}
+
+.navigation__logo svg {
+  block-size: var(--logo-size);
+  inline-size: auto;
+  max-inline-size: unset;
+	margin-inline-end: 1ch;
+}
+
+.navigation__right ul {
+	position: absolute;
+	list-style: none;
+	padding-inline-start: unset;
+}
+
+.navigation__right li {
+	padding-inline-start: unset;
+}

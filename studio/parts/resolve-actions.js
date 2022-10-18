@@ -1,17 +1,13 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 
 import sanityClient from 'part:@sanity/base/client'
 
 import defaultResolve, {
   PublishAction,
-  DiscardChangesAction,
-  DeleteAction
+  DiscardChangesAction
 } from 'part:@sanity/base/document-actions'
 
-import { useToast } from '@sanity/ui'
-
-import { Eye, Storefront } from 'phosphor-react'
+import { Eye } from 'phosphor-react'
 
 const singletons = [
   'generalSettings',

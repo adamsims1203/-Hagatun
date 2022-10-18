@@ -1,20 +1,71 @@
-
-
-main > section {
-	max-width: 1300px;
-	margin-left: auto;
-	margin-right: auto;
+:root {
+  --layout-max-width: 1440px;
+  --layout-max-width-section: 1300px;
+  --layout-inline-padding: var(--size-fluid-2);
+  --layout-section-gap: var(--size-11);
 }
 
-main > section + section {
-	margin-block-start: var(--size-11)
+footer a,
+header a {
+  color: var(--text-2) !important;
 }
 
-main > section > h1,
-main > section > h2,
-main > section > h3,
-main > section > h4,
-main > section > h5,
-main > section > h6 {
-  margin-block-end: var(--size-10);
+main {
+  margin-top: var(--header-estimated-height);
+  min-height: calc(var(--vh, 1vh) * 100 - var(--header-estimated-height));
+}
+
+main > section,
+header,
+footer > div {
+  padding-inline: var(--layout-inline-padding);
+  margin-inline: auto;
+}
+
+header,
+footer > div:nth-child(2) {
+  max-width: var(--layout-max-width);
+}
+
+main > section,
+footer > div:nth-child(1) {
+  max-width: var(--layout-max-width-section);
+}
+
+main > section + section,
+footer {
+  margin-block-start: var(--layout-section-gap);
+}
+
+footer {
+  position: relative;
+}
+
+/* Header Swish Banner */
+
+header {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background-color: var(--surface-1);
+  box-shadow: var(--header-shadow);
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  /* Full bleed */
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
