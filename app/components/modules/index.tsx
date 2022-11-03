@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Hero, { links as heroLinks } from './hero/hero'
+import StartPageHero, { links as startPageHeroLinks } from './start-page-hero/start-page-hero'
 import CTA, { links as ctaLinks } from './cta/cta'
 import Partners, { links as partnersLinks } from './partners/partners'
 import TextImage, { links as textImageLinks } from './text-image/text-image'
@@ -10,7 +10,7 @@ import type { Modules } from '~/loaders'
 
 export const links: LinksFunction = () => {
 	return [
-		...heroLinks(),
+		...startPageHeroLinks(),
 		...ctaLinks(),
 		...textImageLinks(),
 		...partnersLinks()
@@ -33,7 +33,7 @@ export interface ModuleProps<T extends Modules['_type'] = Modules['_type']> {
 }
 
 const modules = {
-  hero: Hero,
+  'start-page-hero': StartPageHero,
 	cta: CTA,
 	partners: Partners,
 	'text-image': TextImage,

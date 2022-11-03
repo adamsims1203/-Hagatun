@@ -2,17 +2,13 @@ import groq from 'groq'
 
 import { image } from './image'
 import { card } from './card'
-import { portableTextContent } from './portableTextContent'
 
 export const modules = groq`
-  _type == 'hero' => {
+  _type == 'start-page-hero' => {
     _type,
     _key,
 		title,
 		subtitle,
-    content[]{
-      ${portableTextContent}
-    },
     bgType,
     photos{
       ...,
@@ -85,9 +81,5 @@ export const modules = groq`
     photo{
       ${image}
     }
-  },
-  _type == 'productHero' => {
-    _type,
-    _key,
   }
 `

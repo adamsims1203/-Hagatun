@@ -1,12 +1,12 @@
 import { MapPin, Phone, EnvelopeSimple } from 'phosphor-react'
 
 import { THEME } from '~/utils/theme-provider';
+import { useRouteData } from '~/hooks/useRouteData';
 
-import stylesUrl from "./hero.css";
+import stylesUrl from "./start-page-hero.css";
 
 import type { LinksFunction } from "@remix-run/node";
 import type { ModuleProps } from '..';
-import { useRouteData } from '~/hooks/useRouteData';
 
 export const links: LinksFunction = () => {
   return [
@@ -14,16 +14,16 @@ export const links: LinksFunction = () => {
 	];
 };
 
-function Hero({ data }: ModuleProps<'hero'>) {
+function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 	const { page } = useRouteData()
 
 	return (
-		<section className="hero" color-scheme={THEME.light} style={{ '--hero-image-url': `url(${data.photos.desktopPhoto.src})` } as React.CSSProperties}>
+		<section className="start-page-hero" color-scheme={THEME.light} style={{ '--_image-url': `url(${data.photos.desktopPhoto.src})` } as React.CSSProperties}>
 			<div>
-				<div className="hero-content">
-					<h1 className="hero-title">{data.title}</h1>
-					<p className="hero-subtitle">{data.subtitle}</p>
-					<div className="hero-contact-list">
+				<div className="start-page-hero-content">
+					<h1 className="start-page-hero-title">{data.title}</h1>
+					<p className="start-page-hero-subtitle">{data.subtitle}</p>
+					<div className="start-page-hero-contact-list">
 						<h2>Kontakta oss</h2>
 						<div>
 							<div>
@@ -49,4 +49,4 @@ function Hero({ data }: ModuleProps<'hero'>) {
 	)
 }
 
-export default Hero
+export default StartPageHero

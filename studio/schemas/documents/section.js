@@ -22,7 +22,7 @@ export default {
       name: 'content',
       type: 'array',
       of: [
-        { type: 'hero' },
+        { type: 'start-page-hero' },
         { type: 'marquee' },
         { type: 'dividerPhoto' }
       ],

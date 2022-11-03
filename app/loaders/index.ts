@@ -42,7 +42,7 @@ export type Card = {
 
 export type Modules = 
 	| {
-		_type: 'hero'
+		_type: 'start-page-hero'
 		_key: string
 		title: string
 		subtitle: string
@@ -82,14 +82,14 @@ export type Modules =
 			href: string
 		}[]
 	}
-	| {
+	/* | {
 		_type: 'marquee'
 		_key: string
 		items: (null | null)[]
     speed: number
     reverse: boolean
     pauseable: boolean
-	}
+	} */
 
 export type Site = {
 	home: PageReference

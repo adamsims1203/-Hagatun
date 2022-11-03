@@ -14,7 +14,7 @@ import seoSettings from './documents/settings-seo'
 import menu from './documents/menu'
 
 // Module types
-import hero from './modules/hero'
+import startPageHero from './modules/start-page-hero'
 import marquee from './modules/marquee'
 import dividerPhoto from './modules/divider-photo'
 import cta from './modules/cta'
@@ -59,7 +59,7 @@ export default createSchema({
 
     /* --------------- */
     /* 2: Module types */
-    hero,
+    startPageHero,
     marquee,
     dividerPhoto,
 		cta,

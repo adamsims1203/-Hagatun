@@ -3,8 +3,8 @@ import { Star } from 'phosphor-react'
 import customImage from '../../lib/custom-image'
 
 export default {
-  title: 'Hero',
-  name: 'hero',
+  name: 'start-page-hero',
+  title: 'Start Page Hero',
   type: 'object',
   icon: Star,
   fields: [
@@ -79,7 +79,7 @@ export default {
     },
     prepare({ photo, content }) {
       return {
-        title: 'Hero',
+        title: 'Start Page Hero',
         subtitle: content && content[0]?.text,
         media: photo
       }
