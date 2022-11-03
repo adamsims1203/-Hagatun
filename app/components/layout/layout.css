@@ -17,18 +17,17 @@ main {
 
 main > section,
 header,
-footer > div {
+footer {
   padding-inline: var(--layout-inline-padding);
   margin-inline: auto;
 }
 
 header,
-footer > div:nth-child(2) {
+footer {
   max-width: var(--layout-max-width);
 }
 
-main > section,
-footer > div:nth-child(1) {
+main > section {
   max-width: var(--layout-max-width-section);
 }
 

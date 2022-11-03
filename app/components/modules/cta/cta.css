@@ -1,0 +1,60 @@
+section.cta {
+	--link: var(--text-2);
+	--link-visited: var(--text-2);
+	--_radius: var(--radius-conditional-4);
+
+	padding: 0;
+}
+
+section.cta h2 {
+	text-align: center;
+	margin-block-end: var(--size-9);
+	max-inline-size: 100%;
+}
+
+section.cta > div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+section.cta > div > div {
+	flex: 1;
+	display: flex;
+	min-width: 35ch;
+	width: 100%;
+}
+
+section.cta a {
+	flex: 1;
+	display: flex;
+	height: 100%;
+	width: 100%;
+}
+
+section.cta .card {
+	--card-radius: var(--_radius);
+	--_image-scale: 1;
+	flex: 1;
+	display: flex;
+	margin: calc(var(--card-radius) / 2);
+}
+
+section.cta .card:hover {
+	--_image-scale: 1.05;
+}
+
+section.cta .card__thumbnail {
+	display: flex;
+	place-items: center;
+	padding: var(--size-6);
+}
+
+section.cta .card__thumbnail img {
+	inline-size: var(--size-12);
+	scale: var(--_image-scale);
+	transition: scale .1s ease-in;
+}
+
+section.cta .card__body {
+	background-color: var(--surface-3);
+}

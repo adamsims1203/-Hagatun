@@ -31,10 +31,14 @@ export const page = groq`
 	"footer": *[_type == "footerSettings" && _id == "footerSettings"][0]{
 		"blocks": [
 			{
-				"title": blockTitle1,
-				social[]{
+				"_type": "bio",
+				"_key": _rev,
+				socialLinks[]{
 					icon,
 					url
+				},
+				...*[_type == "generalSettings"][0] {
+					"bio": bio[$lang]
 				}
 			},
 			blockMenu2->{
@@ -47,6 +51,20 @@ export const page = groq`
 					${menu}
 				},
 			},
-		]
+			*[_type == "generalSettings"][0] {
+				"_type": "information",
+				"_key": _rev,
+        email,
+        postalAddress,
+        offices
+      }
+		],
 	},
+	"company": *[_type == "generalSettings"][0] {
+		"_type": "information",
+		_key,
+		email,
+		postalAddress,
+		offices
+	}
 `

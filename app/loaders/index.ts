@@ -6,9 +6,15 @@ import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
 import { pageQueryBySlug, siteQuery } from './groq-fragments/query'
 import { getLocaleFromPath, i18n, Locale } from './i18n'
+import { Theme } from '~/utils/theme-provider'
+
+export type ImageSrc = {
+	src: string
+	alt: string
+}
 
 export type PageReference = {
-	key: string,
+	_key: string,
 	_updatedAt: string
 	slug: string
 	title: string
@@ -18,27 +24,61 @@ export type PageReference = {
 export type MenuItem = 
 	| { _type: 'navPage' } & PageReference
 	| {
-		key: string
+		_key: string
 		_type: 'navLink'
 		title: string
 		url: string
 	}
 
+export type Card = {
+	_type: 'card'
+	_key: string
+	title: string
+	subtitle: string
+	text: string
+	thumbnail: ImageSrc
+	href: PageReference | null;
+}
+
 export type Modules = 
 	| {
 		_type: 'hero'
 		_key: string
-		content: null[]
+		title: string
+		subtitle: string
 		bgType: string
 		photos: {
-			mobilePhoto: object
-			desktopPhoto: object
+			mobilePhoto: ImageSrc
+			desktopPhoto: ImageSrc
 		}
 		video: {
 			id: string
 			title: string
 		}
-	} | {
+	} 
+	| {
+		_type: 'cta',
+		_key: string
+		title: string
+		cards: Card[]
+	}
+	| {
+		_type: 'text-image'
+		_key: string
+		title: string
+		text: string
+		image: ImageSrc
+		theme: Theme
+		contentPlacement: 'left' | 'right'
+	}
+	| {
+		_type: 'partners'
+		_key: string
+		title: string
+		text: string
+		partnerLogos: ImageSrc[]
+	}
+	| {
 		_type: 'marquee'
 		_key: string
 		items: (null | null)[]
@@ -79,11 +119,11 @@ export type Page = {
 	lang: Locale
 	header: {
 		menu: { 
-			key: string,
+			_key: string,
 			_type: 'menu'
 			items: (
 				{ 
-					key: string
+					_key: string
 					_type: 'menu'
 					title: string
 					items: MenuItem[]
@@ -100,11 +140,48 @@ export type Page = {
 	modules: Modules[] | null
 	footer: {
 		blocks:
-		{ 
-			key: string,
-			_type: 'menu'
-			title: string
-			items: MenuItem[]
+		(
+			| {
+				_key: string,
+				_type: 'bio',
+				bio: string
+				socialLinks: {
+					icon: string
+					url: string
+				}[]
+			}
+			| { 
+				_key: string,
+				_type: 'menu'
+				title: string
+				items: MenuItem[]
+			}
+			| {
+				_key: string
+				_type: 'information',
+				postalAddress: string
+				email: string
+				offices: {
+					_type: 'office'
+					_key: string
+					address: string
+					name: string
+					phoneNumber: string
+				}[]
+			}
+		)[]
+	}
+	company: {
+		_key: string
+		_type: 'information',
+		postalAddress: string
+		email: string
+		offices: {
+			_type: 'office'
+			_key: string
+			address: string
+			name: string
+			phoneNumber: string
 		}[]
 	}
 	seo: any

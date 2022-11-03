@@ -8,3 +8,10 @@ type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   ComponentPropsWithoutRef<E>
   & PolymorphicAsProp<E>
 >;
+
+declare global {
+	interface String {
+		toCapitalize: () => string
+	}
+}
+

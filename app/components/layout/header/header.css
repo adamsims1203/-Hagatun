@@ -1,14 +1,19 @@
 :root {
-	--header-item-gap: clamp(var(--size-4), 5vw, var(--size-8));
-  --logo-size: var(--size-9);
+  --header-logo-size: var(--size-9);
   --header-block-padding: 1rem;
   --header-shadow: var(--shadow-2);
-
+	
   --header-estimated-height: calc(
-    var(--header-block-padding) * 2 + var(--logo-size)
-  );
+		var(--header-block-padding) * 2 + var(--header-logo-size)
+		);
+		
+		--header-action-height: 2.5rem;
+		
+	--header-item-gap: 1ch;
+	--header-item-radius: var(--radius-2);
 
-  --header-action-height: 2.5rem;
+	--header-dropdown-item-block-padding: .5ch;
+	--header-dropdown-item-inline-padding: 1.5ch;
 }
 
 @media (min-width: /* var(--size-md) */ 768px) {
@@ -16,7 +21,12 @@
     --header-block-padding: 2.25rem;
     --header-logo-size: var(--size-10);
     --header-action-height: 3.125rem;
+		--header-item-gap: clamp(var(--size-4), 5vw, var(--size-8));
   }
+
+	.navigation__left button {
+		display: none;
+	}
 }
 
 header .navigation {
@@ -27,11 +37,12 @@ header .navigation {
   white-space: nowrap;
 }
 
-.navigation .navigation__left,
-.navigation .navigation__right {
-  display: flex;
-  align-items: center;
+.navigation__left,
+.navigation__right {
+	display: flex;
   gap: var(--header-item-gap);
+	align-items: center;
+	justify-content: space-between;
 }
 
 .navigation__logo {
@@ -40,18 +51,183 @@ header .navigation {
 }
 
 .navigation__logo svg {
-  block-size: var(--logo-size);
+  block-size: var(--header-logo-size);
   inline-size: auto;
-  max-inline-size: unset;
 	margin-inline-end: 1ch;
+}
+
+.navigation svg {
+  max-inline-size: unset;
+}
+
+.navigation__left button {
+	padding: 1ch;
+}
+.navigation__left button svg {
+	pointer-events: none;
+}
+
+.navigation__right ul,
+.navigation__dropdown ul {
+	list-style: none;
+	padding-inline-start: unset;
+	border-radius: var(--header-item-radius);
+}
+
+.navigation__right li,
+.navigation__dropdown li {
+	padding-inline-start: unset;
+	max-inline-size: unset;
+}
+
+.navigation__right a,
+.navigation__dropdown a {
+	display: block;
+	padding-block: var(--header-dropdown-item-block-padding);
+	margin-block: 0;
+}
+
+.navigation__right li a,
+.navigation__dropdown li a {
+	padding-inline: var(--header-dropdown-item-inline-padding);
+}
+
+.navigation__right > div,
+.navigation__dropdown > div {
+	padding: 1ch;
+	position: relative;
+	border-radius: var(--header-item-radius);
+}
+
+.navigation__right div > a,
+.navigation__dropdown div > a {
+	padding-block: 0;
+}
+
+.navigation__right a,
+.navigation__dropdown a {
+	display: flex;
+}
+
+.navigation__right > div > a svg,
+.navigation__dropdown > div > a svg {
+	margin-inline-start: 1ch;
+}
+
+@media (max-width: /* var(--size-md) */ 768px) {
+	.navigation {
+		flex-direction: column;	
+	}
+	.navigation__left {
+		align-items: center;
+		justify-content: space-between;
+	}
+	.navigation__dropdown {
+		flex-direction: column;
+		padding-block: var(--size-2);
+	}
+	
+	.navigation select {
+		align-self: center;
+	}
+
+	.navigation__dropdown {
+		display: none;
+	}
+	.navigation__dropdown.open {
+		display: flex
+	}
+
+	.navigation__right {
+		display: none;
+	}
+}
+
+@media (min-width: /* var(--size-md) */ 768px) {
+	.navigation__dropdown {
+		display: none;
+	}
+}
+
+
+@keyframes fade-in {
+	to {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+@keyframes fade-out {
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
 
 .navigation__right ul {
 	position: absolute;
-	list-style: none;
-	padding-inline-start: unset;
+	top: 100%;
+	left: 0;
+	background-color: var(--surface-2);
+	padding-block: 1ch;
+	box-shadow: var(--header-shadow);
 }
 
-.navigation__right li {
-	padding-inline-start: unset;
+.navigation__right ul {
+	opacity: 0;
+	visibility: hidden;
+	animation: fade-out 0.3s var(--ease-3) forwards;
+}
+.navigation__right > div:hover,
+.navigation__right > div:focus-within {
+	background-color: var(--surface-2);
+}
+.navigation__right > div:hover ul,
+.navigation__right > div:focus-within ul {
+	animation: fade-in 0.3s var(--ease-3) forwards;
+}
+
+.navigation__right > div:hover svg,
+.navigation__right > div:focus-within + svg {
+	transform: rotate(180deg);
+}
+
+.navigation__right ul li:hover,
+.navigation__right ul li:focus-within {
+	background-color: var(--surface-3);
+}
+
+.navigation__dropdown summary,
+.navigation__dropdown a,
+.navigation__dropdown ul {
+  font-weight: var(--font-weight-4);
+	font-size: var(--font-size-2);
+	line-height: var(--font-lineheight-3);
+}
+
+.navigation__dropdown details {
+  background-color: transparent;
+  padding-inline: 0;
+  padding-block: 0;
+	line-height: var(--font-lineheight-3);
+}
+
+.navigation__dropdown details::marker {
+  display: none;
+}
+
+.navigation__dropdown summary {
+  background-color: transparent;
+  margin: 0;
+	padding: var(--header-dropdown-item-block-padding) 0;
+	border-radius: 0;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.navigation__dropdown details[open] summary svg {
+  transform: rotate(180deg);
 }

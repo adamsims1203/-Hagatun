@@ -28,3 +28,10 @@ export const merge = async <T extends Promise<object>>(data: T[]) =>
 
 export const mergeSync = <T extends object, U extends object = Merge<T>>(data: T[]) =>
 	data.reduce<U>((pack, res) => ({ ...pack, ...res }), {} as U)
+
+
+export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+String.prototype.toCapitalize = function (this: string) {
+	return capitalize(this);
+};

@@ -18,7 +18,7 @@ export const getIcon = icon => {
     case 'Likedin':
       return { Icon: LinkedinLogo, color: '#0A66C2' }
     default:
-      return false
+      return { Icon: null, color: '' }
   }
 }
 
@@ -61,7 +61,7 @@ export default {
         subtitle: url ? url : '(url not set)',
         media: (props) => {
 					const { Icon, color } = getIcon(icon)
-					return <Icon size={props.dimensions.width} weight="fill" color={color} />
+					return Icon && <Icon size={props.dimensions.width} weight="fill" color={color} />
 				}
       }
     }

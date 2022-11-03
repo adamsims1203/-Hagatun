@@ -34,7 +34,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 
 export default function Page() {
 	const data = useLoaderData<typeof loader>()
-	
+	console.log(data)
   return (
 		<>
 			{data?.page?.modules?.map((module, i) => (

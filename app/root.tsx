@@ -8,7 +8,7 @@ import {
 	useCatch,
 	useLoaderData
 } from "@remix-run/react";
-import { LoaderArgs, LinksFunction, Response } from "@remix-run/node";
+import { LoaderArgs, LinksFunction, Response, MetaFunction } from "@remix-run/node";
 import { useShouldHydrate, DynamicLinks } from 'remix-utils'
 import { SmileySad } from "phosphor-react";
 
@@ -34,6 +34,13 @@ export const links: LinksFunction = () => {
 		...moduleLinks()
   ];
 };
+
+export const meta: MetaFunction = () => {
+	return { 
+		name: 'viewport', 
+		content: 'width=device-width, initial-scale=1' 
+	}
+}
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   const data = merge([

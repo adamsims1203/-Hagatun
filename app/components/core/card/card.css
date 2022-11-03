@@ -1,5 +1,5 @@
 .card {
-	--card-radius: var(--radius-conditional-3);
+	--card-radius: var(--radius-3);
 	--card-padding: var(--size-3);
 	--card-item-gap: var(--size-2);
 	--card-orientation: ;
@@ -8,9 +8,9 @@
 
 
 	--card-color: var(--surface-2);
-	--card-color-title: var(--gray-2);
-	--card-color-subtitle: var(--gray-5);
-	--card-color-body: var(--gray-4);
+	--card-color-title: var(--text-1);
+	--card-color-subtitle: var(--text-2);
+	--card-color-body: var(--text-2);
 }
 
 .card.card--horizontal {

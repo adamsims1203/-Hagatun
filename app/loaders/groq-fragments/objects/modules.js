@@ -1,12 +1,15 @@
 import groq from 'groq'
 
 import { image } from './image'
+import { card } from './card'
 import { portableTextContent } from './portableTextContent'
 
 export const modules = groq`
   _type == 'hero' => {
     _type,
     _key,
+		title,
+		subtitle,
     content[]{
       ${portableTextContent}
     },
@@ -25,6 +28,34 @@ export const modules = groq`
       title
     }
   },
+	_type == 'cta' => {
+		_type,
+		_key,
+		title,
+		cards[] {
+			${card}
+		}
+	},
+	_type == 'text-image' => {
+		_type,
+		_key,
+		title,
+		text,
+		image{
+			${image}
+		},
+		theme,
+		contentPlacement
+	},
+	_type == 'partners' => {
+		_type,
+		_key,
+		title,
+		text,
+		partnerLogos[]{
+			${image}
+		},
+	},
   _type == 'marquee' => {
     _type,
     _key,

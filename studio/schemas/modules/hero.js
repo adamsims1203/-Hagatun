@@ -8,6 +8,16 @@ export default {
   type: 'object',
   icon: Star,
   fields: [
+		{
+			name: 'title',
+			title: 'Title',
+			type: 'string'
+		},
+		{
+			name: 'subtitle',
+			title: 'Subtitle',
+			type: 'string',
+		},
     {
       title: 'Background Type',
       name: 'bgType',

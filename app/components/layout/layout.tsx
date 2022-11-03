@@ -1,8 +1,8 @@
 import { IconContext } from 'phosphor-react';
 
 import { useRouteData } from '~/hooks/useRouteData';
-import { Link } from '~/components/core/link/link';
 import { Header, links as headerLinks } from './header/header';
+import { Footer, links as footerLinks } from './footer/footer';
 
 import stylesUrl from './layout.css'
 
@@ -11,7 +11,8 @@ import type { LinksFunction } from "@remix-run/node";
 export const links: LinksFunction = () => {
   return [
 		{ rel: 'stylesheet', href: stylesUrl },
-		...headerLinks()
+		...headerLinks(),
+		...footerLinks()
 	];
 };
 
@@ -32,27 +33,9 @@ function Layout({ children }: LayoutProps) {
 		>
 			<Header />
 			<main>
-				<section>
-					<h1>{page?.title}</h1>
-				</section>
 				{children}
 			</main>
-			<footer style={{ display: 'flex' }}>
-				{page?.footer.blocks.map(block => 
-					<div>
-						<p>{block.title}</p>
-						<ul>
-							{block.items?.map(subItem => 
-								<li key={subItem.key}>
-									<Link 
-										to={subItem._type === 'navPage' ? subItem.slug : subItem.url}
-									>{subItem.title}</Link>
-								</li>
-							)}
-						</ul>
-					</div>
-				)}
-			</footer>
+			<Footer />
 			{/* {!IS_PROD && 
 				<button
 					style={{ position: 'fixed', left: 0, bottom: 0 }}

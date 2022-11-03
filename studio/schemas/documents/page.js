@@ -83,6 +83,9 @@ export default {
         { type: 'hero' },
         { type: 'marquee' },
         { type: 'dividerPhoto' },
+        { type: 'cta' },
+        { type: 'text-image' },
+        { type: 'partners' },
         {
           title: 'Reusable Section',
           type: 'reference',

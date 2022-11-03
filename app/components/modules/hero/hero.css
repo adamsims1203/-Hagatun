@@ -40,6 +40,14 @@ html[color-scheme="dark"] .hero {
 	--link-visited: var(--grape-7);
 
   position: relative;
+  max-width: var(--layout-max-width);
+	padding: 0;
+}
+.hero > div {
+	--link: var(--indigo-7);
+	--link-visited: var(--grape-7);
+
+  position: relative;
 	display: flex;
 	min-height: var(--hero-min-height);
 	border-radius: var(--radius-conditional-4);
@@ -47,7 +55,7 @@ html[color-scheme="dark"] .hero {
 	overflow: hidden;
 }
 
-.hero::before {
+.hero > div::before {
 	content: "";
 	top: 0;
 	left: 0;
@@ -150,6 +158,11 @@ html[color-scheme="dark"] .hero {
 	inline-size: var(--hero-svg-size);
 }
 
+@media (max-width: 768px) {
+	.hero {
+		margin-inline: calc(var(--layout-inline-padding) * -1);
+	}
+}
 @media (min-width: 768px) {
 	.hero-content {
 		justify-content: unset;

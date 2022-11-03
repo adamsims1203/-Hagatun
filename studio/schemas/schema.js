@@ -17,9 +17,13 @@ import menu from './documents/menu'
 import hero from './modules/hero'
 import marquee from './modules/marquee'
 import dividerPhoto from './modules/divider-photo'
+import cta from './modules/cta'
+import textImage from './modules/text-image'
+import partners from './modules/partners'
 
 // Object types
 import office from './objects/office'
+import card from './objects/card';
 import seo from './objects/seo'
 
 import navPage from './objects/nav-page'
@@ -30,6 +34,7 @@ import simplePortableText from './objects/portable-simple'
 
 import accordions from './objects/accordions'
 import accordion from './objects/accordion'
+
 
 /*  ------------------------------------------ */
 /*  Your Schema documents / modules / objects
@@ -57,10 +62,14 @@ export default createSchema({
     hero,
     marquee,
     dividerPhoto,
+		cta,
+		textImage,
+		partners,
 
     /* ----------------------- */
     /* 3: Generic Object types */
 		office,
+		card,
     seo,
 
     navPage,

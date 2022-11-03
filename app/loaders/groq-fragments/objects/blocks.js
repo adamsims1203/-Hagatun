@@ -7,7 +7,7 @@ export const blocks = groq`
     _type,
     _key,
     items[]{
-      "id": _key,
+      _key,
       title,
       content[]{
         ${portableTextContent}

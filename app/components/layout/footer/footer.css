@@ -1,0 +1,83 @@
+footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-8);
+	padding-block: var(--size-10);
+}
+
+footer > div {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 30ch;
+	max-width: var(--size-content-3);
+	gap: var(--size-3);
+}
+footer > div.links {
+	min-width: 15ch;
+	max-width: 25ch;
+}
+
+footer .logo {
+	display: flex;
+	white-space: nowrap;
+	align-items: center;
+	font-size: var(--font-size-3);
+	text-transform: uppercase;
+}
+footer .logo svg {
+	margin-inline-end: 1ch;
+	inline-size: var(--size-9);
+}
+footer h3 {
+	font-size: var(--font-size-3);
+	font-weight: var(--font-weight-7);
+}
+
+footer h4 {
+	font-size: var(--font-size-3);
+	font-weight: var(--font-weight-4);
+}
+footer ul {
+	list-style: none;
+	padding-inline-start: unset;
+	font-size: var(--font-size-2);
+}
+footer p {
+	font-size: var(--font-size-0);
+	line-height: var(--font-lineheight-5);
+}
+footer li {
+	padding-inline-start: unset;
+}
+footer li + li {
+	margin-block-start: var(--size-3);
+}
+footer .media {
+	display: flex;
+	gap: var(--size-8);
+}
+footer .media svg {
+	inline-size: auto;
+	block-size: var(--size-6);
+	font-weight: 900;
+}
+footer .media a.facebook {
+	--text-2: #1877F2;
+}
+footer .media a.instagram {
+	--text-2: #EC3397;
+}
+footer .media a.twitter {
+	--text-2: #1DA1F2;
+}
+footer .media a.likedin {
+	--text-2: #0A66C2;
+}
+footer button {
+	max-width: 25ch;
+	margin-block-start: .5ch;
+}
+footer address {
+	margin-block-start: .5ch;
+}

@@ -1,13 +1,16 @@
-import { useNavigate } from '@remix-run/react'
-import React from 'react'
+import { useLocation, useNavigate } from '@remix-run/react'
 import { useRouteData } from '~/hooks/useRouteData'
 
 export const TranslationSelect = () => {
-	const to = useNavigate()
-	
+	const { pathname } = useLocation()
 	const { page } = useRouteData()
+	const to = useNavigate()
+
 	return (
-		<select onChange={e => to(e.target.value)}>
+		<select 
+			value={pathname.replace(/^\/|\/$/, '')}
+			onChange={e => to(e.target.value)}
+		>
 			{page?.header.translations.map(t => <option key={t.slug} value={t.slug}>{t.lang}</option>)}
 		</select>
 	)

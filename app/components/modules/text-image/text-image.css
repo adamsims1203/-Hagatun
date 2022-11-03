@@ -1,0 +1,52 @@
+.text-image {
+	--_image: ;
+	--_justify: flex-start;
+}
+
+@media (min-width: 768px) {
+	.text-image {
+		min-height: var(--size-15);
+	}
+}
+
+.text-image--placement-left {
+	--_justify: flex-start;
+}
+
+.text-image--placement-right {
+	--_justify: flex-end;
+}
+
+.text-image {
+  position: relative;
+  max-width: var(--layout-max-width);
+	border-radius: var(--radius-conditional-4);
+	overflow: hidden;
+	display: flex;
+	justify-content: var(--_justify);
+	align-items: center;
+}
+
+.text-image > div {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+}
+
+.text-image > div > div {
+	max-width: var(--size-content-2);
+}
+
+.text-image::before {
+	content: '';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: -1;
+	background-size: cover;
+	background-position: center;
+	background-image: var(--_image);
+	background-color: var(--_placeholder-color);
+}

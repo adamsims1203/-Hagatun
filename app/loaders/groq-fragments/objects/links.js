@@ -11,13 +11,13 @@ export const pageReference = groq`
 
 export const links = groq`
   _type == 'navLink' => {
-		"key": _key,
+		_key,
 		_type,
 		title,
 		url
 	},
 	_type == 'navPage' => {
-		"key": _key,
+		_key,
 		_type,
 		...page-> {
 			${pageReference}

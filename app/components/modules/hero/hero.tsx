@@ -1,64 +1,47 @@
 import { MapPin, Phone, EnvelopeSimple } from 'phosphor-react'
 
+import { THEME } from '~/utils/theme-provider';
+
 import stylesUrl from "./hero.css";
 
-import image from '~/assets/images/hero-background.jpeg'
-
 import type { LinksFunction } from "@remix-run/node";
-import { ModuleProps } from '..';
-import { THEME } from '~/utils/theme-provider';
+import type { ModuleProps } from '..';
+import { useRouteData } from '~/hooks/useRouteData';
 
 export const links: LinksFunction = () => {
   return [
-		{ rel: "stylesheet", href: stylesUrl },
-		{
-			rel: "preload",
-			href: image,
-			as: "image",
-			type: "image/jpeg",
-		},
+		{ rel: "stylesheet", href: stylesUrl }
 	];
 };
 
-const INFO = {
-	location: [
-		'Östertullsgatan 9, Laholm',
-		'Kaptensgatan 8, 302 45 Halmstad',
-	],
-	phone: [
-		'+4670 - 753 79 53',
-		'035 - 12 30 95'
-	]
-}
+function Hero({ data }: ModuleProps<'hero'>) {
+	const { page } = useRouteData()
 
-
-
-function Hero({ data }: ModuleProps) {
-	
 	return (
-		<section className="hero" color-scheme={THEME.light}>
-			<div className="hero-content">
-				<h1 className="hero-title">Lorem ipsum dolor sit amet.</h1>
-				<p className="hero-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					
-				<div className="hero-contact-list">
-					<h2>Kontakta oss</h2>
-					<div>
+		<section className="hero" color-scheme={THEME.light} style={{ '--hero-image-url': `url(${data.photos.desktopPhoto.src})` } as React.CSSProperties}>
+			<div>
+				<div className="hero-content">
+					<h1 className="hero-title">{data.title}</h1>
+					<p className="hero-subtitle">{data.subtitle}</p>
+					<div className="hero-contact-list">
+						<h2>Kontakta oss</h2>
 						<div>
-							<h3>Plats</h3>
 							<div>
-								{INFO.location.map(v => <p key={v}>{v} <MapPin /></p>)}
+								<h3>Plats</h3>
+								<div>
+									{page?.company.offices.map(v => <p key={v._key}>{v.address} <MapPin /></p>)}
+								</div>
 							</div>
-						</div>
-						<hr/>
-						<div>
-							<h3>Telefon</h3>
+							<hr/>
 							<div>
-								{INFO.phone.map(v => <p key={v}><a href={`tel:${v}`}>{v}</a> <Phone mirrored /></p>)}
+								<h3>Telefon</h3>
+								<div>
+									{page?.company.offices.map(v => <p key={v._key}><a href={`tel:${v.phoneNumber}`}>{v.phoneNumber}</a> <Phone mirrored /></p>)}
+								</div>
 							</div>
+							<hr/>
+							<button className="primary"><EnvelopeSimple />info@hagatun.se</button>
 						</div>
-						<hr/>
-						<button className="primary"><EnvelopeSimple />info@hagatun.se</button>
 					</div>
 				</div>
 			</div>

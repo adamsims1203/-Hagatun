@@ -26,6 +26,15 @@ export default {
     }
   ],
   fields: [
+    {
+      title: 'Social Media Links',
+      name: 'socialLinks',
+      type: 'array',
+			of: [
+				{ type: 'socialLink' }
+			],
+      group: 'column1',
+    },
 		{
       title: 'Block Title',
       name: 'blockTitle2',
