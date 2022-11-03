@@ -63,7 +63,7 @@ export type Modules =
 		cards: Card[]
 	}
 	| {
-		_type: 'text-image'
+		_type: 'hero'
 		_key: string
 		title: string
 		text: string

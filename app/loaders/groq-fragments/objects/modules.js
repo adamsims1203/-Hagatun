@@ -32,7 +32,7 @@ export const modules = groq`
 			${card}
 		}
 	},
-	_type == 'text-image' => {
+	_type == 'hero' => {
 		_type,
 		_key,
 		title,

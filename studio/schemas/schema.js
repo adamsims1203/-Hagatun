@@ -18,7 +18,7 @@ import startPageHero from './modules/start-page-hero'
 import marquee from './modules/marquee'
 import dividerPhoto from './modules/divider-photo'
 import cta from './modules/cta'
-import textImage from './modules/text-image'
+import hero from './modules/hero'
 import partners from './modules/partners'
 
 // Object types
@@ -63,7 +63,7 @@ export default createSchema({
     marquee,
     dividerPhoto,
 		cta,
-		textImage,
+		hero,
 		partners,
 
     /* ----------------------- */

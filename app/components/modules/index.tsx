@@ -3,7 +3,7 @@ import React from 'react'
 import StartPageHero, { links as startPageHeroLinks } from './start-page-hero/start-page-hero'
 import CTA, { links as ctaLinks } from './cta/cta'
 import Partners, { links as partnersLinks } from './partners/partners'
-import TextImage, { links as textImageLinks } from './text-image/text-image'
+import Hero, { links as heroLinks } from './hero/hero'
 
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import type { Modules } from '~/loaders'
@@ -12,7 +12,7 @@ export const links: LinksFunction = () => {
 	return [
 		...startPageHeroLinks(),
 		...ctaLinks(),
-		...textImageLinks(),
+		...heroLinks(),
 		...partnersLinks()
 	]
 }
@@ -36,7 +36,7 @@ const modules = {
   'start-page-hero': StartPageHero,
 	cta: CTA,
 	partners: Partners,
-	'text-image': TextImage,
+	hero: Hero,
 } as { [k in Modules['_type']]: React.FunctionComponent<ModuleProps> };
 
 export const Module = ({

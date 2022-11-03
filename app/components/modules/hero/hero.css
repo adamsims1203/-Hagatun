@@ -1,23 +1,23 @@
-.text-image {
+.hero {
 	--_image: ;
 	--_justify: flex-start;
 }
 
 @media (min-width: 768px) {
-	.text-image {
+	.hero {
 		min-height: var(--size-15);
 	}
 }
 
-.text-image--placement-left {
+.hero--placement-left {
 	--_justify: flex-start;
 }
 
-.text-image--placement-right {
+.hero--placement-right {
 	--_justify: flex-end;
 }
 
-.text-image {
+.hero {
   position: relative;
   max-width: var(--layout-max-width);
 	border-radius: var(--radius-conditional-4);
@@ -27,17 +27,23 @@
 	align-items: center;
 }
 
-.text-image > div {
+.hero > div {
 	width: 50%;
 	display: flex;
 	justify-content: center;
 }
 
-.text-image > div > div {
+.hero > div > div {
 	max-width: var(--size-content-2);
 }
 
-.text-image::before {
+.hero h2 {
+	margin-block-end: 1ch;
+	font-size: var(--font-size-7);
+	font-weight: var(--font-weight-9);
+}
+
+.hero::before {
 	content: '';
 	top: 0;
 	left: 0;

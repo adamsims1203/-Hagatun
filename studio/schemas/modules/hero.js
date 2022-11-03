@@ -2,8 +2,8 @@ import React from "react";
 import { SquareHalf } from "phosphor-react";
 
 export default {
-	name: 'text-image',
-	title: 'Text Image',
+	name: 'hero',
+	title: 'Hero',
 	type: 'object',
   icon: SquareHalf,
 	fields: [
