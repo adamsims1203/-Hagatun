@@ -2,6 +2,7 @@ import React from 'react'
 
 import Hero, { links as heroLinks } from './hero/hero'
 import CTA, { links as ctaLinks } from './cta/cta'
+import Partners, { links as partnersLinks } from './partners/partners'
 import TextImage, { links as textImageLinks } from './text-image/text-image'
 
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
@@ -11,7 +12,8 @@ export const links: LinksFunction = () => {
 	return [
 		...heroLinks(),
 		...ctaLinks(),
-		...textImageLinks()
+		...textImageLinks(),
+		...partnersLinks()
 	]
 }
 
@@ -33,7 +35,8 @@ export interface ModuleProps<T extends Modules['_type'] = Modules['_type']> {
 const modules = {
   hero: Hero,
 	cta: CTA,
-	'text-image': TextImage
+	partners: Partners,
+	'text-image': TextImage,
 } as { [k in Modules['_type']]: React.FunctionComponent<ModuleProps> };
 
 export const Module = ({

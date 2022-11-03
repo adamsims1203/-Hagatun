@@ -1,0 +1,30 @@
+.partners {
+	text-align: center;
+}
+
+.partners h2,
+.partners p {
+	max-inline-size: unset;
+	margin-block-end: 1ch;
+}
+
+.partners > div {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.partners > div > * {
+	flex: 1;
+	min-width: 300px;
+	max-width: 300px;
+	padding: var(--size-7);
+}
+
+.partners > div > a img {
+	transition: scale .1s ease-in;
+}
+
+.partners > div > a:hover img {
+	scale: 1.05;
+}

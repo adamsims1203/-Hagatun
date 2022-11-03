@@ -53,7 +53,11 @@ export const modules = groq`
 		title,
 		text,
 		partnerLogos[]{
-			${image}
+			_key,
+			logo{
+				${image}
+			},
+			href,
 		},
 	},
   _type == 'marquee' => {

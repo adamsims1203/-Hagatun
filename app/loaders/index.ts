@@ -76,7 +76,11 @@ export type Modules =
 		_key: string
 		title: string
 		text: string
-		partnerLogos: ImageSrc[]
+		partnerLogos: {
+			_key: string
+			logo: ImageSrc
+			href: string
+		}[]
 	}
 	| {
 		_type: 'marquee'
