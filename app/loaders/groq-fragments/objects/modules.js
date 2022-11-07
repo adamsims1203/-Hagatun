@@ -2,6 +2,7 @@ import groq from 'groq'
 
 import { image } from './image'
 import { card } from './card'
+import { post } from './post'
 
 export const modules = groq`
   _type == 'start-page-hero' => {
@@ -55,6 +56,21 @@ export const modules = groq`
 			},
 			href,
 		},
+	},
+	_type == 'blog-posts' => {
+		_type,
+		_key,
+		orderBy,
+		orderBy == 'recent' => {
+			"posts": *[_type == 'blog-post' && __i18n_lang == $lang] | order(publishedAt desc)[0..3] {
+				${post}
+			}
+		},
+		orderBy == 'featured' => {
+			posts[] {
+				${post}
+			}
+		}
 	},
   _type == 'marquee' => {
     _type,

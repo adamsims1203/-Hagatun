@@ -1,18 +1,18 @@
 import groq from 'groq'
 import { i18n } from '~/loaders/i18n'
 
-import { pageReference } from '../objects/links'
+import { referenceWithSlug } from '../objects/links'
 import { menu } from '../documents/menu'
 import { filterById, filterSavedPages } from '../utils/filters'
 
 export const site = groq`
 	"home": *${filterById.replace('$id', '*[_type=="generalSettings"][0].home->_id')}[__i18n_lang == $lang][0] {
-		${pageReference}
+		${referenceWithSlug}
 	},
 	"pages": *${filterSavedPages}[__i18n_lang == '${i18n.base}'] {
-		${pageReference},
+		${referenceWithSlug},
 		"translations": *[_type == 'page']${filterById.replace('$id', '^._id')}[__i18n_lang != '${i18n.base}'] { 
-			${pageReference}
+			${referenceWithSlug}
 		}
 	},
 	...*[_type == "generalSettings"][0] {

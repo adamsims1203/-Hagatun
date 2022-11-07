@@ -35,3 +35,21 @@ export const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 String.prototype.toCapitalize = function (this: string) {
 	return capitalize(this);
 };
+
+export const dateFormat = (...dates: (Date | string)[]) =>
+  (
+    new Intl.DateTimeFormat('sv', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }) as any
+  )[dates.length === 1 ? 'format' : 'formatRange'](...dates.map((v) => new Date(v)));
+
+export const dateFormatAbbr = (...dates: (Date | string)[]) =>
+  (
+    new Intl.DateTimeFormat('sv', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }) as any
+  )[dates.length === 1 ? 'format' : 'formatRange'](...dates.map((v) => new Date(v)));

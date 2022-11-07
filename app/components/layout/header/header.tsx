@@ -19,27 +19,12 @@ export const links: LinksFunction = () => {
 	];
 };
 
-const useClickOutside = (selector: string, callback: () => void) => {
-  const handleClick = (e: MouseEvent) => {
-		const target = document.querySelector(selector)
-    if (target && !target.contains(e.target as never)) {
-      callback();
-    }
-  };
-  
-};
-
 export const Header = () => {
-	const { page, site } = useRouteData()
+	const { page, post, site } = useRouteData()
+	const routeData = page ?? post
 	const [open, setOpen] = useState(false)
 
-	useClickOutside(
-		'.navigation__dropdown', 
-		() => setOpen(false)
-	)
-
 	useEffect(() => {
-
 		const onClick = (e: MouseEvent) => {
 			const list = document.querySelector('.navigation__dropdown')!
 			const button = document.querySelector('.navigation__left button')!
@@ -66,7 +51,7 @@ export const Header = () => {
 					<button onClick={() => setOpen(v => !v)}>{!open ? <List /> : <X />}</button>
 				</div>
 				<div className='navigation__right'>
-					{page?.header.menu.items.map(item => 
+					{routeData?.header.menu.items.map(item => 
 						item._type === 'menu' ?
 								<div key={item._key}>
 									<p tabIndex={0} aria-haspopup>{item.title} <CaretDown  /></p>
@@ -91,7 +76,7 @@ export const Header = () => {
 					open && 'open'
 				)}>
 					<TranslationSelect />
-					{page?.header.menu.items.map(item => 
+					{routeData?.header.menu.items.map(item => 
 						item._type === 'menu' ? 
 							<details key={item._key}>
 								<summary>{item.title}<CaretDown /></summary>

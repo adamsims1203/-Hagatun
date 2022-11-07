@@ -2,7 +2,15 @@ import groq from 'groq'
 
 import { normalizeSlug } from '../utils/normalizers'
 
-export const pageReference = groq`
+export const referenceWithSlug = groq`
+	"slug": ${normalizeSlug}, 
+	title,
+	"lang": __i18n_lang,
+	_updatedAt
+`
+
+
+export const referenceBlogPostWithSlug = groq`
 	"slug": ${normalizeSlug}, 
 	title,
 	"lang": __i18n_lang,
@@ -20,7 +28,7 @@ export const links = groq`
 		_key,
 		_type,
 		...page-> {
-			${pageReference}
+			${referenceWithSlug}
 		}
 	}
 `

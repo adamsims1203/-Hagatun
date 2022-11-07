@@ -1,7 +1,7 @@
 import groq from 'groq'
 
 import { image } from './image'
-import { pageReference } from './links'
+import { referenceWithSlug } from './links'
 
 export const card = groq`
 	_type,
@@ -13,6 +13,6 @@ export const card = groq`
 	},
 	text,
 	"href": link->{
-		${pageReference}
+		${referenceWithSlug}
 	}
 `

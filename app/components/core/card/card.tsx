@@ -5,7 +5,7 @@ import { clsx } from '~/utils/utils';
 import stylesUrl from './card.css'
 
 import type { LinksFunction } from "@remix-run/node";
-import { PolymorphicProps } from '~/types/types';
+import { PolymorphicAsProp, PolymorphicProps } from '~/types/types';
 
 export const links: LinksFunction = () => {
   return [
@@ -14,11 +14,12 @@ export const links: LinksFunction = () => {
 };
 
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface CardProps<T extends React.ElementType> extends React.HTMLAttributes<HTMLDivElement>, PolymorphicAsProp<T> {
 	orientation?: 'horizontal' | 'vertical'
+	responsive?: boolean
 }
 
-function Card({ orientation, children, ...props }: CardProps) {
+function Card<T extends React.ElementType = 'div'>({ orientation, children, as, responsive,  ...props }: CardProps<T>) {
 	const {
 		thumbnail,
 		nonSlottedChildren
@@ -33,12 +34,15 @@ function Card({ orientation, children, ...props }: CardProps) {
 		nonSlottedChildren: [] as React.ReactElement[],
 	}), [children])
 
+	const Comp = as ?? 'div'
+
 	return (
-		<div 
+		<Comp 
 			{...props}
 			className={clsx(
 				'card',
 				orientation && `card--${orientation}`,
+        responsive && 'card--responsive',
 				props.className
 			)}
 		>
@@ -46,7 +50,7 @@ function Card({ orientation, children, ...props }: CardProps) {
 			<div>
 				{nonSlottedChildren}
 			</div>
-		</div>
+		</Comp>
 	)
 }
 

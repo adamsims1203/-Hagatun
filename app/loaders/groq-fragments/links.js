@@ -1,6 +1,6 @@
 import groq from 'groq'
 
-import { pageReference } from './page'
+import { referenceWithSlug } from './page'
 
 export const links = groq`
   _type == 'navLInk' => {
@@ -10,6 +10,6 @@ export const links = groq`
 		url
 	},
 	_type == 'navPage' => page->{
-		${pageReference}
+		${referenceWithSlug}
 	}
 `

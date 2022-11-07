@@ -4,16 +4,17 @@ import { client } from '~/utils/sanityClient'
 import { urlBuilder } from '~/utils/urlBuilder'
 import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
-import { pageQueryBySlug, siteQuery } from './groq-fragments/query'
+import { blogPostQueryBySlug, pageQueryBySlug, siteQuery } from './groq-fragments/query'
 import { getLocaleFromPath, i18n, Locale } from './i18n'
 import { Theme } from '~/utils/theme-provider'
+import type { PortableTextBlock } from '@portabletext/types'
 
 export type ImageSrc = {
 	src: string
 	alt: string
 }
 
-export type PageReference = {
+export type referenceWithSlug = {
 	_key: string,
 	_updatedAt: string
 	slug: string
@@ -22,7 +23,7 @@ export type PageReference = {
 }
 
 export type MenuItem = 
-	| { _type: 'navPage' } & PageReference
+	| { _type: 'navPage' } & referenceWithSlug
 	| {
 		_key: string
 		_type: 'navLink'
@@ -37,7 +38,7 @@ export type Card = {
 	subtitle: string
 	text: string
 	thumbnail: ImageSrc
-	href: PageReference | null;
+	href: referenceWithSlug | null;
 }
 
 export type Modules = 
@@ -82,6 +83,12 @@ export type Modules =
 			href: string
 		}[]
 	}
+	| {
+		_key: string
+		_type: 'blog-posts'
+		orderBy: 'recent' | 'featured'
+		posts: Post[]
+	}
 	/* | {
 		_type: 'marquee'
 		_key: string
@@ -91,9 +98,25 @@ export type Modules =
     pauseable: boolean
 	} */
 
+export type Post = {
+	_type: 'blog-post'
+	_key: string
+	href: {
+		slug: string
+		title: string
+		lang: string
+	}
+	title: string
+	publishedAt: string
+	body: PortableTextBlock
+	authorName: string
+	excerpt?: string
+	image?: ImageSrc
+}
+
 export type Site = {
-	home: PageReference
-	pages: (PageReference & { translations: PageReference[] })[]
+	home: referenceWithSlug
+	pages: (referenceWithSlug & { translations: referenceWithSlug[] })[]
 
 	title: string
 	shortTitle: string
@@ -117,64 +140,67 @@ export type Site = {
 	}
 } | null | undefined
 
+export type Header = {
+	menu: { 
+		_key: string,
+		_type: 'menu'
+		items: (
+			{ 
+				_key: string
+				_type: 'menu'
+				title: string
+				items: MenuItem[]
+			} | MenuItem
+		)[]
+	}
+	translations: {
+		slug: string
+		title: string
+		lang: string
+	}[]
+}
+
+export type Footer = {
+	blocks:
+	(
+		| {
+			_key: string,
+			_type: 'bio',
+			bio: string
+			socialLinks: {
+				icon: string
+				url: string
+			}[]
+		}
+		| { 
+			_key: string,
+			_type: 'menu'
+			title: string
+			items: MenuItem[]
+		}
+		| {
+			_key: string
+			_type: 'information',
+			postalAddress: string
+			email: string
+			offices: {
+				_type: 'office'
+				_key: string
+				address: string
+				name: string
+				phoneNumber: string
+			}[]
+		}
+	)[]
+}
+
 export type Page = {
 	id: string
 	title: string
 	lang: Locale
-	header: {
-		menu: { 
-			_key: string,
-			_type: 'menu'
-			items: (
-				{ 
-					_key: string
-					_type: 'menu'
-					title: string
-					items: MenuItem[]
-				} | MenuItem
-			)[]
-		}
-		translations: {
-			slug: string
-			title: string
-			lang: string
-		}[]
-	}
-	hasTransparentHeader: boolean
+	header: Header
 	modules: Modules[] | null
-	footer: {
-		blocks:
-		(
-			| {
-				_key: string,
-				_type: 'bio',
-				bio: string
-				socialLinks: {
-					icon: string
-					url: string
-				}[]
-			}
-			| { 
-				_key: string,
-				_type: 'menu'
-				title: string
-				items: MenuItem[]
-			}
-			| {
-				_key: string
-				_type: 'information',
-				postalAddress: string
-				email: string
-				offices: {
-					_type: 'office'
-					_key: string
-					address: string
-					name: string
-					phoneNumber: string
-				}[]
-			}
-		)[]
-	}
+	footer: Footer
 	company: {
 		_key: string
 		_type: 'information',
@@ -190,6 +216,16 @@ export type Page = {
 	}
 	seo: any
 } | null | undefined
+
+export type BlogPost = {
+	_key: string
+	_type: 'blog-post'
+	lang: Locale
+	orderBy: 'recent' | 'featured'
+	header: Header
+	post: Post
+	footer: Footer
+}
 
 export async function getPage(slug?: string) {
 	let page: Page | undefined
@@ -242,8 +278,46 @@ export async function getSite(path?: string) {
 	}
 }
 
+export async function getBlogPost(slug?: string) {
+	let blogPost: BlogPost | undefined
+	let urlLang = getLocaleFromPath(slug, false)
+	const lang = urlLang||i18n.base
+
+	slug = 
+		// base lang have been stripped of and needs to be included
+		!urlLang && slug ? `${i18n.base}/${slug}` 
+		// accessing index route, needs to include base lang
+		: !slug ? `${lang}` 
+		: slug
+	
+	try {
+		blogPost = await client.fetch<BlogPost>(blogPostQueryBySlug, { slug, lang })
+	} catch (error: unknown) {
+		if(
+			error &&
+			typeof error === 'object' && 
+			'code' in error && 
+			(error as any).code === 'ECONNRESET'
+		) throw Error('Connection request was abruptly closed by peer', { cause: 500 })
+	}
+	
+	blogPost && assert(
+		blogPost.lang === lang, 
+		`pathname language didn't match the page results language`
+	)
+	
+	return { 
+		post: blogPost ? Object.assign(blogPost, {
+			images: buildBlogPostImages(blogPost)
+		}) : undefined,
+		lang,
+		notFound: !blogPost
+	}
+}
+
 export interface RouteData extends 
 	Awaited<ReturnType<typeof getPage>>, 
+	Awaited<ReturnType<typeof getBlogPost>>, 
 	Awaited<ReturnType<typeof getSite>>, 
 	Awaited<ReturnType<typeof loadTheme>> {}
 
@@ -251,6 +325,10 @@ const getShareGraphic = (src: SanityImageSource) => urlBuilder.image(src).width(
 
 const buildPageImages = (page: Page) => ({
 	shareGraphic: page?.seo?.shareGraphic && getShareGraphic(page?.seo?.shareGraphic)
+})
+
+const buildBlogPostImages = (post: BlogPost) => ({
+	shareGraphic: undefined
 })
 
 const buildSiteImages = (site: Site) => ({

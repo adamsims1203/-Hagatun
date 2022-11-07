@@ -1,9 +1,6 @@
 section.cta {
-	--link: var(--text-2);
-	--link-visited: var(--text-2);
-	--_radius: var(--radius-conditional-4);
-
-	padding: 0;
+	--_radius: var(--radius-4);
+	--_gap: var(--size-7);
 }
 
 section.cta h2 {
@@ -15,6 +12,7 @@ section.cta h2 {
 section.cta > div {
 	display: flex;
 	flex-wrap: wrap;
+	gap: var(--_gap);
 }
 
 section.cta > div > div {
@@ -25,22 +23,28 @@ section.cta > div > div {
 }
 
 section.cta a {
+	--_image-scale: 1;
+	
 	flex: 1;
 	display: flex;
 	height: 100%;
 	width: 100%;
+	padding: 0;
+	margin: 0;
+	text-decoration: none;
+}
+
+section.cta a:hover {
+	--_image-scale: 1.05;
 }
 
 section.cta .card {
 	--card-radius: var(--_radius);
-	--_image-scale: 1;
 	flex: 1;
 	display: flex;
-	margin: calc(var(--card-radius) / 2);
 }
 
 section.cta .card:hover {
-	--_image-scale: 1.05;
 }
 
 section.cta .card__thumbnail {

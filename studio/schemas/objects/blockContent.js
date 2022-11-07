@@ -1,32 +1,31 @@
 import i18nconfig from 'config:@sanity/document-internationalization';
 
-import React from 'react'
-
-import { Button, Icon } from '../../components/block-renders'
-
-export default {
-  title: 'Portable Text',
-  name: 'simplePortableText',
+ export default {
+  title: 'Block Content',
+  name: 'blockContent',
   type: 'array',
   of: [
     {
       title: 'Block',
       type: 'block',
-      styles: [{ title: 'Paragraph', value: 'normal' }],
-      lists: [],
+      styles: [
+        {title: 'Normal', value: 'normal'},
+        {title: 'H2', value: 'h2'},
+        {title: 'H3', value: 'h3'},
+        {title: 'H4', value: 'h4'},
+        {title: 'Quote', value: 'blockquote'}
+      ],
+      lists: [{title: 'Bullet', value: 'bullet'}],
       marks: {
         decorators: [
-          { title: 'Strong', value: 'strong' },
-          { title: 'Emphasis', value: 'em' }
-        ],
+					{ title: 'Strong', value: 'strong' }, 
+					{ title: 'Emphasis', value: 'em' }
+				],
         annotations: [
-          {
+					{
             title: 'Link',
             name: 'link',
             type: 'object',
-            blockEditor: {
-              render: Button
-            },
             fields: [
               {
                 title: 'Link Type',
@@ -64,17 +63,15 @@ export default {
                     scheme: ['http', 'https', 'mailto', 'tel']
                   }),
                 hidden: ({ parent }) => parent.linkType !== 'external'
-              },
-              {
-                title: 'Style as Button?',
-                name: 'isButton',
-                type: 'boolean',
-                initialValue: false
               }
             ]
           },
         ]
       }
+    },
+    {
+      type: 'image',
+      options: {hotspot: true}
     }
   ]
 }

@@ -14,7 +14,7 @@ export default {
     {
       title: 'Content',
       name: 'content',
-      type: 'simplePortableText'
+      type: 'text'
     }
   ],
   preview: {

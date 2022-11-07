@@ -1,7 +1,9 @@
 import groq from 'groq'
 
 import { page } from './documents/page'
+import { blogPost } from './documents/blog-post'
 import { site } from './documents/site'
+import { conditionNoDraft } from './utils/conditions'
 import { filterSavedPages, filterById, filterBySlug } from './utils/filters'
 
 export const siteQuery = groq`{ ${site} }`
@@ -14,6 +16,10 @@ export const pageQueryById = groq`
 
 export const pageQueryBySlug = groq`
 	*${filterSavedPages}${filterBySlug}[0] { ${page} }
+`
+
+export const blogPostQueryBySlug = groq`
+	*[_type == 'blog-post' && ${conditionNoDraft}]${filterBySlug}[0] { ${blogPost} }
 `
 
 export const queryHomeID = groq`

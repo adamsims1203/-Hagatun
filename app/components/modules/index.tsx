@@ -4,6 +4,7 @@ import StartPageHero, { links as startPageHeroLinks } from './start-page-hero/st
 import CTA, { links as ctaLinks } from './cta/cta'
 import Partners, { links as partnersLinks } from './partners/partners'
 import Hero, { links as heroLinks } from './hero/hero'
+import BlogPosts, { links as blogPostLinks } from './blog-posts/blog-posts'
 
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import type { Modules } from '~/loaders'
@@ -13,7 +14,8 @@ export const links: LinksFunction = () => {
 		...startPageHeroLinks(),
 		...ctaLinks(),
 		...heroLinks(),
-		...partnersLinks()
+		...partnersLinks(),
+		...blogPostLinks()
 	]
 }
 
@@ -37,6 +39,7 @@ const modules = {
 	cta: CTA,
 	partners: Partners,
 	hero: Hero,
+	'blog-posts': BlogPosts
 } as { [k in Modules['_type']]: React.FunctionComponent<ModuleProps> };
 
 export const Module = ({

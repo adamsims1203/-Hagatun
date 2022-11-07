@@ -38,11 +38,12 @@ export const links: LinksFunction = () => {
 };
 
 export const Footer = () => {
-	const { page, site, lang } = useRouteData()
+	const { page, post, site, lang } = useRouteData()
+	const routeData = page ?? post
 	
 	return (
 		<footer style={{ display: 'flex' }}>
-			{page?.footer.blocks.map(block => 
+			{routeData?.footer.blocks.map(block => 
 				block._type === 'menu' ?
 					<div key={block._key} className='links'>
 						<h3>{block.title}</h3>

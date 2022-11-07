@@ -4,17 +4,8 @@ import React from 'react'
 import { Browser } from 'phosphor-react'
 
 import isUniqueAcrossAllDocuments from '../../lib/isUniqueAcrossAllDocuments';
+import { slugify } from '../../lib/slugify';
 
-const slugify = input =>
-	input
-		.toLowerCase()
-		.replace('ö', 'o')
-		.replace('ä', 'a')
-		.replace('å', 'a')
-		//Remove special characters
-		.replace(/[&\\#,+()$~%.'":*?<>{}]/g, "")
-		.replace(/\s\s+/g, ' ')
-		.replace(/\s+/g, "-")
 
 export default {
   title: 'Page',
@@ -81,11 +72,12 @@ export default {
       type: 'array',
       of: [
         { type: 'start-page-hero' },
-        { type: 'marquee' },
         { type: 'dividerPhoto' },
         { type: 'cta' },
         { type: 'hero' },
         { type: 'partners' },
+        { type: 'blog-posts' },
+        { type: 'marquee' },
         {
           title: 'Reusable Section',
           type: 'reference',
