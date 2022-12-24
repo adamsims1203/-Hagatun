@@ -20,6 +20,8 @@ const hiddenDocTypes = listItem =>
     'seoSettings',
 
     'menu',
+		'author',
+		'category',
     'siteSettings',
     'media.tag' // for media plugin
   ].includes(listItem.getId())
