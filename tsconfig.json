@@ -19,6 +19,6 @@
       "~/*": ["./app/*"]
     },
   },
-  "include": ["**/*.ts", "**/*.tsx", "app/data/groq-fragments/**/*.js"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,10 @@
 import groq from 'groq'
 
+export type ImageSrc = {
+	src: string
+	alt: string
+}
+
 export const image = groq`
 	"src": asset->url,
   "alt": coalesce(alt, asset->altText),

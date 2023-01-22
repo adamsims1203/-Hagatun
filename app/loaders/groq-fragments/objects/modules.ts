@@ -1,8 +1,56 @@
 import groq from 'groq'
 
-import { image } from './image'
-import { card } from './card'
+import { image, ImageSrc } from './image'
+import { Card, card } from './card'
 import { post } from './post'
+import { Theme } from '~/utils/theme-provider'
+import { Post } from '../documents/blog-post'
+
+export type Modules = 
+	| {
+		_type: 'start-page-hero'
+		_key: string
+		title: string
+		subtitle: string
+		bgType: string
+		image: ImageSrc
+		video: {
+			id: string
+			title: string
+		}
+	} 
+	| {
+		_type: 'cta',
+		_key: string
+		title: string
+		cards: Card[]
+	}
+	| {
+		_type: 'hero'
+		_key: string
+		title: string
+		text: string
+		image: ImageSrc
+		theme: Theme
+		contentPlacement: 'left' | 'right'
+	}
+	| {
+		_type: 'partners'
+		_key: string
+		title: string
+		text: string
+		partnerLogos: {
+			_key: string
+			logo: ImageSrc
+			href: string
+		}[]
+	}
+	| {
+		_key: string
+		_type: 'blog-posts'
+		orderBy: 'recent' | 'featured'
+		posts: Post[]
+	}
 
 export const modules = groq`
   _type == 'start-page-hero' => {
