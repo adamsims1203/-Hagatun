@@ -1,20 +1,25 @@
-import { useRef, useEffect } from 'react'
-import { renderStudio } from 'sanity'
+import {ClientOnly} from 'remix-utils'
+import { Studio } from 'sanity'
 import { config } from 'sanity.config'
 
 export const handle = {
 	hydrate: true
 }
 
-export default function Studio() {
-  const studioRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    renderStudio(studioRef.current, config)
-  }, [])
-
+export default function StudioPage() {
   return (
-    <>
-      <div ref={studioRef} style={{ height: '100vh' }} />
-    </>
+    <ClientOnly>
+      {() => (
+				<div style={{ height: '100vh' }}>
+					<Studio
+						
+						config={config}
+						// To enable guests view-only access to your Studio,
+						// uncomment this line!
+						// unstable_noAuthBoundary
+					/>
+				</div>
+      )}
+    </ClientOnly>
   )
 }
