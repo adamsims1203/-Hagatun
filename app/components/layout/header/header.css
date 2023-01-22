@@ -1,5 +1,5 @@
 :root {
-  --header-logo-size: var(--size-9);
+  --header-logo-size: var(--size-8);
   --header-block-padding: 1rem;
   --header-shadow: var(--shadow-2);
 	
@@ -7,7 +7,7 @@
 		var(--header-block-padding) * 2 + var(--header-logo-size)
 		);
 		
-		--header-action-height: 2.5rem;
+	--header-action-height: 2.5rem;
 		
 	--header-item-gap: 1ch;
 	--header-item-radius: var(--radius-2);
@@ -18,8 +18,8 @@
 
 @media (min-width: /* var(--size-md) */ 768px) {
   :root {
-    --header-block-padding: 2.25rem;
-    --header-logo-size: var(--size-10);
+    --header-block-padding: 1.5rem;
+    --header-logo-size: var(--size-9);
     --header-action-height: 3.125rem;
 		--header-item-gap: clamp(var(--size-4), 5vw, var(--size-8));
   }
