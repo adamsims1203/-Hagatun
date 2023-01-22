@@ -1,6 +1,40 @@
 import groq from 'groq'
 
-import { menu } from './menu'
+import { menu, MenuItem } from './menu'
+
+export type Footer = {
+	blocks?:
+	(
+		| {
+			_key: string,
+			_type: 'bio',
+			bio: string
+			socialLinks?: {
+				icon: string
+				url: string
+			}[]
+		}
+		| { 
+			_key: string,
+			_type: 'menu'
+			title: string
+			items: MenuItem[]
+		}
+		| {
+			_key: string
+			_type: 'information',
+			postalAddress: string
+			email: string
+			offices?: {
+				_type: 'office'
+				_key: string
+				address: string
+				name: string
+				phoneNumber: string
+			}[]
+		}
+	)[]
+}
 
 export const footer = groq`
 	...*[_type == "footerSettings" && _id == "footerSettings"][0] {

@@ -4,219 +4,15 @@ import { urlBuilder } from '~/utils/urlBuilder'
 import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
 import { blogPostQueryBySlug, pageQueryBySlug, pageQueryById, siteQuery, queryHomeID } from './groq-fragments/query'
-import { getLocaleFromPath, i18nConfig, Locale } from '../../studio/lib/i18n'
-import { Theme } from '~/utils/theme-provider'
+import { getLocaleFromPath, i18nConfig } from '../../studio/lib/i18n'
 
-import type { SanityImageObject, SanityImageSource } from '@sanity/image-url/lib/types/types'
-import type { PortableTextBlock } from '@portabletext/types'
-import groq from 'groq'
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import type { BlogPost } from './groq-fragments/documents/blog-post'
+import type { Page } from './groq-fragments/documents/page'
+import type { Site } from './groq-fragments/documents/site'
+import type { Modules } from './groq-fragments/objects/modules'
+export type { Page, Site, BlogPost, Modules }
 
-export type ImageSrc = {
-	src: string
-	alt: string
-}
-
-export type referenceWithSlug = {
-	_key: string,
-	_updatedAt: string
-	slug: string
-	title: string
-	lang: Locale
-}
-
-export type MenuItem = 
-	| { _type: 'navPage' } & referenceWithSlug
-	| {
-		_key: string
-		_type: 'navLink'
-		title: string
-		url: string
-	}
-
-export type Card = {
-	_type: 'card'
-	_key: string
-	title: string
-	subtitle: string
-	text: string
-	thumbnail: ImageSrc
-	href: referenceWithSlug | null;
-}
-
-export type Modules = 
-	| {
-		_type: 'start-page-hero'
-		_key: string
-		title: string
-		subtitle: string
-		bgType: string
-		image: ImageSrc
-		video: {
-			id: string
-			title: string
-		}
-	} 
-	| {
-		_type: 'cta',
-		_key: string
-		title: string
-		cards: Card[]
-	}
-	| {
-		_type: 'hero'
-		_key: string
-		title: string
-		text: string
-		image: ImageSrc
-		theme: Theme
-		contentPlacement: 'left' | 'right'
-	}
-	| {
-		_type: 'partners'
-		_key: string
-		title: string
-		text: string
-		partnerLogos: {
-			_key: string
-			logo: ImageSrc
-			href: string
-		}[]
-	}
-	| {
-		_key: string
-		_type: 'blog-posts'
-		orderBy: 'recent' | 'featured'
-		posts: Post[]
-	}
-
-export type Post = {
-	_type: 'blog-post'
-	_key: string
-	href: {
-		slug: string
-		title: string
-		lang: string
-	}
-	title: string
-	publishedAt: string
-	body: PortableTextBlock
-	authorName: string
-	excerpt?: string
-	image?: ImageSrc
-}
-
-export type Site = {
-	home: referenceWithSlug
-	pages: (referenceWithSlug & { translations: referenceWithSlug[] })[]
-
-	title: string
-	shortTitle: string
-	rootDomain: string
-
-	cookieConsent: {
-		enabled: boolean
-		message: null
-		link: null
-	}
-
-	seo: {
-		metaTitle: string,
-		metaDesc: string,
-		shareTitle: string,
-		shareDesc: string,
-		favicon: string | null,
-		faviconLegacy: string | null
-		shareGraphic: SanityImageObject | null,
-		touchIcon: SanityImageObject | null
-	}
-} | null | undefined
-
-export type Header = {
-	menu: { 
-		_key: string,
-		_type: 'menu'
-		items?: (
-			{ 
-				_key: string
-				_type: 'menu'
-				title: string
-				items?: MenuItem[]
-			} | MenuItem
-		)[]
-	}
-	translations: {
-		slug: string
-		title: string
-		lang: string
-	}[]
-}
-
-export type Footer = {
-	blocks?:
-	(
-		| {
-			_key: string,
-			_type: 'bio',
-			bio: string
-			socialLinks?: {
-				icon: string
-				url: string
-			}[]
-		}
-		| { 
-			_key: string,
-			_type: 'menu'
-			title: string
-			items: MenuItem[]
-		}
-		| {
-			_key: string
-			_type: 'information',
-			postalAddress: string
-			email: string
-			offices?: {
-				_type: 'office'
-				_key: string
-				address: string
-				name: string
-				phoneNumber: string
-			}[]
-		}
-	)[]
-}
-
-export type Page = {
-	id: string
-	title: string
-	lang: Locale
-	header: Header
-	modules: Modules[] | null
-	footer: Footer
-	company: {
-		_key: string
-		_type: 'information',
-		postalAddress: string
-		email: string
-		offices?: {
-			_type: 'office'
-			_key: string
-			address: string
-			name: string
-			phoneNumber: string
-		}[]
-	}
-	seo: any
-} | null | undefined
-
-export type BlogPost = {
-	_key: string
-	_type: 'blog-post'
-	lang: Locale
-	orderBy: 'recent' | 'featured'
-	header: Header
-	post: Post
-	footer: Footer
-}
 
 export async function getPage(slug?: string) {
 	let page: Page | undefined
@@ -230,15 +26,12 @@ export async function getPage(slug?: string) {
 		: !slug ? `${lang}` 
 		: slug
 		
-	
-	
 	try {
 		if(slug === lang) {
 			page = await client.fetch<Page>(pageQueryById.replace('$id', queryHomeID), { lang })
 		} else {
 			page = await client.fetch<Page>(pageQueryBySlug, { slug, lang })
 		}
-		
 	} catch (error: unknown) {
 		if(
 			error &&

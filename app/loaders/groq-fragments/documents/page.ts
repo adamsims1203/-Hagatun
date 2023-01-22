@@ -1,10 +1,34 @@
 import groq from 'groq'
 
 import { referenceWithSlug } from '../objects/links'
-import { footer } from './footer'
-import { header } from './header'
-import { modules } from '../objects/modules'
+import { Footer, footer } from './footer'
+import { Header, header } from './header'
+import { Modules, modules } from '../objects/modules'
 import { filterById } from '../utils/filters'
+import { Locale } from 'studio/lib/i18n'
+
+export type Page = {
+	id: string
+	title: string
+	lang: Locale
+	header: Header
+	modules: Modules[] | null
+	footer: Footer
+	company: {
+		_key: string
+		_type: 'information',
+		postalAddress: string
+		email: string
+		offices?: {
+			_type: 'office'
+			_key: string
+			address: string
+			name: string
+			phoneNumber: string
+		}[]
+	}
+	seo: any
+} | null | undefined
 
 export const page = groq`
 	"header": {
