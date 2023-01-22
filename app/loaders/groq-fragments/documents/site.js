@@ -1,17 +1,17 @@
 import groq from 'groq'
-import { i18n } from '~/loaders/i18n'
+import { i18nConfig } from '../../../../studio/lib/i18n'
 
 import { referenceWithSlug } from '../objects/links'
 import { menu } from '../documents/menu'
 import { filterById, filterSavedPages } from '../utils/filters'
 
 export const site = groq`
-	"home": *${filterById.replace('$id', '*[_type=="generalSettings"][0].home->_id')}[__i18n_lang == $lang][0] {
+	"home": *[_type == 'page']${filterById.replace('$id', '*[_type=="generalSettings"][0].home->_id')}[__i18n_lang == $lang][0] {
 		${referenceWithSlug}
 	},
-	"pages": *${filterSavedPages}[__i18n_lang == '${i18n.base}'] {
+	"pages": *${filterSavedPages}[__i18n_lang == '${i18nConfig.base}'] {
 		${referenceWithSlug},
-		"translations": *[_type == 'page']${filterById.replace('$id', '^._id')}[__i18n_lang != '${i18n.base}'] { 
+		"translations": *[_type == 'page']${filterById.replace('$id', '^._id')}[__i18n_lang != '${i18nConfig.base}'] { 
 			${referenceWithSlug}
 		}
 	},

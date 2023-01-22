@@ -2,8 +2,7 @@
 import { type EntryContext, redirect } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { renderToString } from "react-dom/server";
-import { getLocaleFromPath, validateLocale, i18n } from "./loaders/i18n";
-import { IS_PROD } from "./utils/constants";
+import { getLocaleFromPath, validateLocale, i18nConfig } from "studio/lib/i18n";
 
 // todo: [use ETags](https://sergiodxa.com/articles/use-etags-in-remix) when adding cache/caching
 
@@ -48,7 +47,7 @@ export default async function handleRequest(
 		// check locales
 		const locale = {
 			pathname: url.pathname,
-			url: getLocaleFromPath(url.pathname, i18n.stripBase /*
+			url: getLocaleFromPath(url.pathname, i18nConfig.stripBase /*
 				If strip base, then we can't assume that the locale might be in the url
 				the following options would be cumbersome and lead to the system preferences always wining
 			*/),
@@ -63,7 +62,7 @@ export default async function handleRequest(
 			locale.url || 
 			locale.clientLanguage ||
 			locale.clientCountry ||
-			i18n.base
+			i18nConfig.base
 	
 		// Helpful console.log for debugging
 		/* console.log({
@@ -108,7 +107,7 @@ export default async function handleRequest(
 		*/
 		url.pathname = url.pathname.replace(new RegExp(`^\/${locale.url}$|^\/${locale.url}\/`), '/')
 
-		if(!i18n.stripBase || language !== i18n.base) {
+		if(!i18nConfig.stripBase || language !== i18nConfig.base) {
 			url.pathname = `${language}${url.pathname}`
 		}
 		

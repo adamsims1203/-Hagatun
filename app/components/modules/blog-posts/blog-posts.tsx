@@ -7,7 +7,6 @@ import stylesUrl from './blog-posts.css'
 
 import type { LinksFunction } from '@remix-run/node';
 import Card from '~/components/core/card/card';
-import { dateFormat } from '~/utils/utils';
 
 export const links: LinksFunction = () => {
   return [
@@ -16,7 +15,7 @@ export const links: LinksFunction = () => {
 };
 
 const BlogPosts = ({ data }: ModuleProps<'blog-posts'>) => {
-	console.log(data)
+	
 	return (
 		<section className='blog-posts'>
 			<div className='blog-posts__header'>

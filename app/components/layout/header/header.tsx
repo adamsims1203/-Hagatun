@@ -6,11 +6,11 @@ import { TranslationSelect } from '~/components/app/TranslationSelect'
 import { useRouteData } from '~/hooks/useRouteData'
 import { Link } from '~/components/core/link/link';
 import { Logo } from '~/components/app/Logo';
+import { clsx } from '~/utils/utils';
 
 import stylesUrl from './header.css'
 
 import type { LinksFunction } from '@remix-run/node';
-import { clsx } from '~/utils/utils';
 
 
 export const links: LinksFunction = () => {
@@ -51,12 +51,12 @@ export const Header = () => {
 					<button onClick={() => setOpen(v => !v)}>{!open ? <List /> : <X />}</button>
 				</div>
 				<div className='navigation__right'>
-					{routeData?.header.menu.items.map(item => 
+					{routeData?.header.menu.items?.map(item => 
 						item._type === 'menu' ?
 								<div key={item._key}>
 									<p tabIndex={0} aria-haspopup>{item.title} <CaretDown  /></p>
 									<ul>
-										{item.items.map(subItem => 
+										{item.items?.map(subItem => 
 											subItem.title !== 'menu' ? 
 												<li key={subItem._key}>
 													<Link 
@@ -76,12 +76,12 @@ export const Header = () => {
 					open && 'open'
 				)}>
 					<TranslationSelect />
-					{routeData?.header.menu.items.map(item => 
+					{routeData?.header.menu.items?.map(item => 
 						item._type === 'menu' ? 
 							<details key={item._key}>
 								<summary>{item.title}<CaretDown /></summary>
 								<ul>
-									{item.items.map(subItem => 
+									{item.items?.map(subItem => 
 										subItem.title !== 'menu' ? 
 											<li key={subItem._key}>
 												<Link 
