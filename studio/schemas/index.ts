@@ -15,11 +15,11 @@ import { author } from "./objects/author";
 import { blockContent } from "./objects/blockContent";
 import { card } from "./objects/card";
 import { category } from "./objects/category";
-import { navLink } from "./objects/nav-link";
-import { navPage } from "./objects/nav-page";
+import { navLink } from "./objects/navLink";
+import { navPage } from "./objects/navPage";
 import { office } from "./objects/office";
 import { seo } from "./objects/seo";
-import { socialLink } from "./objects/social-link";
+import { socialLink } from "./objects/socialLink";
 
 export const schemaTypes = [
 	/* Document types */

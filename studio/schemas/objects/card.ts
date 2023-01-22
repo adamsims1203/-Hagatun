@@ -1,5 +1,5 @@
 import { defineType } from "sanity";
-import { i18nConfig } from "sanity.config";
+import { i18nConfig } from "studio/lib/i18n";
 
 export const card = defineType({
 	type: 'object',

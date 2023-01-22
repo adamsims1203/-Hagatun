@@ -23,7 +23,7 @@ export const blogPosts = defineType({
 			type: 'array',
 			name: 'posts',
 			title: 'Posts',
-			of: [{ type: 'reference', to: { type: 'blog-post' } }],
+			of: [{ type: 'reference', to: { type: 'blogPost' } }],
       hidden: ({ parent }) => parent.orderBy !== 'featured'
 		}
 	],

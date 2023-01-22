@@ -1,5 +1,6 @@
 import { Gear } from 'phosphor-react'
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
+import { i18nConfig } from 'studio/lib/i18n'
 
 export const GeneralSettingsIcon = Gear
 
@@ -9,6 +10,7 @@ export const settingsGeneral = defineType({
   type: 'document',
   groups: [
     { title: 'Site Details', name: 'details', default: true },
+    { title: 'Company Details', name: 'company' },
     { title: 'Displays', name: 'displays' },
     { title: 'Advanced', name: 'advanced' }
   ],
@@ -76,17 +78,59 @@ export const settingsGeneral = defineType({
 					title: 'Default language',
 					name: 'defaultLang',
 					type: 'string',
-					readOnly: true
+					options: {
+						list: i18nConfig.languages.map(l => ({ ...l, value: l.id  }))
+					},
+					readOnly: true,
+					initialValue: i18nConfig.base
 				},
 				{
 					title: 'Strip default language',
 					name: 'stripDefaultLang',
 					description: 'Remove default language from url',
-					type: 'boolean'
+					type: 'boolean',
+					initialValue: i18nConfig.stripBase,
+					readOnly: true
 				}
 			],
       group: 'advanced',
 			options: { collapsible: true }
+		},
+    {
+			name: 'postalAddress',
+			title: 'Postal Address',
+			type: 'string',
+      group: 'company'
+		},
+    {
+			name: 'email',
+			title: 'Email Address',
+			type: 'string',
+      group: 'company'
+		},
+		defineField({
+			name: 'bio',
+			title: 'Biography',
+			type: 'object',
+			fieldsets: [{
+				title: 'Translations',
+				name: 'translations',
+				options: { collapsible: true }
+			}],
+			fields: i18nConfig.languages.map((lang) => ({
+				title: lang.title,
+				name: lang.id,
+				type: 'text',
+				fieldset: lang.id !== i18nConfig.base ? 'translations' : undefined
+			})),
+      group: 'company'
+		}),
+    {
+			name: 'offices',
+			title: 'Offices',
+			type: 'array',
+			of: [{ type: 'office' }],
+      group: 'company'
 		}
   ],
   preview: {

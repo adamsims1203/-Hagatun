@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { renderStudio } from 'sanity'
-import sanityConfig from 'sanity.config'
+import { config } from 'sanity.config'
 
 export const handle = {
 	hydrate: true
@@ -9,7 +9,7 @@ export const handle = {
 export default function Studio() {
   const studioRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    renderStudio(studioRef.current, sanityConfig)
+    renderStudio(studioRef.current, config)
   }, [])
 
   return (

@@ -1,5 +1,6 @@
 import { NavigationArrow } from 'phosphor-react'
 import { defineType } from 'sanity'
+import { i18nConfig } from 'studio/lib/i18n'
 
 export const HeaderSettingsIcon = NavigationArrow
 
@@ -12,7 +13,10 @@ export const settingsHeader = defineType({
       title: 'Main Menu',
       name: 'menu',
       type: 'reference',
-      to: [{ type: 'menu' }]
+      to: [{ type: 'menu' }],
+			options: {
+				filter: `${i18nConfig.fieldNames.lang} == "${i18nConfig.base}"`
+			},
     }
   ],
   preview: {

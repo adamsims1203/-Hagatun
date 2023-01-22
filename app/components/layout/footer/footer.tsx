@@ -19,17 +19,17 @@ const ICON = {
 const T = {
 	'contact us': {
 		en: 'contact us',
-		sv: 'kontakta oss'
+		se: 'kontakta oss'
 	},
 	'offices': {
 		en: 'offices',
-		sv: 'kontor'
+		se: 'kontor'
 	},
 	'postal address': {
 		en: 'postal address',
-		sv: 'post address'
+		se: 'post address'
 	}
-}
+} as const
 
 export const links: LinksFunction = () => {
   return [
@@ -43,7 +43,7 @@ export const Footer = () => {
 	
 	return (
 		<footer style={{ display: 'flex' }}>
-			{routeData?.footer.blocks.map(block => 
+			{routeData?.footer.blocks?.map(block => 
 				block._type === 'menu' ?
 					<div key={block._key} className='links'>
 						<h3>{block.title}</h3>
@@ -66,7 +66,7 @@ export const Footer = () => {
 						</Link>
 						<p className='bio'>{block.bio}</p>
 						<div className='media'>
-							{block.socialLinks.map(item =>
+							{block.socialLinks?.map(item =>
 								<Link key={item.icon} to={item.url} className={item.icon.toLowerCase()}>{ICON[item.icon as never]}</Link>
 							)}
 						</div>
@@ -75,7 +75,7 @@ export const Footer = () => {
 				: block._type === 'information' ? 
 					<div key={block._key}>
 						<h3>{T['contact us'][lang].toCapitalize()}</h3>
-						{block.offices.map(office =>
+						{block.offices?.map(office =>
 							<div key={office._key}>
 								<h4>{office.name.toCapitalize()+':'}</h4>
 								<address>

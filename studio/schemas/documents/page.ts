@@ -4,6 +4,7 @@ import { Browser } from "phosphor-react";
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments";
 import { slugify } from "../../lib/slugify";
 import { customImage } from "../../lib/custom-image";
+import { i18nConfig } from "studio/lib/i18n";
 
 export const PageIcon = Browser
 
@@ -12,6 +13,9 @@ export const page = defineType({
 	name: 'page',
 	title: 'Page',
   i18n: true,
+	initialValue: {
+    __i18n_lang: i18nConfig.base,
+  },
 	icon: PageIcon,
 	groups: [
 		{ title: 'Settings', name: 'settings' },
@@ -33,11 +37,21 @@ export const page = defineType({
 			description: '(unique)',
 			options: {
 				maxLength: 96,
-				source: (doc) => `${doc.title}`,
+        source: (doc) => `${doc.__i18n_lang}/${doc.title}`,
 				slugify,
 				isUnique: isUniqueAcrossAllDocuments,
-			},
-			validation: Rule => Rule.required(),
+      },
+      validation: Rule => [
+				Rule.required(),
+				Rule.custom((input, { document }) => {
+					if(
+						document &&
+						!new RegExp(`^${document.__i18n_lang}$|^${document.__i18n_lang}/`).test(input?.current??'')
+					) return `Required to start with locale; Try "${document.__i18n_lang}/${(document.title+'').toLowerCase()}" instead`
+					if(input && typeof input.current === 'string' && /\/$/.test(input.current)) return `No trailing slash; Try "${input.current.replace(/\/$/,'')}" instead`
+					return true
+				})
+			],
 			group: ['settings', 'content']
 		}),
 		{
@@ -47,9 +61,9 @@ export const page = defineType({
       of: [
         { type: 'start-page-hero' },
 				{ type: 'hero' },
-        { type: 'text-image' },
-        { type: 'content-gallery' },
-        { type: 'timeline' },
+        { type: 'partners' },
+        { type: 'blog-posts' },
+				{ type: 'cta' },
       ],
       group: 'content'
     },

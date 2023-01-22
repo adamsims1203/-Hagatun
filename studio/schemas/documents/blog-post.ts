@@ -1,5 +1,6 @@
 import { Note } from "phosphor-react"
 import { defineField, defineType } from "sanity"
+import { i18nConfig } from "studio/lib/i18n"
 import { customImage } from "../../lib/custom-image"
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments"
 import { slugify } from "../../lib/slugify"
@@ -13,6 +14,9 @@ export const blogPost = defineType({
   name: 'blogPost',
   title: 'Blog post',
   i18n: true,
+	initialValue: {
+    __i18n_lang: i18nConfig.base,
+  },
 	icon: BlogPostIcon,
 	groups: [
 		{ title: 'Settings', name: 'settings' },

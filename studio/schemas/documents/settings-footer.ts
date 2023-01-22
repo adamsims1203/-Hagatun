@@ -1,5 +1,6 @@
 import { PaperPlaneTilt, List, AnchorSimple } from 'phosphor-react'
 import { defineType } from 'sanity'
+import { i18nConfig } from 'studio/lib/i18n'
 
 export const FooterSettingsIcon = AnchorSimple
 
@@ -7,7 +8,7 @@ export const settingsFooter = defineType({
   type: 'document',
   name: 'footerSettings',
   title: 'Footer Settings',
-  groups: [
+	groups: [
     {
       title: 'Block 1',
       name: 'column1',
@@ -26,26 +27,6 @@ export const settingsFooter = defineType({
     }
   ],
   fields: [
-		{
-      title: 'Block text',
-      name: 'blockText1',
-      type: 'text',
-      group: 'column1',
-		},
-		{
-      title: 'With donate button',
-			name: 'donateButton1',
-			type: 'boolean',
-      group: 'column1',
-			initialValue: false
-		},
-    {
-      title: 'Block Menu',
-      name: 'blockMenu2',
-      type: 'reference',
-      to: [{ type: 'menu' }],
-      group: 'column2',
-    },
     {
       title: 'Social Media Links',
       name: 'socialLinks',
@@ -53,21 +34,40 @@ export const settingsFooter = defineType({
 			of: [
 				{ type: 'socialLink' }
 			],
-      group: 'column2',
+      group: 'column1',
     },
 		{
-      title: 'Block text',
-      name: 'blockText3',
-      type: 'text',
+      title: 'Block Title',
+      name: 'blockTitle2',
+      type: 'string',
+      group: 'column2'
+    },
+    {
+      title: 'Block Menu',
+      name: 'blockMenu2',
+      type: 'reference',
+      to: [{ type: 'menu' }],
+      group: 'column2',
+			options: {
+				filter: `${i18nConfig.fieldNames.baseReference} == ${i18nConfig.base}`
+			},
+    },
+    {
+      title: 'Block Title',
+      name: 'blockTitle3',
+      type: 'string',
+      group: 'column3'
+    },
+    {
+      title: 'Block Menu',
+      name: 'blockMenu3',
+      type: 'reference',
+      to: [{ type: 'menu' }],
       group: 'column3',
-		},
-		{
-      title: 'With donate button',
-			name: 'donateButton3',
-			type: 'boolean',
-      group: 'column3',
-			initialValue: true
-		}
+			options: {
+				filter: `${i18nConfig.fieldNames.baseReference} == ${i18nConfig.base}`
+			},
+    }
   ],
   preview: {
     prepare() {

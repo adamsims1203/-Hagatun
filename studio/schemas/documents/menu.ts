@@ -1,5 +1,6 @@
 import { List } from 'phosphor-react'
 import { defineType } from 'sanity'
+import { i18nConfig } from 'studio/lib/i18n'
 
 export const MenuIcon = List
 
@@ -8,6 +9,9 @@ export const menu = defineType({
   name: 'menu',
   title: 'Menu',
   i18n: true,
+	initialValue: {
+    __i18n_lang: i18nConfig.base,
+  },
   icon: MenuIcon,
   fields: [
 		{
@@ -25,7 +29,12 @@ export const menu = defineType({
 				{
           type: 'reference',
           title: 'Menu reference',
-          to: [{ type: 'menu' }]
+          to: [{ type: 'menu' }],
+					options: {
+						filter: ({ document }) => ({
+							filter: `${i18nConfig.fieldNames.lang} == "${document.__i18n_lang}"` as any
+						})
+					}
         }
 			]
     }
@@ -37,7 +46,7 @@ export const menu = defineType({
     },
     prepare: v => ({
 			title: v.title || 'Untitled',
-			subtitle: `${v.items.length} link(s)`,
+			subtitle: v.items?.length ? `${v.items.length} link(s)` : 'empty',
 			media: List
     })
   }

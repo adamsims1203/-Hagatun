@@ -1,13 +1,15 @@
-import { SanityImageObject, SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 import { client } from '~/utils/sanityClient'
 import { urlBuilder } from '~/utils/urlBuilder'
 import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
-import { blogPostQueryBySlug, pageQueryBySlug, siteQuery } from './groq-fragments/query'
-import { getLocaleFromPath, i18n, Locale } from './i18n'
+import { blogPostQueryBySlug, pageQueryBySlug, pageQueryById, siteQuery, queryHomeID } from './groq-fragments/query'
+import { getLocaleFromPath, i18nConfig, Locale } from '../../studio/lib/i18n'
 import { Theme } from '~/utils/theme-provider'
+
+import type { SanityImageObject, SanityImageSource } from '@sanity/image-url/lib/types/types'
 import type { PortableTextBlock } from '@portabletext/types'
+import groq from 'groq'
 
 export type ImageSrc = {
 	src: string
@@ -89,14 +91,6 @@ export type Modules =
 		orderBy: 'recent' | 'featured'
 		posts: Post[]
 	}
-	/* | {
-		_type: 'marquee'
-		_key: string
-		items: (null | null)[]
-    speed: number
-    reverse: boolean
-    pauseable: boolean
-	} */
 
 export type Post = {
 	_type: 'blog-post'
@@ -144,12 +138,12 @@ export type Header = {
 	menu: { 
 		_key: string,
 		_type: 'menu'
-		items: (
+		items?: (
 			{ 
 				_key: string
 				_type: 'menu'
 				title: string
-				items: MenuItem[]
+				items?: MenuItem[]
 			} | MenuItem
 		)[]
 	}
@@ -161,13 +155,13 @@ export type Header = {
 }
 
 export type Footer = {
-	blocks:
+	blocks?:
 	(
 		| {
 			_key: string,
 			_type: 'bio',
 			bio: string
-			socialLinks: {
+			socialLinks?: {
 				icon: string
 				url: string
 			}[]
@@ -183,7 +177,7 @@ export type Footer = {
 			_type: 'information',
 			postalAddress: string
 			email: string
-			offices: {
+			offices?: {
 				_type: 'office'
 				_key: string
 				address: string
@@ -230,17 +224,24 @@ export type BlogPost = {
 export async function getPage(slug?: string) {
 	let page: Page | undefined
 	let urlLang = getLocaleFromPath(slug, false)
-	const lang = urlLang||i18n.base
+	const lang = urlLang||i18nConfig.base
 
 	slug = 
 		// base lang have been stripped of and needs to be included
-		!urlLang && slug ? `${i18n.base}/${slug}` 
+		!urlLang && slug ? `${i18nConfig.base}/${slug}` 
 		// accessing index route, needs to include base lang
 		: !slug ? `${lang}` 
 		: slug
 		
+	
+	
 	try {
-		page = await client.fetch<Page>(pageQueryBySlug, { slug, lang })
+		if(slug === lang) {
+			page = await client.fetch<Page>(pageQueryById.replace('$id', queryHomeID), { lang })
+		} else {
+			page = await client.fetch<Page>(pageQueryBySlug, { slug, lang })
+		}
+		
 	} catch (error: unknown) {
 		if(
 			error &&
@@ -266,7 +267,7 @@ export async function getPage(slug?: string) {
 
 export async function getSite(path?: string) {
 	let urlLang = getLocaleFromPath(path, false)
-	const lang = urlLang||i18n.base
+	const lang = urlLang||i18nConfig.base
 
 	const site = await client.fetch<Site>(siteQuery, { lang })
 	assert(site, 'site was undefined')
@@ -281,11 +282,11 @@ export async function getSite(path?: string) {
 export async function getBlogPost(slug?: string) {
 	let blogPost: BlogPost | undefined
 	let urlLang = getLocaleFromPath(slug, false)
-	const lang = urlLang||i18n.base
+	const lang = urlLang||i18nConfig.base
 
 	slug = 
 		// base lang have been stripped of and needs to be included
-		!urlLang && slug ? `${i18n.base}/${slug}` 
+		!urlLang && slug ? `${i18nConfig.base}/${slug}` 
 		// accessing index route, needs to include base lang
 		: !slug ? `${lang}` 
 		: slug

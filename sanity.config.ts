@@ -5,34 +5,15 @@ import { structure } from './studio/structure'
 import { visionTool } from '@sanity/vision'
 import { media } from 'sanity-plugin-media'
 import { withDocumentI18nPlugin } from '@sanity/document-internationalization'
+import { i18nConfig } from 'studio/lib/i18n'
 
-export const i18nConfig = {
-	base: 'sv',
-	languages: [
-		{
-			title: 'Swedish (SW)',
-			id: 'sv'
-		},
-		{
-			title: 'English (EN)',
-			id: 'en'
-		}
-	],
-	fieldNames: {
-		lang: '__i18n_lang',
-		references: '__i18n_refs',
-		baseReference: '__i18n_base'
-	}
-}
-
-export default defineConfig({
+export const config = defineConfig({
   name: 'default',
   title: 'Hagatun',
 
   projectId: 's50l6en8',
-  dataset: 'production',
+  dataset: 'development',
 	basePath: '/studio',
-
 
   plugins: withDocumentI18nPlugin([
 		deskTool({ 
@@ -40,10 +21,10 @@ export default defineConfig({
 		}),
     visionTool({
       defaultApiVersion: 'v2021-10-21',
-      defaultDataset: 'production',
+      defaultDataset: 'development',
     }),
 		media()
-	], i18nConfig),
+	], i18nConfig as unknown as Parameters<typeof withDocumentI18nPlugin>[1]),
 
   schema: {
     types: schemaTypes,

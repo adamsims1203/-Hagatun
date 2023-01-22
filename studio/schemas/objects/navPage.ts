@@ -1,5 +1,6 @@
 import { LinkSimpleHorizontal } from 'phosphor-react'
-import { defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
+import { i18nConfig } from 'studio/lib/i18n';
 
 export const navPage = defineType({
   type: 'object',
@@ -13,7 +14,9 @@ export const navPage = defineType({
       title: 'Page',
       to: [{ type: 'page' }],
 			options: {
-				filter: '',
+				filter: ({ document }) => ({
+					filter: `${i18nConfig.fieldNames.lang} == "${document.__i18n_lang}"` as any
+				})
 			},
     }
   ],

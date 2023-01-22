@@ -24,7 +24,8 @@ export const settingsSeo = defineType({
         Rule.max(50).warning(
           'Longer titles may be truncated by search engines'
         ),
-      group: 'seo'
+      group: 'seo',
+			initialValue: '{{page_title}} | {{site_title}}'
     },
     {
       title: 'Default Meta Description',
@@ -45,7 +46,8 @@ export const settingsSeo = defineType({
       description: 'Title used for social sharing cards',
       validation: Rule =>
         Rule.max(50).warning('Longer titles may be truncated by social sites'),
-      group: 'social'
+      group: 'social',
+			initialValue: '{{page_title}} | {{site_title}}'
     },
     {
       title: 'Default Share Description',

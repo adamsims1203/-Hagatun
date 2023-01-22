@@ -9,7 +9,7 @@ import { filterSavedPages, filterById, filterBySlug } from './utils/filters'
 export const siteQuery = groq`{ ${site} }`
 
 export const pageQueryById = groq`
-	*${filterSavedPages}${filterById}[0] {
+	*${filterSavedPages}${filterById}[__i18n_lang == $lang][0] {
 		${page}
 	}
 `
