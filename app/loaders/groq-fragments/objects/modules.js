@@ -11,14 +11,8 @@ export const modules = groq`
 		title,
 		subtitle,
     bgType,
-    photos{
-      ...,
-      mobilePhoto{
-        ${image}
-      },
-      desktopPhoto{
-        ${image}
-      }
+    image {
+      ${image}
     },
     video{
       id,

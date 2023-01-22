@@ -18,7 +18,7 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 	const { page } = useRouteData()
 
 	return (
-		<section className="start-page-hero" color-scheme={THEME.light} style={{ '--_image-url': `url(${data.photos.desktopPhoto.src})` } as React.CSSProperties}>
+		<section className="start-page-hero" color-scheme={THEME.light} style={{ '--_image-url': `url(${data.image.src})` } as React.CSSProperties}>
 			<div>
 				<div className="start-page-hero-content">
 					<h1 className="start-page-hero-title">{data.title}</h1>
@@ -29,18 +29,18 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 							<div>
 								<h3>Plats</h3>
 								<div>
-									{page?.company.offices.map(v => <p key={v._key}>{v.address} <MapPin /></p>)}
+									{page?.company.offices?.map(v => <p key={v._key}>{v.address} <MapPin /></p>)}
 								</div>
 							</div>
 							<hr/>
 							<div>
 								<h3>Telefon</h3>
 								<div>
-									{page?.company.offices.map(v => <p key={v._key}><a href={`tel:${v.phoneNumber}`}>{v.phoneNumber}</a> <Phone mirrored /></p>)}
+									{page?.company.offices?.map(v => <p key={v._key}><a href={`tel:${v.phoneNumber}`}>{v.phoneNumber}</a> <Phone mirrored /></p>)}
 								</div>
 							</div>
 							<hr/>
-							<button className="primary"><EnvelopeSimple />info@hagatun.se</button>
+							<button className="primary"><EnvelopeSimple />{page?.company.email}</button>
 						</div>
 					</div>
 				</div>

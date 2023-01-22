@@ -50,10 +50,7 @@ export type Modules =
 		title: string
 		subtitle: string
 		bgType: string
-		photos: {
-			mobilePhoto: ImageSrc
-			desktopPhoto: ImageSrc
-		}
+		image: ImageSrc
 		video: {
 			id: string
 			title: string
@@ -200,7 +197,7 @@ export type Page = {
 		_type: 'information',
 		postalAddress: string
 		email: string
-		offices: {
+		offices?: {
 			_type: 'office'
 			_key: string
 			address: string
