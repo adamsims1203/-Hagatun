@@ -38,8 +38,7 @@ const modules = {
   'start-page-hero': StartPageHero,
 	cta: CTA,
 	partners: Partners,
-	hero: Hero,
-	'blog-posts': BlogPosts
+	hero: Hero
 } as { [k in Modules['_type']]: React.FunctionComponent<ModuleProps> };
 
 export const Module = ({
