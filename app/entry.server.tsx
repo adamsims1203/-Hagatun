@@ -1,9 +1,11 @@
 import { PassThrough } from "stream";
-import type { EntryContext } from "@remix-run/node";
+import { EntryContext, redirect } from "@remix-run/node";
 import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
+import { i18nConfig } from "studio/lib/i18n";
+import { getNormalizedURLPathname, redirectMaliciousRequests, getLocaleFromReqUrl, stripBaseLocaleFromURL, stripTrailingSlashFromURL } from "./utils/server-redirects";
 
 const ABORT_DELAY = 5000;
 
@@ -75,6 +77,36 @@ function handleBrowserRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+	const url = new URL(request.url);
+
+  const headers: Record<string, string> = {};
+
+	const originalUrl =  url.toString()
+	// normalize
+	url.pathname = getNormalizedURLPathname(url)
+
+	try {
+		// Early return if it is a public file such as an image
+		if (/* Regex to check whether something has an extension, e.g. .jpg *//\.(.*)$/.test(url.pathname)) throw ''
+
+		// redirect malicious requests
+		redirectMaliciousRequests(url)
+
+
+		const locale = getLocaleFromReqUrl(request, url)
+		if(i18nConfig.stripBase && locale === i18nConfig.base) {
+			stripBaseLocaleFromURL(url)
+		}
+
+		stripTrailingSlashFromURL(url)
+		
+		const cleanedUrl = url.toString()
+
+		if (originalUrl !== cleanedUrl) {
+			return redirect(cleanedUrl, { headers, status: 301 });
+		}
+	} catch (error) {}
+	
   return new Promise((resolve, reject) => {
     let didError = false;
 
