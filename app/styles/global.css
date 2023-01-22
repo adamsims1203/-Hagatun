@@ -1,0 +1,109 @@
+body {
+	margin: 0;
+}
+
+:where(h1, h2) {
+	font-family: var(--font-serif);
+}
+
+:where(p,ul,ol,dl,h6) {
+	font-size: var(--font-size-2);
+	color: var(--text-2);
+}
+
+button {
+	border: none;
+	box-shadow: var(--shadow-2),0 0 var(--surface-3),0 0 0 var(--_highlight-size) var(--_highlight);
+}
+
+button.primary {
+  background: var(--indigo-7);
+  color: white;
+	border-radius: var(--radius-3);
+	padding: var(--size-3);
+}
+
+button.primary:hover {
+	background: var(--indigo-6);
+}
+
+hr {
+	background-color: var(--text-2);
+	border-width: 1px;
+	margin-block: var(--size-fluid-2);
+}
+
+address {
+	display: block;
+	font-style: italic;
+}
+
+p > svg {
+	display: inline-block;
+	inline-size: var(--font-size-2);
+	position: relative;
+	vertical-align: text-top;
+	margin-inline-start: var(--size-3);
+}
+
+/* slightly transparent fallback */
+:root {
+	--frost-blur: none;
+	--frost-opacity: .9;
+	--frost-color-light: rgba(233, 236, 239, var(--frost-opacity));
+	--frost-color-dark: rgba(206, 212, 218, var(--frost-opacity));
+	--frost-color: var(--frost-color-light);
+}
+
+/* if backdrop support: very transparent and blurred */
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  :root {
+    --frost-blur: blur(10px);
+		--frost-opacity: .6;
+  }
+}
+
+:where([color-scheme="light"]) {
+  color-scheme: light;
+	/* --brand: #ac9339; */
+
+	--link: var(--indigo-7);
+	--link-visited: var(--grape-7);
+
+	--text-1: var(--gray-9);
+	--text-2: var(--gray-7);
+
+	--surface-1: var(--gray-0);
+	--surface-2: var(--gray-2);
+	--surface-3: var(--gray-3);
+	--surface-4: var(--gray-4);
+
+	--nav-icon: var(--gray-7);
+	--nav-icon-hover: var(--gray-9);
+}
+
+:where([color-scheme="light"] button) {
+	--_highlight: var(--_highlight-light);
+}
+
+
+:where([color-scheme="dark"]) {
+	/* --brand: #c3a94d; */
+
+	--link: var(--indigo-3);
+	--link-visited: var(--grape-3);
+
+	--text-1: var(--gray-1);
+	--text-2: var(--gray-2);
+
+	--surface-1: var(--gray-9);
+	--surface-2: var(--gray-8);
+	--surface-3: var(--gray-7);
+	--surface-4: var(--gray-6);
+
+	--nav-icon: var(--gray-5);
+	--nav-icon-hover: var(--gray-2);
+
+	--shadow-strength: 10%;
+	--shadow-color: 220 40% 2%;
+}
