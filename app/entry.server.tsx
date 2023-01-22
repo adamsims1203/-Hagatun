@@ -1,139 +1,111 @@
-
-import { type EntryContext, redirect } from "@remix-run/node";
+import { PassThrough } from "stream";
+import type { EntryContext } from "@remix-run/node";
+import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
-import { renderToString } from "react-dom/server";
-import { getLocaleFromPath, validateLocale, i18nConfig } from "studio/lib/i18n";
+import isbot from "isbot";
+import { renderToPipeableStream } from "react-dom/server";
 
-// todo: [use ETags](https://sergiodxa.com/articles/use-etags-in-remix) when adding cache/caching
+const ABORT_DELAY = 5000;
 
-// Regex to check whether something has an extension, e.g. .jpg
-const PUBLIC_FILE = /\.(.*)$/
-
-export default async function handleRequest(
+export default function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  remixContext: EntryContext,
+  remixContext: EntryContext
 ) {
-	const url = new URL(request.url);
+  return isbot(request.headers.get("user-agent"))
+    ? handleBotRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext
+      )
+    : handleBrowserRequest(
+        request,
+        responseStatusCode,
+        responseHeaders,
+        remixContext
+      );
+}
 
-  const headers: Record<string, string> = {};
+function handleBotRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext
+) {
+  return new Promise((resolve, reject) => {
+    let didError = false;
 
-	const originalUrl =  url.toString()
-	
-	// normalize
-	url.pathname = url.pathname.toLowerCase()
+    const { pipe, abort } = renderToPipeableStream(
+      <RemixServer context={remixContext} url={request.url} />,
+      {
+        onAllReady() {
+          const body = new PassThrough();
 
-		// make it UTF-8
-		.replace(/* å */'c3a5', 'a')
-		.replace(/* ä */'c3a4', 'a')
-		.replace(/* ö */'c3b6', 'o')
+          responseHeaders.set("Content-Type", "text/html");
 
-		// Remove special characters
-		.replace(/[&\\#,+()$~%.'":*?<>{}]/g, "")
+          resolve(
+            new Response(body, {
+              headers: responseHeaders,
+              status: didError ? 500 : responseStatusCode,
+            })
+          );
 
-		// dash instead of space
-		.replace(/\s\s+/g, ' ')
-		.replace(/\s+/g, "-")
+          pipe(body);
+        },
+        onShellError(error: unknown) {
+          reject(error);
+        },
+        onError(error: unknown) {
+          didError = true;
 
-		// remove trailing slash
-		.replace(/\/$/g, "")
+          console.error(error);
+        },
+      }
+    );
 
+    setTimeout(abort, ABORT_DELAY);
+  });
+}
 
-  try {
-		// Early return if it is a public file such as an image
-		if (PUBLIC_FILE.test(url.pathname)) throw ''
+function handleBrowserRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext
+) {
+  return new Promise((resolve, reject) => {
+    let didError = false;
 
-		// check locales
-		const locale = {
-			pathname: url.pathname,
-			url: getLocaleFromPath(url.pathname, i18nConfig.stripBase /*
-				If strip base, then we can't assume that the locale might be in the url
-				the following options would be cumbersome and lead to the system preferences always wining
-			*/),
-			// TODO: maybe build in cookies for locale?
-			// cookie: validateLocale(cookies.NEXT_LOCALE),
-			clientCountry: validateLocale((request as any)?.geo?.country?.toLowerCase?.()),
-			clientLanguage: validateLocale(request.headers.get("accept-language")?.split(",")?.[0].split("-")?.[0].toLowerCase()),
-		}
-		
-		// determent locale
-		const language = 
-			locale.url || 
-			locale.clientLanguage ||
-			locale.clientCountry ||
-			i18nConfig.base
-	
-		// Helpful console.log for debugging
-		/* console.log({
-			...locale, language
-		}); */
-	
-		// redirect malicious requests
-		// todo: build more extended (db-based) redirect list & solution &| [6G Firewall](https://perishablepress.com/6g/)
-		if (
-			url.pathname.startsWith("/.env") ||
-			url.pathname.startsWith("/php") ||
-			url.pathname.startsWith("/java_script") ||
-			url.pathname.startsWith("/_nuxt") ||
-			url.pathname.startsWith("/uploads") ||
-			url.pathname.startsWith("/sdk") ||
-			url.pathname.startsWith("/evox") ||
-			url.pathname.startsWith("/nmap") ||
-			url.pathname.startsWith("/boaform") ||
-			url.pathname.startsWith("/wp-admin")
-		) {
-			return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ", 307);
-		}
-		
-		// redirect to https:
-		if (
-			// note: not sure why this worked in Deno? [refed](https://community.fly.io/t/redirect-http-to-https/2714/3?u=canrau) [good article](https://fly.io/blog/always-be-connecting-with-https/)
-			// url.protocol === "http:" ||
-			request.headers.get("X-Forwarded-Proto") === "http"
-		) url.protocol = "https:";
-	
-		// prepend www.
-		//if (IS_PROD && !url.host.startsWith("www")) url.host = `www.${url.host}`
-	
-		/*
-			Strip base language
-			defaultLang = 'sv' && stripDefaultLang
-			result:
-				"/sv/bokforing" -> "/bokforing" 
-				"/sv" -> "" 
-				"/en/accounting" -> "/en/accounting" 
-				"/en" -> "/en" 
-		*/
-		url.pathname = url.pathname.replace(new RegExp(`^\/${locale.url}$|^\/${locale.url}\/`), '/')
+    const { pipe, abort } = renderToPipeableStream(
+      <RemixServer context={remixContext} url={request.url} />,
+      {
+        onShellReady() {
+          const body = new PassThrough();
 
-		if(!i18nConfig.stripBase || language !== i18nConfig.base) {
-			url.pathname = `${language}${url.pathname}`
-		}
-		
-		url.pathname = url.pathname.replace(/\/$/g, "")
-		const cleanedUrl = url.toString()
+          responseHeaders.set("Content-Type", "text/html");
 
-		if (originalUrl !== cleanedUrl) {
-			return redirect(cleanedUrl, { headers, status: 301 });
-		}
-	} catch (error) {}
+          resolve(
+            new Response(body, {
+              headers: responseHeaders,
+              status: didError ? 500 : responseStatusCode,
+            })
+          );
 
-  const { matches, routeData } = remixContext;
+          pipe(body);
+        },
+        onShellError(err: unknown) {
+          reject(err);
+        },
+        onError(error: unknown) {
+          didError = true;
 
-  const match = matches.find((m: any) => m?.pathname === url.pathname);
+          console.error(error);
+        },
+      }
+    );
 
-  const canonical = match?.route?.id && routeData?.[match.route.id]?.canonical;
-
-  let markup = renderToString(<RemixServer context={remixContext} url={request.url} />);
-	
-  responseHeaders.set("Content-Type", "text/html");
-  if (canonical) {
-    responseHeaders.set("Link", `<${canonical}>; rel="canonical"`);
-  }
-
-  return new Response("<!DOCTYPE html>" + markup, {
-    status: responseStatusCode,
-    headers: responseHeaders,
+    setTimeout(abort, ABORT_DELAY);
   });
 }
