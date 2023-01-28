@@ -6,51 +6,61 @@ import { post } from './post'
 import { Theme } from '~/utils/theme-provider'
 import { Post } from '../documents/blog-post'
 
+type StartPageHeroModule = {
+	_type: 'start-page-hero'
+	_key: string
+	title: string
+	subtitle: string
+	bgType: string
+	image: ImageSrc
+	video: {
+		id: string
+		title: string
+	}
+} 
+
+type CTAModule = {
+	_type: 'cta',
+	_key: string
+	title: string
+	cards: Card[]
+}
+
+type HeroModule = {
+	_type: 'hero'
+	_key: string
+	title: string
+	text: string
+	image: ImageSrc
+	theme: Theme
+	contentPlacement: 'left' | 'right'
+}
+
+type PartnersModule = {
+	_type: 'partners'
+	_key: string
+	title: string
+	text: string
+	partnerLogos: {
+		_key: string
+		logo: ImageSrc
+		href: string
+	}[]
+}
+
+type BlogPostsModule = {
+	_key: string
+	_type: 'blog-posts'
+	orderBy: 'recent' | 'featured'
+	posts: Post[]
+}
+
 export type Modules = 
-	| {
-		_type: 'start-page-hero'
-		_key: string
-		title: string
-		subtitle: string
-		bgType: string
-		image: ImageSrc
-		video: {
-			id: string
-			title: string
-		}
-	} 
-	| {
-		_type: 'cta',
-		_key: string
-		title: string
-		cards: Card[]
-	}
-	| {
-		_type: 'hero'
-		_key: string
-		title: string
-		text: string
-		image: ImageSrc
-		theme: Theme
-		contentPlacement: 'left' | 'right'
-	}
-	| {
-		_type: 'partners'
-		_key: string
-		title: string
-		text: string
-		partnerLogos: {
-			_key: string
-			logo: ImageSrc
-			href: string
-		}[]
-	}
-	| {
-		_key: string
-		_type: 'blog-posts'
-		orderBy: 'recent' | 'featured'
-		posts: Post[]
-	}
+	| StartPageHeroModule
+	| CTAModule
+	| HeroModule
+	| PartnersModule
+	| BlogPostsModule
 
 export const modules = groq`
   _type == 'start-page-hero' => {
