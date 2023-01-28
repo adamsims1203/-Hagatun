@@ -1,16 +1,17 @@
+export const LOCALE = {
+	'se': 'se',
+	'en': 'en',
+} as const
+
+export const LOCALE_LABEL = {
+	[LOCALE.se]: 'Svenska',
+	[LOCALE.en]: 'English',
+} as const
+
 export const i18nConfig = {
-	base: 'se',
+	base: LOCALE.se,
 	stripBase: true,
-	languages: [
-		{
-			title: 'Swedish (SE)',
-			id: 'se'
-		},
-		{
-			title: 'English (EN)',
-			id: 'en'
-		},
-	],
+	languages: Object.entries(LOCALE_LABEL).map(([id, title]) => ({ id, title })),
 	fieldNames: {
 		lang: '__i18n_lang',
 		references: '__i18n_refs',
@@ -18,11 +19,10 @@ export const i18nConfig = {
 	}
 } as const
 
-export type Locale = typeof i18nConfig.languages[number]['id']
-export type BaseLocale = typeof i18nConfig.base
+export type Locale = keyof typeof LOCALE
 
-export const validateLocale = (locale: string | undefined | null) => i18nConfig.languages.find(l => l.id === locale)?.id
-export const getLocaleFromPath = (path: string | undefined | null, fallback: boolean = i18nConfig.stripBase) => {
-	let locale = validateLocale((path??'').replace(/^\//, "").split('/')[0])
-	return locale || (fallback ? i18nConfig.base : undefined)
+export const parseLocale = (locale?: unknown): Locale | undefined => LOCALE[locale as never]
+export const getLocaleFromPath = <T extends boolean = typeof i18nConfig.stripBase>(path: string | undefined | null, fallback?: T) => {
+	let locale: string | undefined = (path??'').replace(/^\//, "").split('/')[0]
+	return (parseLocale(locale) || (fallback ?? i18nConfig.stripBase ? i18nConfig.base : undefined)) as T extends true ? Locale : Locale | undefined
 }

@@ -1,4 +1,5 @@
 import groq from "groq";
+import { Locale } from "studio/lib/i18n";
 
 import { menu, MenuItem } from "./menu";
 
@@ -18,7 +19,7 @@ export type Header = {
 	translations: {
 		slug: string
 		title: string
-		lang: string
+		lang: Locale
 	}[]
 }
 

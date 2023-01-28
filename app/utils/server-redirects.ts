@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { getLocaleFromPath, i18nConfig, validateLocale } from "studio/lib/i18n";
+import { getLocaleFromPath, i18nConfig, parseLocale } from "studio/lib/i18n";
 
 export const getNormalizedURLPathname = (url: URL) => 
 	url.pathname.toLowerCase()
@@ -39,8 +39,8 @@ export const getLocaleFromReqUrl = (request: Request, url: URL) => {
 	*/)
 	// TODO: maybe build in cookies for locale?
 	// cookie: validateLocale(cookies.NEXT_LOCALE),
-	const clientCountry = validateLocale((request as any)?.geo?.country?.toLowerCase?.())
-	const clientLanguage = validateLocale(request.headers.get("accept-language")?.split(",")?.[0].split("-")?.[0].toLowerCase())
+	const clientCountry = parseLocale((request as any)?.geo?.country?.toLowerCase?.())
+	const clientLanguage = parseLocale(request.headers.get("accept-language")?.split(",")?.[0].split("-")?.[0].toLowerCase())
 
 	return (
 		locale || 
