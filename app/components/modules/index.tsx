@@ -5,6 +5,7 @@ import CTA, { links as ctaLinks } from './cta/cta'
 import Partners, { links as partnersLinks } from './partners/partners'
 import Hero, { links as heroLinks } from './hero/hero'
 import BlogPosts, { links as blogPostLinks } from './blog-posts/blog-posts'
+import TextImage, { links as textImageLinks } from './text-image/text-image'
 
 import type { LinksFunction, MetaFunction } from '@remix-run/node'
 import type { Modules } from '~/loaders'
@@ -15,7 +16,8 @@ export const links: LinksFunction = () => {
 		...ctaLinks(),
 		...heroLinks(),
 		...partnersLinks(),
-		...blogPostLinks()
+		...blogPostLinks(),
+		...textImageLinks()
 	]
 }
 
@@ -24,8 +26,6 @@ export const meta: MetaFunction = (props) => {
 
 	}
 }
-
-export const hydrate = true
 
 export interface ModuleProps<T extends Modules['_type'] = Modules['_type']> {
   index: number;
@@ -38,7 +38,8 @@ const modules = {
   'start-page-hero': StartPageHero,
 	cta: CTA,
 	partners: Partners,
-	hero: Hero
+	hero: Hero,
+	'text-image': TextImage
 } as { [k in Modules['_type']]: React.FunctionComponent<ModuleProps> };
 
 export const Module = ({

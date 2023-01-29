@@ -7,7 +7,7 @@ import { filterById } from "../utils";
 import { post } from '../objects/post'
 import { PortableTextBlock } from "sanity";
 import { ImageSrc } from "../objects/image";
-import { Locale } from "studio/lib/i18n";
+import { Locale } from "sanity/lib/i18n";
 
 export type Post = {
 	_type: 'blog-post'

@@ -1,5 +1,5 @@
 import groq from "groq";
-import { Locale } from "studio/lib/i18n";
+import { Locale } from "sanity/lib/i18n";
 
 import { menu, MenuItem } from "./menu";
 

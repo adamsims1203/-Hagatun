@@ -4,7 +4,7 @@ import { urlBuilder } from '~/utils/urlBuilder'
 import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
 import { blogPostQueryBySlug, pageQueryBySlug, pageQueryById, siteQuery, queryHomeID } from './groq-fragments/query'
-import { getLocaleFromPath, i18nConfig } from '../../studio/lib/i18n'
+import { getLocaleFromPath, i18nConfig } from '../../sanity/lib/i18n'
 
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import type { BlogPost } from './groq-fragments/documents/blog-post'

@@ -27,6 +27,10 @@
 	align-items: center;
 }
 
+section:first-of-type.hero {
+	margin-block-start: unset;
+}
+
 .hero > div {
 	width: 50%;
 	display: flex;

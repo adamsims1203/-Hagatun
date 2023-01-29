@@ -1,6 +1,6 @@
 import { Star } from 'phosphor-react'
 import { defineType } from 'sanity'
-import { customImage } from 'studio/lib/custom-image'
+import { customImage } from 'sanity/lib/custom-image'
 
 export const startPageHero = defineType({
   type: 'object',

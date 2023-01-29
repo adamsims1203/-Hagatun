@@ -1,5 +1,5 @@
 import groq from 'groq'
-import { i18nConfig } from '../../../../studio/lib/i18n'
+import { i18nConfig } from '../../../../sanity/lib/i18n'
 
 import { ReferenceWithSlug, referenceWithSlug } from '../objects/links'
 import { filterById, filterSavedPages } from '../utils/filters'

@@ -8,11 +8,14 @@ import { getSite } from "~/loaders";
 import { loadTheme } from "~/utils/theme.server";
 import { merge } from "~/utils/utils";
 
+import stylesUrl from "~/styles/global.css";
+
 export const links: LinksFunction = () => {
   return [
 		{ rel: 'stylesheet', href: 'https://unpkg.com/open-props' },
 		{ rel: 'stylesheet', href: 'https://unpkg.com/open-props/normalize.min.css' },
 		{ rel: 'stylesheet', href: 'https://unpkg.com/open-props/buttons.min.css' },
+    { rel: 'stylesheet', href: stylesUrl },
 		...layoutLinks(),
 		...moduleLinks()
   ];

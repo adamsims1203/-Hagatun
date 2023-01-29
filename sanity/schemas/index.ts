@@ -11,6 +11,7 @@ import { cta } from "./modules/cta";
 import { hero } from "./modules/hero";
 import { partners } from "./modules/partners";
 import { startPageHero } from "./modules/start-page-hero";
+import { textImage } from "./modules/text-image";
 import { author } from "./objects/author";
 import { blockContent } from "./objects/blockContent";
 import { card } from "./objects/card";
@@ -38,6 +39,7 @@ export const schemaTypes = [
 	hero,
 	partners,
 	startPageHero,
+	textImage,
 
 	/* Object types */
 	author,

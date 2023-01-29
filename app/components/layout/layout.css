@@ -31,8 +31,9 @@ main > section {
   max-width: var(--layout-max-width-section);
 }
 
-main > section + section,
-footer {
+:where(main > section:first-of-type),
+	main > section + section,
+	footer {
   margin-block-start: var(--layout-section-gap);
 }
 

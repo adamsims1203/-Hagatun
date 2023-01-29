@@ -1,5 +1,5 @@
 import { ListItemBuilder, StructureBuilder } from 'sanity/desk'
-import { i18nConfig } from 'studio/lib/i18n'
+import { i18nConfig } from 'sanity/lib/i18n'
 import { PageIcon } from '../../schemas/documents/page'
 
 export const pagesMenu = (S: StructureBuilder): ListItemBuilder =>

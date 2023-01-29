@@ -1,5 +1,5 @@
 import { defineType } from "sanity"
-import { i18nConfig } from "studio/lib/i18n"
+import { i18nConfig } from "sanity/lib/i18n"
 
 export const blockContent = defineType({
 	type: 'array',
@@ -11,10 +11,12 @@ export const blockContent = defineType({
       title: 'Block',
       styles: [
         {title: 'Normal', value: 'normal'},
-        {title: 'H1', value: 'h3'},
-        {title: 'H2', value: 'h4'},
-        {title: 'H3', value: 'h5'},
-        {title: 'H4', value: 'h6'},
+        {title: 'H1', value: 'h1'},
+        {title: 'H2', value: 'h2'},
+        {title: 'H3', value: 'h3'},
+        {title: 'H4', value: 'h4'},
+        {title: 'H5', value: 'h5'},
+        {title: 'H6', value: 'h6'},
         {title: 'Quote', value: 'blockquote'}
       ],
       lists: [{title: 'Bullet', value: 'bullet'}],

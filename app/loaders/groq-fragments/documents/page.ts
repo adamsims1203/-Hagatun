@@ -5,7 +5,7 @@ import { Footer, footer } from './footer'
 import { Header, header } from './header'
 import { Modules, modules } from '../objects/modules'
 import { filterById } from '../utils/filters'
-import { Locale } from 'studio/lib/i18n'
+import { Locale } from 'sanity/lib/i18n'
 
 export type Page = {
 	id: string

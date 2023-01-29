@@ -24,7 +24,7 @@
     "react-dom": "^18",
     "react-is": "^18",
     "remix-utils": "^6.0.0",
-    "sanity": "^3.0.0",
+    "sanity": "^3.2.5",
     "sanity-plugin-media": "^2.0.2",
     "styled-components": "^5.2.0"
   },

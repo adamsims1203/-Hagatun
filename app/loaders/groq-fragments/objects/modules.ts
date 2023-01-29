@@ -5,6 +5,7 @@ import { Card, card } from './card'
 import { post } from './post'
 import { Theme } from '~/utils/theme-provider'
 import { Post } from '../documents/blog-post'
+import { PortableTextBlock } from 'sanity'
 
 type StartPageHeroModule = {
 	_type: 'start-page-hero'
@@ -55,12 +56,21 @@ type BlogPostsModule = {
 	posts: Post[]
 }
 
+type TextImageModule = {
+	_type: 'text-image'
+	_key: string
+	body: PortableTextBlock
+	photo: ImageSrc
+	alignment: 'left' | 'right'
+}
+
 export type Modules = 
 	| StartPageHeroModule
 	| CTAModule
 	| HeroModule
 	| PartnersModule
 	| BlogPostsModule
+	| TextImageModule
 
 export const modules = groq`
   _type == 'start-page-hero' => {
@@ -124,30 +134,13 @@ export const modules = groq`
 			}
 		}
 	},
-  _type == 'marquee' => {
-    _type,
-    _key,
-    items[]{
-      _type == 'simple' => {
-        _type,
-        text
-      },
-      _type == 'photo' => {
-        _type,
-        "photo": {
-          ${image}
-        }
-      }
+	_type == 'text-image' => {
+		_type,
+		_key,
+		body,
+    photo {
+			${image}
     },
-    speed,
-    reverse,
-    pauseable
-  },
-  _type == 'dividerPhoto' => {
-    _type,
-    _key,
-    photo{
-      ${image}
-    }
-  }
+		alignment
+	}
 `

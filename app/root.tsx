@@ -7,19 +7,16 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { LinksFunction, MetaFunction } from "@remix-run/node";
-import { useShouldHydrate, DynamicLinks } from 'remix-utils'
+import { DynamicLinks } from 'remix-utils'
 
 import { useRouteData } from "./hooks/useRouteData";
-
-import stylesUrl from "~/styles/global.css";
 
 import { ThemeBody, ThemeHead, ThemeProvider } from "~/utils/theme-provider";
 
 export const links: LinksFunction = () => {
   return [
 		{ rel: 'manifest', href: '/manifest.json' },
-		{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    { rel: 'stylesheet', href: stylesUrl }
+		{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
   ];
 };
 
@@ -33,7 +30,6 @@ export const meta: MetaFunction = () => {
 
 function Root({ title }: {title?: string}) {
 	const { theme, lang } = useRouteData()
-  const shouldHydrate = useShouldHydrate();
 	
   return (
     <ThemeProvider specifiedTheme={theme}>
@@ -49,8 +45,7 @@ function Root({ title }: {title?: string}) {
 					<Outlet />
 					<ThemeBody ssrTheme={Boolean(theme)} />
 					<ScrollRestoration />
-					{/* Render Scripts if shouldHydrate is true */}
-					{shouldHydrate && <Scripts />}
+					<Scripts />
 					{process.env.NODE_ENV === "development" && <LiveReload />}
 				</body>
 			</html>

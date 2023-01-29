@@ -35,7 +35,7 @@ html[color-scheme="dark"] .start-page-hero {
 	--frost-color: var(--frost-color-dark);
 }
 
-.start-page-hero {
+section.start-page-hero {
 	--link: var(--indigo-7);
 	--link-visited: var(--grape-7);
 
@@ -43,6 +43,11 @@ html[color-scheme="dark"] .start-page-hero {
   max-width: var(--layout-max-width);
 	padding: 0;
 }
+
+section:first-of-type.start-page-hero {
+	margin-block-start: unset;
+}
+
 .start-page-hero > div {
 	--link: var(--indigo-7);
 	--link-visited: var(--grape-7);

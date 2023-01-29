@@ -2,8 +2,16 @@ body {
 	margin: 0;
 }
 
+
 :where(h1, h2) {
 	font-family: var(--font-serif);
+}
+
+:where(h1) {
+	margin-block-end: 1ch;
+}
+:where(h2) {
+	margin-block-end: 2ch;
 }
 
 :where(p,ul,ol,dl,h6) {

@@ -1,13 +1,13 @@
 import createSanityClient from "@sanity/client";
+import { projectDetails } from "sanity/projectDetails";
 
 import { IS_PROD } from "~/utils/constants";
 
+const details = projectDetails()
+
 const options = {
-	dataset: "development",
-	projectId: 's50l6en8',
-	token: process.env.SANITY_TOKEN, 
+	...details,
 	useCdn: IS_PROD,
-	apiVersion: '2022-09-26',
 }
 
 export const client = createSanityClient(options)

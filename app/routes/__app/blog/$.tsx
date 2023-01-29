@@ -13,8 +13,7 @@ export const meta: MetaFunction = ({ data }) => {
 }
 
 export const handle = { 
-	dynamicLinks,
-	hydrate: true
+	dynamicLinks
 }
 
 export const loader = async ({ params }: LoaderArgs) => {

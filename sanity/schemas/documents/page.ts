@@ -4,7 +4,7 @@ import { Browser } from "phosphor-react";
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments";
 import { slugify } from "../../lib/slugify";
 import { customImage } from "../../lib/custom-image";
-import { i18nConfig } from "studio/lib/i18n";
+import { i18nConfig } from "sanity/lib/i18n";
 
 export const PageIcon = Browser
 
@@ -64,6 +64,7 @@ export const page = defineType({
         { type: 'partners' },
         { type: 'blog-posts' },
 				{ type: 'cta' },
+				{ type: 'text-image' },
       ],
       group: 'content'
     },

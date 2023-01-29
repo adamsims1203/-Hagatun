@@ -1,4 +1,4 @@
-import { replaceTemplateTags } from "studio/lib/helpers"
+import { replaceTemplateTags } from "sanity/lib/helpers"
 import { RouteData } from "."
 
 export function metadata(data?: RouteData) {

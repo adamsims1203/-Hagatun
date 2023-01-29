@@ -1,5 +1,5 @@
 import { ListItemBuilder, StructureBuilder } from 'sanity/desk'
-import { i18nConfig } from 'studio/lib/i18n'
+import { i18nConfig } from 'sanity/lib/i18n'
 import { MenuIcon } from '../../schemas/documents/menu'
 
 export const menusMenu = (S: StructureBuilder): ListItemBuilder => 

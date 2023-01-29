@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { getLocaleFromPath, i18nConfig, parseLocale } from "studio/lib/i18n";
+import { getLocaleFromPath, i18nConfig, parseLocale } from "sanity/lib/i18n";
 
 export const getNormalizedURLPathname = (url: URL) => 
 	url.pathname.toLowerCase()

@@ -1,6 +1,6 @@
 import { Note } from "phosphor-react"
 import { defineField, defineType } from "sanity"
-import { i18nConfig } from "studio/lib/i18n"
+import { i18nConfig } from "sanity/lib/i18n"
 import { customImage } from "../../lib/custom-image"
 import { isUniqueAcrossAllDocuments } from "../../lib/isUniqueAcrossAllDocuments"
 import { slugify } from "../../lib/slugify"

@@ -1,7 +1,7 @@
-import { useCatch, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { LoaderArgs, MetaFunction } from "@remix-run/node";
 
-import { Module, hydrate as moduleHydrate } from "~/components/modules";
+import { Module } from "~/components/modules";
 import { merge } from "~/utils/utils";
 import { getPage, getSite } from "~/loaders";
 import { metadata } from "~/loaders/metadata";
@@ -14,8 +14,7 @@ export const meta: MetaFunction = ({ data }) => {
 }
 
 export const handle = { 
-	dynamicLinks,
-	hydrate: true && moduleHydrate,
+	dynamicLinks
 }
 
 export const loader = async ({ params }: LoaderArgs) => {
