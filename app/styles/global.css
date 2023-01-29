@@ -107,3 +107,23 @@ p > svg {
 	--shadow-strength: 10%;
 	--shadow-color: 220 40% 2%;
 }
+
+img {
+	position: relative;
+	z-index: 1;
+	transition: .15s opacity;
+}
+img.fit {
+	object-fit: contain;
+}
+img.cover {
+	object-fit: cover;
+}
+
+img + img.lqip {
+	opacity: 0;
+}
+
+*:has(img) {
+	position: relative;
+}
