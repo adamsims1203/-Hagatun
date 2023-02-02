@@ -22,8 +22,7 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => {
 	return { 
-		name: 'viewport', 
-		content: 'width=device-width, initial-scale=1' 
+		viewport: 'width=device-width, initial-scale=1' 
 	}
 }
 
@@ -47,6 +46,7 @@ function Root({ title }: {title?: string}) {
 					<ScrollRestoration />
 					<Scripts />
 					{process.env.NODE_ENV === "development" && <LiveReload />}
+					<div id="portals" className="portals" />
 				</body>
 			</html>
 		</ThemeProvider>

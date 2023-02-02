@@ -21,7 +21,6 @@ interface LayoutProps extends React.PropsWithChildren {
 }
  
 function Layout({ children }: LayoutProps) {
-	const { page } = useRouteData()
 	
 	return (
 		<IconContext.Provider
@@ -36,21 +35,6 @@ function Layout({ children }: LayoutProps) {
 				{children}
 			</main>
 			<Footer />
-			{/* {!IS_PROD && 
-				<button
-					style={{ position: 'fixed', left: 0, bottom: 0 }}
-					onClick={() => {
-						assert(site) 
-						;[...site.pages].forEach(page => 
-							setTimeout(() => {
-								window.open(`localhost:3000${page.slug}`);
-							}, 200)
-						)
-					}}
-				>
-					Open all routes
-				</button>
-			} */}
 		</IconContext.Provider>
 	);
 }

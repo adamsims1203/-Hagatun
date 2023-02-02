@@ -1,32 +1,29 @@
-import { RemixBrowser } from "@remix-run/react";
-import { startTransition, StrictMode } from "react";
-import { hydrateRoot } from "react-dom/client";
+import { RemixBrowser } from '@remix-run/react'
+import React from 'react';
 
-function hydrate() {
-  startTransition(() => {
-    hydrateRoot(
-      document,
-      <StrictMode>
-        <RemixBrowser />
-      </StrictMode>
-    );
-  });
-}
+import { hydrate } from 'react-dom'
 
-if (typeof requestIdleCallback === "function") {
-  requestIdleCallback(hydrate);
-} else {
-  // Safari doesn't support requestIdleCallback
-  // https://caniuse.com/requestidlecallback
-  setTimeout(hydrate, 1);
-}
+hydrate( 
+	<React.StrictMode>
+		<RemixBrowser />
+	</React.StrictMode>,
+	document
+)
+/* 
+import { hydrateRoot } from 'react-dom/client'
 
+// Works perfectly, except that glider.js behaves strangely in Strict mode
+requestIdleCallback(() => {
+	React.startTransition(() => {
+		hydrateRoot(document, <RemixBrowser/>)
+	})
+})
+ */
 
 // if the browser supports SW (all modern browsers do it)
-/* if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     // we will register it after the page complete the load
     navigator.serviceWorker.register("/sw.js");
   });
 }
-*/

@@ -19,16 +19,9 @@ footer > div.links {
 }
 
 footer .logo {
-	display: flex;
-	white-space: nowrap;
-	align-items: center;
-	font-size: var(--font-size-3);
-	text-transform: uppercase;
+	--logo-size: var(--size-9);
 }
-footer .logo svg {
-	margin-inline-end: 1ch;
-	inline-size: var(--size-9);
-}
+
 footer h3 {
 	font-size: var(--font-size-3);
 	font-weight: var(--font-weight-7);
@@ -76,8 +69,8 @@ footer .media a.likedin {
 }
 footer button {
 	max-width: 25ch;
-	margin-block-start: .5ch;
+	margin-block-start: var(--size-4);
 }
 footer address {
-	margin-block-start: .5ch;
+	margin-block-start: var(--size-4);
 }

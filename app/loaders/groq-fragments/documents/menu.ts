@@ -16,6 +16,9 @@ export const menu = groq`
 	_type,
 	title,
 	"items": [
+		...items[_type != 'reference'] {
+			${links}
+		},
 		...items[_type == 'reference']-> {
 			"_key": _rev,
 			_type,
@@ -24,8 +27,5 @@ export const menu = groq`
 				${links}
 			}
 		},
-		...items[_type != 'reference'] {
-			${links}
-		}
 	]
 `

@@ -1,10 +1,9 @@
+import { Moon, Sun } from 'phosphor-react';
 import React from 'react'
-import { useShouldHydrate } from 'remix-utils';
 
 import { useTheme, THEME } from '~/utils/theme-provider';
 
 export const ThemeButton = () => {
-  const shouldHydrate = useShouldHydrate();
 	const [theme, setTheme] = useTheme();
   const toggleTheme = () => {
     setTheme((prevTheme) =>
@@ -15,13 +14,11 @@ export const ThemeButton = () => {
 	return (
 		<button 
 			onClick={toggleTheme}
-			title={`Toggles light & dark${!shouldHydrate?'; Requires Javascript':''}`}
+			title='Toggles light & dark'
 			aria-label={theme??''}
 			aria-live="polite"
-			disabled={!shouldHydrate}
-
 		>
-			{shouldHydrate ? theme : 'Auto'}
+			{theme === 'light' ? <Moon /> : <Sun />}
 		</button>
 	)
 }

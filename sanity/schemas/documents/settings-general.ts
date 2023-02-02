@@ -24,6 +24,14 @@ export const settingsGeneral = defineType({
       group: 'displays'
     },
     {
+      title: 'Blog Page',
+      name: 'blog',
+      type: 'reference',
+      to: [{ type: 'page' }],
+      description: 'This page will show your blog-posts',
+      group: 'displays'
+    },
+    {
       title: 'Error Page (404)',
       name: 'error',
       type: 'reference',
@@ -91,6 +99,20 @@ export const settingsGeneral = defineType({
 					type: 'boolean',
 					initialValue: i18nConfig.stripBase,
 					readOnly: true
+				},
+				{
+					title: 'Show theme switch',
+					name: 'themeSwitch',
+					description: 'Show theme switch in production',
+					type: 'boolean',
+					initialValue: true
+				},
+				{
+					title: 'Show language select',
+					name: 'languageSelect',
+					description: 'Show language select in production',
+					type: 'boolean',
+					initialValue: true
 				}
 			],
       group: 'advanced',

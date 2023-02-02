@@ -1,5 +1,6 @@
 import { SquareHalf } from "phosphor-react";
 import { defineType } from "sanity";
+import { customImage } from "sanity/lib/custom-image";
 
 export const hero = defineType({
 	type: 'object',
@@ -17,11 +18,10 @@ export const hero = defineType({
 			title: 'Text',
 			name: 'text',
 		},
-		{
-			type: 'image',
+		customImage({
 			name: 'image',
 			title: 'Image',
-		},
+		}),
 		{
 			type: 'string',
 			name: 'theme',

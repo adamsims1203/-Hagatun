@@ -5,6 +5,7 @@ import { merge } from "~/utils/utils";
 import { getBlogPost, getSite } from "~/loaders";
 import { metadata } from "~/loaders/metadata";
 import { dynamicLinks } from "~/loaders/dynamicLinks";
+import { useRouteData } from "~/hooks/useRouteData";
 
 export const meta: MetaFunction = ({ data }) => {
 	return {
@@ -17,10 +18,7 @@ export const handle = {
 }
 
 export const loader = async ({ params }: LoaderArgs) => {
-	const data = await merge([
-		getBlogPost(params['*']),
-		getSite(params['*'])
-	])
+	const data = await getBlogPost(params)
 
   if (data.notFound)
     throw new Response("Not Found", { status: 404 })
@@ -29,7 +27,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 }
 
 export default function Post() {
-	const data = useLoaderData<typeof loader>()
+	const data = useRouteData()
 
   return (
 		<>

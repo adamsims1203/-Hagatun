@@ -2,6 +2,7 @@ import React from 'react'
 
 import Card, { links as cardLinks } from '~/components/core/card/card'
 import { Link } from '~/components/core/link/link'
+import { Image } from '~/components/core/image/image'
 
 import stylesUrl from "./cta.css";
 
@@ -25,10 +26,7 @@ const CTA = ({ data }: ModuleProps<'cta'>) => {
 					const item = (
 						<Card orientation='vertical'>
 							<Card.Thumbnail>
-								<img 
-									src={card.thumbnail.src} 
-									alt={card.thumbnail.alt}
-								/>
+								<Image image={card.thumbnail} />
 							</Card.Thumbnail>
 							<Card.Body>
 								<h3>{card.title}</h3>

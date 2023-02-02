@@ -1,5 +1,5 @@
 import { redirect } from "@remix-run/node";
-import { getLocaleFromPath, i18nConfig, parseLocale } from "sanity/lib/i18n";
+import { getLocaleFromPathname, i18nConfig, parseLocale } from "sanity/lib/i18n";
 
 export const getNormalizedURLPathname = (url: URL) => 
 	url.pathname.toLowerCase()
@@ -33,7 +33,7 @@ export const getNormalizedURLPathname = (url: URL) =>
 }
 
 export const getLocaleFromReqUrl = (request: Request, url: URL) => {
-	const locale = getLocaleFromPath(url.pathname, i18nConfig.stripBase /*
+	const locale = getLocaleFromPathname(url.pathname, i18nConfig.stripBase /*
 		If strip base, then we can't assume that the locale might be in the url
 		the following options would be cumbersome and lead to the system preferences always wining
 	*/)

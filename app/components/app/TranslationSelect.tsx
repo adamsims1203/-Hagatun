@@ -7,12 +7,12 @@ export const TranslationSelect = () => {
 	const { page } = useRouteData()
 	const navigate = useNavigate()
 
-	return page ? (
+	return page?.translations.length ? (
 		<select 
-			defaultValue={pathname}
+			defaultValue={pathname.replace(/^\//, '')}
 			onChange={e => navigate({ pathname: e.target.value })}
 		>
-			{page?.header.translations.map(t => <option key={t.slug} value={t.slug}>{LOCALE_LABEL[t.lang]}</option>)}
+			{page.translations.map(t => <option key={t.slug} value={t.slug}>{LOCALE_LABEL[t.lang]}</option>)}
 		</select>
 	) : null
 }

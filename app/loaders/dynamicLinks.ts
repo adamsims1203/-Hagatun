@@ -17,7 +17,7 @@ export const dynamicLinks = ({ data }: { data?: RouteData }): LinkDescriptor[] =
 		// https://developers.google.com/search/docs/specialty/international/localized-versions#html
 		...data.page ? 
 			[
-				...data.page.header.translations.map(t =>
+				...data.page.translations.map(t =>
 					({ rel: 'alternate', href: `https://${data.site.rootDomain}/${t.slug.replace(/^\//, '')}`, hrefLang: t.lang })
 				),
 				{ rel: 'alternate', href: `https://${data.site.rootDomain}`, hrefLang: 'x-default' }

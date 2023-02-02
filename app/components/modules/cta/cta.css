@@ -3,6 +3,15 @@ section.cta {
 	--_gap: var(--size-7);
 }
 
+:where([color-scheme="light"] section.cta) {
+	--_background: #FCFAF5;
+	--_foreground: #F5F3ED;
+}
+:where([color-scheme="dark"] section.cta) {
+	--_background: var(--surface-2);
+	--_foreground: var(--surface-3);
+}
+
 section.cta h2 {
 	text-align: center;
 	margin-block-end: var(--size-9);
@@ -18,7 +27,7 @@ section.cta > div {
 section.cta > div > div {
 	flex: 1;
 	display: flex;
-	min-width: 35ch;
+	min-width: clamp(25ch, 33vw, 35ch);
 	width: 100%;
 }
 
@@ -40,17 +49,15 @@ section.cta a:hover {
 
 section.cta .card {
 	--card-radius: var(--_radius);
+	--card-color: var(--_background);
 	flex: 1;
 	display: flex;
-}
-
-section.cta .card:hover {
 }
 
 section.cta .card__thumbnail {
 	display: flex;
 	place-items: center;
-	padding: var(--size-6);
+	padding-block: var(--size-10);
 }
 
 section.cta .card__thumbnail img {
@@ -60,5 +67,11 @@ section.cta .card__thumbnail img {
 }
 
 section.cta .card__body {
-	background-color: var(--surface-3);
+	background-color: var(--_foreground);
+	min-height: var(--size-11);
+}
+
+section.cta .card__body h3 {
+	font-size: var(--font-size-4);
+	margin-block-end: .5ch;
 }

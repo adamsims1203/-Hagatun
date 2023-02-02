@@ -1,11 +1,10 @@
-import { useLoaderData } from "@remix-run/react";
-import { LoaderArgs, MetaFunction } from "@remix-run/node";
-
 import { Module } from "~/components/modules";
-import { merge } from "~/utils/utils";
-import { getPage, getSite } from "~/loaders";
+import { getPage } from "~/loaders";
 import { metadata } from "~/loaders/metadata";
 import { dynamicLinks } from "~/loaders/dynamicLinks";
+import { useRouteData } from "~/hooks/useRouteData";
+
+import type { LoaderArgs, MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = ({ data }) => {
 	return {
@@ -18,10 +17,7 @@ export const handle = {
 }
 
 export const loader = async ({ params }: LoaderArgs) => {
-	const data = await merge([
-		getPage(params['*']),
-		getSite(params['*'])
-	])
+	const data = await getPage(params)
 
   if (!data.page) 
     throw new Response("Not Found", { status: 404 })
@@ -30,7 +26,7 @@ export const loader = async ({ params }: LoaderArgs) => {
 }
 
 export default function Page() {
-	const data = useLoaderData<typeof loader>()
+	const data = useRouteData()
 	
   return (
 		<>

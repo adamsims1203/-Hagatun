@@ -3,15 +3,35 @@ import { i18nConfig } from '../../../../sanity/lib/i18n'
 
 import { ReferenceWithSlug, referenceWithSlug } from '../objects/links'
 import { filterById, filterSavedPages } from '../utils/filters'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { image, ImageSrc } from '../objects/image'
+import { Header, header } from './header'
+import { Footer, footer } from './footer'
 
 export type Site = {
 	home: ReferenceWithSlug
 	pages: (ReferenceWithSlug & { translations: ReferenceWithSlug[] })[]
-
+	header: Header
+	footer: Footer
+	company: {
+		_key: string
+		_type: 'information',
+		postalAddress: string
+		email: string
+		offices?: {
+			_type: 'office'
+			_key: string
+			address: string
+			name: string
+			phoneNumber: string
+		}[]
+	}
 	title: string
 	shortTitle: string
 	rootDomain: string
+	presets: {
+		themeSwitch: boolean
+		languageSelect: boolean
+	}
 
 	cookieConsent: {
 		enabled: boolean
@@ -24,10 +44,10 @@ export type Site = {
 		metaDesc: string,
 		shareTitle: string,
 		shareDesc: string,
-		favicon: string | null,
-		faviconLegacy: string | null
-		shareGraphic: SanityImageObject | null,
-		touchIcon: SanityImageObject | null
+		favicon: ImageSrc | null,
+		faviconLegacy: ImageSrc | null,
+		shareGraphic: ImageSrc | null,
+		touchIcon: ImageSrc | null
 	}
 } | null | undefined
 
@@ -45,21 +65,46 @@ export const site = groq`
 		"title": siteTitle.long,
 		"shortTitle": siteTitle.short,
 		"rootDomain": ${process.env.NODE_ENV === 'development' ? `'localhost:3000'` : `siteURL`},
-		gtmID,
+		"presets": {
+			"themeSwitch": presets.themeSwitch,
+			"languageSelect": presets.languageSelect,
+		},
+		gtmID
 	},
 	"cookieConsent": *[_type == "cookieSettings"][0]{
 		enabled,
 		message,
 		"link": link->{"type": _type, "slug": slug.current}
 	},
+	"header": {
+		${header}
+	},
+	"footer": {
+		${footer}
+	},
+	"company": *[_type == "generalSettings"][0] {
+		"_type": "information",
+		_key,
+		email,
+		postalAddress,
+		offices
+	},
 	"seo": *[_type == "seoSettings"][0]{
 		metaTitle,
 		metaDesc,
 		shareTitle,
 		shareDesc,
-		shareGraphic,
-		"favicon": favicon.asset->url,
-		"faviconLegacy": faviconLegacy.asset->url,
-		touchIcon
+		shareGraphic {
+			${image}
+		},
+		favicon {
+			${image}
+		},
+		faviconLegacy {
+			${image}
+		},
+		touchIcon {
+			${image}
+		},
 	}
 `

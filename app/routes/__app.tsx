@@ -9,6 +9,8 @@ import { loadTheme } from "~/utils/theme.server";
 import { merge } from "~/utils/utils";
 
 import stylesUrl from "~/styles/global.css";
+import { useRouteData } from "~/hooks/useRouteData";
+import { Link } from "~/components/core/link/link";
 
 export const links: LinksFunction = () => {
   return [
@@ -23,7 +25,7 @@ export const links: LinksFunction = () => {
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   const data = merge([
-		getSite(params['*']??''),
+		getSite(params),
 		loadTheme(request)
 	])
 
@@ -41,16 +43,18 @@ export default function App() {
 }
 
 export function CatchBoundary() {
+	const { site } = useRouteData()
   const caught = useCatch();
   console.error(caught);
 
   return (
 		<Layout>
-			<div style={{ height: '70vh', display: 'flex' }}>
-				<div style={{ alignSelf: 'center', margin: '0 auto', fontSize: '1rem', whiteSpace: 'pre-wrap', fontWeight: 'bold', textAlign: 'center' }}>
-					<SmileySad weight="thin" size="7rem" />
+			<div style={{ height: '70vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+				<div style={{ whiteSpace: 'pre-wrap', fontWeight: 'bold', textAlign: 'center', maxWidth: 'var(--size-content-2)' }}>
+					<h1 style={{ maxInlineSize: 'unset', fontSize: '10rem' }}>404</h1>
+					<h2 style={{ maxInlineSize: 'unset', marginBlockEnd: '2ch' }}>Page Not Found</h2>
 					<p>
-						{caught.status} {caught.statusText}
+						The Page you are looking for doesn't exist or an other error occured. Go to <Link to={site.home.slug}>Home Page</Link>.
 					</p>
 				</div>
 			</div>
@@ -59,7 +63,7 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
+  console.error('ErrorBoundary', error);
 
   return (
 		<html lang="en" style={{ height: '100%' }}>
@@ -67,7 +71,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
 				<title>{error.name||''}</title>
 			</head>
 			<body>
-				<div style={{ height: '70vh', display: 'flex' }}>
+				<div style={{ height: '100vh', display: 'flex' }}>
 					<div style={{ alignSelf: 'center', margin: '0 auto', fontSize: '1rem', whiteSpace: 'pre-wrap', fontWeight: 'bold', textAlign: 'center' }}>
 						<SmileySad weight="thin" size="7rem" />
 						<pre style={{ fontSize: '1rem', whiteSpace: 'pre-wrap', fontWeight: 'bold' }}>

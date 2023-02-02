@@ -1,17 +1,17 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { CaretDown, List, X } from 'phosphor-react';
+import * as Drawer from '@accessible/drawer'
 
-import { TranslationSelect } from '~/components/app/TranslationSelect'
-import { useRouteData } from '~/hooks/useRouteData'
+import { useRouteData } from '../../../hooks/useRouteData'
 import { Link } from '~/components/core/link/link';
 import { Logo } from '~/components/app/Logo';
-import { clsx } from '~/utils/utils';
+import { TranslationSelect } from '~/components/app/TranslationSelect';
+import { ThemeButton } from '~/components/app/ThemeButton';
 
 import stylesUrl from './header.css'
 
 import type { LinksFunction } from '@remix-run/node';
-
 
 export const links: LinksFunction = () => {
   return [
@@ -20,82 +20,82 @@ export const links: LinksFunction = () => {
 };
 
 export const Header = () => {
-	const { page, post, site } = useRouteData()
-	const routeData = page ?? post
-	const [open, setOpen] = useState(false)
-
-	useEffect(() => {
-		const onClick = (e: MouseEvent) => {
-			const list = document.querySelector('.navigation__dropdown')!
-			const button = document.querySelector('.navigation__left button')!
-			
-			if(list.contains(e.target as never) || button.isSameNode(e.target as never)) return
-
-			setOpen(false)
-		}
-
-		document.addEventListener('click', onClick)
-		return () => {
-			document.removeEventListener('click', onClick)
-		}
-	}, [])
+	const { site } = useRouteData()
+	console.log(site)
+	const navList = useMemo(() => (
+		site?.header.menu?.items?.map(item => 
+			item._type === 'menu' ?
+				<div key={item._key} className="navigation__list-item">
+					<p aria-haspopup>{item.title} <CaretDown /></p>
+					<ul>
+						{item.items?.map(subItem => 
+							subItem.title !== 'menu' ? 
+								<li key={subItem._key}>
+									<Link 
+										to={subItem._type === 'navPage' ? subItem.slug : subItem.url}
+									>{subItem.title}</Link>
+								</li>
+							: null
+						)}
+					</ul>
+				</div>
+			: <div key={item._key}><Link to={item._type === 'navPage' ? item.slug : item.url}>{item.title}</Link></div>
+		)
+	), [site?.header])
 	
 	return (
 		<header>
 			<div className='navigation'>
 				<div className='navigation__left'>
-					<Link to={site.home.slug} className="navigation__logo">
-						<Logo />
-						<p>{site.title}</p>
-					</Link>
-					<button onClick={() => setOpen(v => !v)}>{!open ? <List /> : <X />}</button>
+					<Logo className='navigation__logo' />
+					<HeaderDrawer>
+						{site.presets.languageSelect && <TranslationSelect />}
+						{navList}
+					</HeaderDrawer>
 				</div>
-				<div className='navigation__right'>
-					{routeData?.header.menu.items?.map(item => 
-						item._type === 'menu' ?
-								<div key={item._key}>
-									<p tabIndex={0} aria-haspopup>{item.title} <CaretDown  /></p>
-									<ul>
-										{item.items?.map(subItem => 
-											subItem.title !== 'menu' ? 
-												<li key={subItem._key}>
-													<Link 
-														to={subItem._type === 'navPage' ? subItem.slug : subItem.url}
-													>{subItem.title}</Link>
-												</li>
-											: null
-										)}
-									</ul>
-								</div>
-						: <div key={item._key}><Link to={item._type === 'navPage' ? item.slug : item.url}>{item.title}</Link></div>
-					)}
-					<TranslationSelect />
-				</div>
-				<div className={clsx(
-					'navigation__dropdown',
-					open && 'open'
-				)}>
-					<TranslationSelect />
-					{routeData?.header.menu.items?.map(item => 
-						item._type === 'menu' ? 
-							<details key={item._key}>
-								<summary>{item.title}<CaretDown /></summary>
-								<ul>
-									{item.items?.map(subItem => 
-										subItem.title !== 'menu' ? 
-											<li key={subItem._key}>
-												<Link 
-													to={subItem._type === 'navPage' ? subItem.slug : subItem.url}
-												>{subItem.title}</Link>
-											</li>
-										: null
-									)}
-								</ul>
-							</details>
-						: <Link key={item._key} to={item._type === 'navPage' ? item.slug : item.url}>{item.title}</Link>
-					)}
-				</div>
+				<nav 
+					className='navigation__right'
+					aria-label="Main menu"
+				>
+					{navList}
+					{site.presets.languageSelect && <TranslationSelect />}
+					{site.presets.themeSwitch && <ThemeButton />}
+				</nav>
 			</div>
 		</header>
+	)
+}
+
+const HeaderDrawer = ({ children }: React.PropsWithChildren) => {
+	return (
+		<>
+			<span hidden id="menu-label">Main menu</span>
+			<Drawer.Drawer>
+				<Drawer.Trigger>
+					<button 
+						aria-label="Open menu"
+						className='menu-button'
+					><List /></button>
+				</Drawer.Trigger>
+
+				<Drawer.Target
+					placement='right'
+					portal
+					preventScroll
+					closeOnEscape
+				>
+					<div className='navigation__drawer'>
+						<Drawer.CloseButton>
+							<button 
+								aria-label="Close menu"
+								className='menu-button'
+							><X /></button>
+						</Drawer.CloseButton>
+
+						{children}
+					</div>
+				</Drawer.Target>
+			</Drawer.Drawer>
+		</>
 	)
 }

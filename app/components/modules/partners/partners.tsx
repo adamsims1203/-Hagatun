@@ -5,6 +5,7 @@ import stylesUrl from './partners.css'
 
 import type { LinksFunction } from '@remix-run/node';
 import { Link } from '~/components/core/link/link';
+import { Image } from '~/components/core/image/image';
 
 export const links: LinksFunction = () => {
   return [
@@ -20,7 +21,7 @@ const Partners = ({ data }: ModuleProps<'partners'>) => {
 			<div>
 				{data.partnerLogos.map(partner =>
 					<Link key={partner._key} to={partner.href}>
-						<img src={partner.logo.src} />	
+						<Image image={partner.logo} lqipEnabled={false} />
 					</Link>
 				)}
 			</div>

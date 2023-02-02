@@ -1,7 +1,7 @@
 import { PortableText } from '@portabletext/react';
 
 import { clsx } from 'app/utils/utils';
-import { Image } from '~/components/core/Image/Image';
+import { Image } from '~/components/core/image/image';
 
 import stylesUrl from './text-image.css'
 
@@ -25,10 +25,7 @@ const TextImage = ({ data }: ModuleProps<'text-image'>) => {
 				<PortableText value={data.body} />
 			</div>
 			<div className='text-image__image'>
-				<Image
-					image={data.photo}
-					maxWidth={650}
-				/>
+				<Image image={data.photo} />
 			</div>
 		</section>
 	)

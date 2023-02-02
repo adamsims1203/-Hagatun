@@ -8,7 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useShouldHydrate } from 'remix-utils'
 
 const THEME = {
   dark: "dark",
@@ -35,13 +34,12 @@ function ThemeProvider({
   children,
   specifiedTheme,
 }: ThemeProviderProps) {
-  const shouldHydrate = useShouldHydrate();
   const [theme, setTheme] = useState<Theme | null>(() => {
     // On the server, if we don't have a specified theme then we should
     // return null and the clientThemeCode will set the theme for us
     // before hydration. Then (during hydration), this code will get the same
     // value that clientThemeCode got so hydration is happy.
-    if (shouldHydrate && specifiedTheme)
+    if (specifiedTheme)
       return themes.includes(specifiedTheme) ? specifiedTheme : null
 
     // there's no way for us to know what the theme should be in this context

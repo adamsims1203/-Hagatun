@@ -12,7 +12,7 @@ header a {
 
 main {
   margin-top: var(--header-estimated-height);
-  min-height: calc(var(--vh, 1vh) * 100 - var(--header-estimated-height));
+  min-height: 75vh;
 }
 
 main > section,

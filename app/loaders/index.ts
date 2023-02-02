@@ -4,28 +4,20 @@ import { urlBuilder } from '~/utils/urlBuilder'
 import { loadTheme } from '~/utils/theme.server'
 import { assert } from '~/utils/utils'
 import { blogPostQueryBySlug, pageQueryBySlug, pageQueryById, siteQuery, queryHomeID } from './groq-fragments/query'
-import { getLocaleFromPath, i18nConfig } from '../../sanity/lib/i18n'
+import { getLangAndSlugFromParams } from '../../sanity/lib/i18n'
 
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 import type { BlogPost } from './groq-fragments/documents/blog-post'
 import type { Page } from './groq-fragments/documents/page'
 import type { Site } from './groq-fragments/documents/site'
 import type { Modules } from './groq-fragments/objects/modules'
+import { Params } from '@remix-run/react'
 export type { Page, Site, BlogPost, Modules }
 
-
-export async function getPage(slug?: string) {
+export async function getPage(params: Params) {
 	let page: Page | undefined
-	let urlLang = getLocaleFromPath(slug, false)
-	const lang = urlLang||i18nConfig.base
-
-	slug = 
-		// base lang have been stripped of and needs to be included
-		!urlLang && slug ? `${i18nConfig.base}/${slug}` 
-		// accessing index route, needs to include base lang
-		: !slug ? `${lang}` 
-		: slug
-		
+	const { lang, slug } = getLangAndSlugFromParams(params)
+	
 	try {
 		if(slug === lang) {
 			page = await client.fetch<Page>(pageQueryById.replace('$id', queryHomeID), { lang })
@@ -55,9 +47,8 @@ export async function getPage(slug?: string) {
 	}
 }
 
-export async function getSite(path?: string) {
-	let urlLang = getLocaleFromPath(path, false)
-	const lang = urlLang||i18nConfig.base
+export async function getSite(params: Params) {
+	const { lang } = getLangAndSlugFromParams(params)
 
 	const site = await client.fetch<Site>(siteQuery, { lang })
 	assert(site, 'site was undefined')
@@ -69,17 +60,9 @@ export async function getSite(path?: string) {
 	}
 }
 
-export async function getBlogPost(slug?: string) {
+export async function getBlogPost(params: Params) {
 	let blogPost: BlogPost | undefined
-	let urlLang = getLocaleFromPath(slug, false)
-	const lang = urlLang||i18nConfig.base
-
-	slug = 
-		// base lang have been stripped of and needs to be included
-		!urlLang && slug ? `${i18nConfig.base}/${slug}` 
-		// accessing index route, needs to include base lang
-		: !slug ? `${lang}` 
-		: slug
+	const { lang, slug } = getLangAndSlugFromParams(params)
 	
 	try {
 		blogPost = await client.fetch<BlogPost>(blogPostQueryBySlug, { slug, lang })

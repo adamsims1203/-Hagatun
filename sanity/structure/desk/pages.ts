@@ -18,6 +18,7 @@ export const pagesMenu = (S: StructureBuilder): ListItemBuilder =>
 					.filter(
 						`_type == "page" && __i18n_lang == "${i18nConfig.base}" && (_id in [
 							*[_type == "generalSettings"][0].home._ref,
+							*[_type == "generalSettings"][0].blog._ref,
 							*[_type == "generalSettings"][0].error._ref,
 						]) && !(_id in path("drafts.**"))`
 					)
@@ -39,6 +40,7 @@ export const pagesMenu = (S: StructureBuilder): ListItemBuilder =>
 						.filter(
 							`_type == "page" && __i18n_lang == "${i18nConfig.base}" && !(_id in [
 								*[_type == "generalSettings"][0].home._ref,
+								*[_type == "generalSettings"][0].blog._ref,
 								*[_type == "generalSettings"][0].error._ref,
 							]) && !(_id in path("drafts.**"))`
 						)

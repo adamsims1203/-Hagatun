@@ -1,5 +1,7 @@
-import stylesUrl from "./hero.css";
 import { clsx } from "~/utils/utils";
+import { Image } from '~/components/core/image/image'
+
+import stylesUrl from "./hero.css";
 
 import type { LinksFunction } from "@remix-run/node";
 import type { ModuleProps } from '..';
@@ -18,9 +20,9 @@ function Hero({ data }: ModuleProps<'hero'>) {
 				'hero',
 				`hero--placement-${data.contentPlacement}`
 			)}
-			style={{ '--_image': `url(${data.image.src})` } as React.CSSProperties}
 			color-scheme={data.theme}
 		>
+			<Image image={data.image} />
 			<div>
 				<div className='hero__content'>
 					<h2>{data.title}</h2>

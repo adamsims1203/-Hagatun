@@ -3,6 +3,7 @@
  * https://www.leanpanda.com/blog/2015-09-12-alternate-sitemap/
  */
 
+import { LoaderFunction } from '@remix-run/node';
 import { getSite } from '~/loaders'
 
 let sitemap: string | undefined
@@ -18,8 +19,8 @@ const init = {
 
 export const getUrl = (root: string, slug: string) => `https://${root}/${slug.replace(/^\//, '')}`
 
-export async function loader() {
-	const { site } = await getSite()
+export const loader: LoaderFunction = async ({ params }) => {
+	const { site } = await getSite(params)
 
   // If our sitemap is cached, we write the cached sitemap, no query to the CMS.
   if (sitemap || !site)

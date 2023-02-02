@@ -15,7 +15,7 @@ export const links: LinksFunction = () => {
 };
 
 function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
-	const { page } = useRouteData()
+	const { site } = useRouteData()
 
 	return (
 		<section className="start-page-hero" color-scheme={THEME.light} style={{ '--_image-url': `url(${data.image.src})` } as React.CSSProperties}>
@@ -29,18 +29,18 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 							<div>
 								<h3>Plats</h3>
 								<div>
-									{page?.company.offices?.map(v => <p key={v._key}>{v.address} <MapPin /></p>)}
+									{site?.company.offices?.map(v => <p key={v._key}>{v.address} <MapPin /></p>)}
 								</div>
 							</div>
 							<hr/>
 							<div>
 								<h3>Telefon</h3>
 								<div>
-									{page?.company.offices?.map(v => <p key={v._key}><a href={`tel:${v.phoneNumber}`}>{v.phoneNumber}</a> <Phone mirrored /></p>)}
+									{site?.company.offices?.map(v => <p key={v._key}><a href={`tel:${v.phoneNumber}`}>{v.phoneNumber}</a> <Phone mirrored /></p>)}
 								</div>
 							</div>
 							<hr/>
-							<button className="primary"><EnvelopeSimple />{page?.company.email}</button>
+							<button className="primary"><EnvelopeSimple />{site?.company.email}</button>
 						</div>
 					</div>
 				</div>

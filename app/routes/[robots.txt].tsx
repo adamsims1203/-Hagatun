@@ -2,11 +2,12 @@
  * https://github.com/ShafSpecs/remix-pwa/blob/main/templates/ts/app/routes/resources/manifest%5B.%5Djson.ts 
  * https://dev.to/chrisbenjamin/tutorial-add-sitemapxml-and-robotstxt-to-remix-site-4n23
  */
+import { LoaderFunction } from "@remix-run/node";
 import { getSite } from "~/loaders";
 import { assert } from "~/utils/utils";
 
-export async function loader() {
-	const { site } = await getSite()
+export const loader: LoaderFunction = async ({ params }) => {
+	const { site } = await getSite(params)
 
 	assert(site)
 	

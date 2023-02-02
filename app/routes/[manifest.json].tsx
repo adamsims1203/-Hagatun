@@ -1,4 +1,4 @@
-import { json, LoaderArgs } from '@remix-run/node';
+import { json, LoaderFunction } from '@remix-run/node';
 
 import { urlBuilder } from '~/utils/urlBuilder';
 import { getThemeSession } from '~/utils/theme.server'
@@ -15,9 +15,9 @@ const createImageGenerator = (src: SanityImageSource) => ({ size , ...rest }: { 
 	...rest
 })
 
-export async function loader({ request }: LoaderArgs) {
+export const loader: LoaderFunction = async ({ request, params }) => {
 	const isDarkMode = (await getThemeSession(request)).getTheme() === 'dark'
-	const { site } = await getSite()
+	const { site } = await getSite(params)
 	assert(site)
 
 	const getImage = site.seo.touchIcon && createImageGenerator(site.seo.touchIcon)

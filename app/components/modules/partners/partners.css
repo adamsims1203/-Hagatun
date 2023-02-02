@@ -8,23 +8,25 @@
 	margin-block-end: 1ch;
 }
 
-.partners > div {
+.partners div {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+	align-items: center;
 }
 
-.partners > div > * {
+.partners a {
 	flex: 1;
+	display: block;
 	min-width: 300px;
 	max-width: 300px;
 	padding: var(--size-7);
 }
 
-.partners > div > a img {
+.partners a img {
 	transition: scale .1s ease-in;
 }
 
-.partners > div > a:hover img {
+.partners a:hover img {
 	scale: 1.05;
 }

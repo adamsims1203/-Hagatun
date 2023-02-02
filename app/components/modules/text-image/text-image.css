@@ -14,6 +14,15 @@
 	}
 }
 
+
+
+.text-image h1 {
+	margin-block-end: 1ch;
+}
+.text-image h2 {
+	margin-block-end: 2ch;
+}
+
 .text-image {
 	display: flex;
 	flex-direction: var(--_alignment);

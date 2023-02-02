@@ -39,7 +39,7 @@ export const blogPost = defineType({
 			description: '(unique)',
 			options: {
 				maxLength: 96,
-				source: (doc) => `${BLOG_POST_PREFIX}/${doc.title}`,
+				source: (doc) => `${doc.__i18n_lang}/${BLOG_POST_PREFIX}/${doc.title}`,
 				slugify,
 				isUnique: isUniqueAcrossAllDocuments,
 			},
@@ -47,9 +47,14 @@ export const blogPost = defineType({
 				Rule.required(), 
 				Rule.custom((input, { document }) => {
 					if(
-						!new RegExp(`^${BLOG_POST_PREFIX}$|^${BLOG_POST_PREFIX}/`).test(input?.current??'')
-					) return `Required to start with ${BLOG_POST_PREFIX}; Try "${BLOG_POST_PREFIX}/${(document?.title+'').toLowerCase()}" instead`
-					if(/\/$/.test(input?.current??'')) return `No trailing slash; Try "${input?.current?.replace(/\/$/,'')}" instead`
+						document &&
+						!new RegExp(`^${document.__i18n_lang}$|^${document.__i18n_lang}/`).test(input?.current??'')
+					) return `Required to start with locale; Try "${document.__i18n_lang}/${BLOG_POST_PREFIX}/${(document.title+'').toLowerCase()}" instead`
+					if(
+						document &&
+						!new RegExp(`^${document.__i18n_lang}/${BLOG_POST_PREFIX}`).test(input?.current??'')
+					) return `Required to be prefixed with "${document.__i18n_lang}/${BLOG_POST_PREFIX}"; Try "${document.__i18n_lang}/${BLOG_POST_PREFIX}/${(document?.title+'').toLowerCase()}" instead`
+					if(input && typeof input.current === 'string' && /\/$/.test(input.current)) return `No trailing slash; Try "${input.current.replace(/\/$/,'')}" instead`
 					return true
 				})
 			],
