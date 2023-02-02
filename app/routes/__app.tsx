@@ -7,10 +7,10 @@ import { links as moduleLinks } from "~/components/modules";
 import { getSite } from "~/loaders";
 import { loadTheme } from "~/utils/theme.server";
 import { merge } from "~/utils/utils";
-
-import stylesUrl from "~/styles/global.css";
 import { useRouteData } from "~/hooks/useRouteData";
 import { Link } from "~/components/core/link/link";
+
+import stylesUrl from "~/styles/global.css";
 
 export const links: LinksFunction = () => {
   return [

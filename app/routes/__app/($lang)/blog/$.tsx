@@ -18,7 +18,10 @@ export const handle = {
 }
 
 export const loader = async ({ params }: LoaderArgs) => {
-	const data = await getBlogPost(params)
+	const data = 	await merge([
+		getSite(params),
+		getBlogPost(params)
+	])
 
   if (data.notFound)
     throw new Response("Not Found", { status: 404 })

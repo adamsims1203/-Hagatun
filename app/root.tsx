@@ -22,7 +22,10 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => {
 	return { 
-		viewport: 'width=device-width, initial-scale=1' 
+		viewport: 'width=device-width, initial-scale=1',
+		charset: "utf-8",
+		'x-ua-compatible': 'ie=edge',
+		'format-detection': 'telephone=no',
 	}
 }
 

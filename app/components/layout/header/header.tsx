@@ -21,7 +21,7 @@ export const links: LinksFunction = () => {
 
 export const Header = () => {
 	const { site } = useRouteData()
-	console.log(site)
+	
 	const navList = useMemo(() => (
 		site?.header.menu?.items?.map(item => 
 			item._type === 'menu' ?

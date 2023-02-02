@@ -33,11 +33,6 @@ export function metadata(data?: RouteData) {
 	const shareGraphic = data.page?.images.shareGraphic || data.site.images.shareGraphic
 		
 	return {
-		charset: "utf-8",
-		viewport: "width=device-width,initial-scale=1",
-		'x-ua-compatible': 'ie=edge',
-		'format-detection': 'telephone=no',
-
 		title: metaTitle,
 		description: metaDesc,
 
