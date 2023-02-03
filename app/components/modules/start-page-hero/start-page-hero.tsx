@@ -7,6 +7,7 @@ import stylesUrl from "./start-page-hero.css";
 
 import type { LinksFunction } from "@remix-run/node";
 import type { ModuleProps } from '..';
+import { Image } from '~/components/core/image/image';
 
 export const links: LinksFunction = () => {
   return [
@@ -18,8 +19,9 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 	const { site } = useRouteData()
 
 	return (
-		<section className="start-page-hero" color-scheme={THEME.light} style={{ '--_image-url': `url(${data.image.src})` } as React.CSSProperties}>
+		<section className="start-page-hero" color-scheme={THEME.light}>
 			<div>
+				<Image image={data.image} loading='eager' isFullscreen />
 				<div className="start-page-hero-content">
 					<h1 className="start-page-hero-title">{data.title}</h1>
 					<p className="start-page-hero-subtitle">{data.subtitle}</p>

@@ -17,7 +17,8 @@
 
 .partners a {
 	flex: 1;
-	display: block;
+	display: flex;
+	justify-content: center;
 	min-width: 300px;
 	max-width: 300px;
 	padding: var(--size-7);

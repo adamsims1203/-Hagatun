@@ -39,7 +39,7 @@ export const Header = () => {
 						)}
 					</ul>
 				</div>
-			: <div key={item._key}><Link to={item._type === 'navPage' ? item.slug : item.url}>{item.title}</Link></div>
+			: <Link key={item._key} to={item._type === 'navPage' ? item.slug : item.url}>{item.title}</Link>
 		)
 	), [site?.header])
 	

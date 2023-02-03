@@ -3,6 +3,7 @@ footer {
 	flex-wrap: wrap;
 	gap: var(--size-8);
 	padding-block: var(--size-10);
+	justify-content: space-around;
 }
 
 footer > div {
@@ -13,7 +14,8 @@ footer > div {
 	max-width: var(--size-content-3);
 	gap: var(--size-3);
 }
-footer > div.links {
+footer > div.links,
+footer > div.info {
 	min-width: 15ch;
 	max-width: 25ch;
 }

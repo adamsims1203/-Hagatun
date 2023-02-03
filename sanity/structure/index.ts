@@ -2,6 +2,7 @@ import { settingsMenu } from './desk/settings'
 import { pagesMenu } from './desk/pages'
 import { menusMenu } from './desk/menus'
 import { postsMenu } from './desk/posts'
+import { IS_PROD } from '~/utils/constants'
 
 import type { StructureResolver, ListItemBuilder } from 'sanity/desk'
 
@@ -19,7 +20,9 @@ const hiddenDocTypes = (listItem: ListItemBuilder) =>
 
 		'author',
 		'category',
-    'menu'
+    'menu',
+
+    'media.tag',
   ].includes(listItem.getId()||'')
 
 export const structure: StructureResolver = (S) =>
@@ -28,8 +31,10 @@ export const structure: StructureResolver = (S) =>
     .items([
       pagesMenu(S),
       S.divider(),
-			...postsMenu(S),
-      S.divider(),
+			...!IS_PROD?[
+				...postsMenu(S),
+				S.divider(),
+			]:[],
       menusMenu(S),
       S.divider(),
       settingsMenu(S),

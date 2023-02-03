@@ -44,9 +44,9 @@ header .navigation {
 .navigation__left,
 .navigation__right {
 	display: flex;
-  gap: var(--header-item-gap);
 	align-items: center;
 	justify-content: space-between;
+	gap: var(--size-5);
 }
 
 .navigation__logo {
@@ -64,6 +64,7 @@ header .navigation {
 	padding: .75ch;
 	align-self: flex-end;
 	font-size: var(--font-size-4);
+	border-radius: var(--radius-2);
 }
 .navigation__left button svg,
 .navigation__drawer button svg {
@@ -86,7 +87,6 @@ header .navigation {
 .navigation__right a,
 .navigation__drawer a {
 	display: block;
-	padding-block: var(--header-drawer-item-block-padding);
 	margin-block: 0;
 }
 
@@ -96,15 +96,14 @@ header .navigation {
 }
 
 .navigation__right > div,
-.navigation__drawer > div {
-	padding: 1ch;
+.navigation__right > a,
+.navigation__drawer > div,
+.navigation__drawer > a {
+	padding-inline: var(--size-3);
+	padding-block: var(--header-drawer-item-block-padding);
 	position: relative;
 	border-radius: var(--header-item-radius) var(--header-item-radius) 0 0;
-}
-
-.navigation__right div > a,
-.navigation__drawer div > a {
-	padding: 0;
+	width: 100%;
 }
 
 .navigation__right a,
@@ -130,11 +129,6 @@ header .navigation {
 	.navigation__left {
 		align-items: center;
 		justify-content: space-between;
-	}
-	.navigation__drawer {
-		flex-direction: column;
-		padding-block: var(--size-2);
-		display: block;
 	}
 	
 	.navigation select {
@@ -191,8 +185,8 @@ header .navigation {
 
 .navigation__drawer {
 	z-index: 1000;
+	flex-direction: column;
 	align-items: center;
-	gap: var(--size-3);
 	
 	width: 100%;
 	max-width: var(--size-content-2);

@@ -69,7 +69,7 @@ export const Footer = () => {
 					</div>
 
 				: block._type === 'information' ? 
-					<div key={block._key}>
+					<div key={block._key} className="info">
 						<h3>{T['contact us'][lang].toCapitalize()}</h3>
 						{block.offices?.map(office =>
 							<div key={office._key}>

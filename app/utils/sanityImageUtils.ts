@@ -129,7 +129,7 @@ export const getImageDimensions = (image: SanityImageObject) => {
   }
 
   const dimensions = image.asset._ref.split('-')[2]
-  const [width, height] = dimensions.split('x').map(Number)
+  const [width, height] = dimensions.split('x').map(Number) as [number,number]
 
   if (!width || !height || Number.isNaN(width) || Number.isNaN(height)) {
     return

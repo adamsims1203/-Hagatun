@@ -16,11 +16,11 @@ function Hero({ data }: ModuleProps<'hero'>) {
 	
 	return (
 		<section
+			color-scheme={data.theme}
 			className={clsx(
 				'hero',
 				`hero--placement-${data.contentPlacement}`
 			)}
-			color-scheme={data.theme}
 		>
 			<Image image={data.image} />
 			<div>
