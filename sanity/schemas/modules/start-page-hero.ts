@@ -53,6 +53,7 @@ export const startPageHero = defineType({
 			type: 'string',
 			name: 'theme',
 			title: 'Theme',
+			description: 'Background image theme; Text color will be highest contrast',
 			options: {
 				list: [
 					{title: 'Light', value: 'light'},
