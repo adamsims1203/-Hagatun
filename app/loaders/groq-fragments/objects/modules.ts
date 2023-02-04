@@ -18,6 +18,7 @@ type StartPageHeroModule = {
 		id: string
 		title: string
 	}
+	theme: Theme
 } 
 
 type CTAModule = {
@@ -85,7 +86,8 @@ export const modules = groq`
     video{
       id,
       title
-    }
+    },
+		theme
   },
 	_type == 'cta' => {
 		_type,
