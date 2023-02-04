@@ -19,7 +19,10 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 	const { site } = useRouteData()
 
 	return (
-		<section className="start-page-hero" color-scheme={THEME.light}>
+		<section 
+			className="start-page-hero" 
+			color-scheme={data.theme}
+		>
 			<div>
 				<Image image={data.image} loading='eager' isFullscreen />
 				<div className="start-page-hero-content">

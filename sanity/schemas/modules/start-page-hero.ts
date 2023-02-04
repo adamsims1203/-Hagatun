@@ -48,7 +48,22 @@ export const startPageHero = defineType({
       hidden: ({ parent }) => {
         return parent.bgType !== 'video'
       }
-    }
+    },
+		{
+			type: 'string',
+			name: 'theme',
+			title: 'Theme',
+			options: {
+				list: [
+					{title: 'Light', value: 'light'},
+					{title: 'Dark', value: 'dark'}
+				],
+				layout: 'radio'
+			},
+      hidden: ({ parent }) => {
+        return parent.bgType !== 'photo'
+      }
+		},
   ],
   preview: {
     select: {
