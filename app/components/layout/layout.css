@@ -11,7 +11,6 @@ header a {
 }
 
 main {
-  margin-top: var(--header-estimated-height);
   min-height: 75vh;
 }
 
@@ -22,7 +21,7 @@ footer {
   margin-inline: auto;
 }
 
-header,
+header .navigation,
 footer {
   max-width: var(--layout-max-width);
 }
@@ -35,7 +34,9 @@ main > section {
 	main > section + section,
 	footer {
   margin-block-start: var(--layout-section-gap);
+	width: 100%;
 }
+
 
 footer {
   position: relative;
@@ -44,28 +45,13 @@ footer {
 /* Header Swish Banner */
 
 header {
-  position: fixed;
-  z-index: 1000;
+	position: relative;
+	z-index: 1000;
   width: 100%;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-header::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
   background-color: var(--surface-1);
   box-shadow: var(--header-shadow);
-  top: 0;
-  left: 0;
+}
 
-  height: 100%;
-  /* Full bleed */
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+section:first-child {
+	margin-block: unset;
 }

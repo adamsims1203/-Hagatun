@@ -45,7 +45,9 @@ function StartPageHero({ data }: ModuleProps<'start-page-hero'>) {
 								</div>
 							</div>
 							<hr/>
-							<button className="primary"><EnvelopeSimple />{site?.company.email}</button>
+							<a href={`mailto:${site?.company.email}`}>
+								<button className='primary'>{site?.company.email}</button>
+							</a>
 						</div>
 					</div>
 				</div>

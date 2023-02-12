@@ -1,10 +1,62 @@
-body {
+html, body {
 	margin: 0;
+	width: 100vw;
+	overflow: hidden;
+}
+
+html {
+	overflow-y: scroll
 }
 
 
 :where(h1, h2) {
 	font-family: var(--font-serif);
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	
+	-webkit-hyphens: auto;
+		 -moz-hyphens: auto;
+					hyphens: auto;
+}
+
+
+:where(h1) {
+	font-size: var(--font-size-6);
+}
+:where(h2) {
+	font-size: var(--font-size-5);
+}
+:where(h3) {
+	font-size: var(--font-size-4);
+}
+:where(h4) {
+	font-size: var(--font-size-3);
+}
+:where(h5) {
+	font-size: var(--font-size-2);
+}
+:where(h6) {
+	font-size: var(--font-size-2);
+}
+@media (min-width: /* var(--size-md) */ 768px) {
+	:where(h1) {
+		font-size: var(--font-size-7);
+	}
+	:where(h2) {
+		font-size: var(--font-size-6);
+	}
+	:where(h3) {
+		font-size: var(--font-size-5);
+	}
+	:where(h4) {
+		font-size: var(--font-size-4);
+	}
+	:where(h5) {
+		font-size: var(--font-size-3);
+	}
+	:where(h6) {
+		font-size: var(--font-size-3);
+	}
 }
 
 :where(p,ul,ol,dl,h6) {

@@ -30,7 +30,6 @@ const CTA = ({ data }: ModuleProps<'cta'>) => {
 							</Card.Thumbnail>
 							<Card.Body>
 								<h3>{card.title}</h3>
-								<p>{card.text}</p>
 							</Card.Body>
 						</Card>
 					);

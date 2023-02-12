@@ -3,18 +3,9 @@
   --header-block-padding: 1rem;
   --header-shadow: var(--shadow-2);
 	--header-background-color: var(--surface-1);
-	
-  --header-estimated-height: calc(
-		var(--header-block-padding) * 2 + var(--header-logo-size)
-		);
-		
-	--header-action-height: 2.5rem;
 		
 	--header-item-gap: 1ch;
 	--header-item-radius: var(--radius-2);
-
-	--header-drawer-item-block-padding: .5ch;
-	--header-drawer-item-inline-padding: 1.5ch;
 }
 header {
 	--header-background-color: var(--surface-1);
@@ -24,7 +15,6 @@ header {
   :root {
     --header-block-padding: 1rem;
     --header-logo-size: var(--size-9);
-    --header-action-height: 3.125rem;
 		--header-item-gap: clamp(var(--size-4), 5vw, var(--size-7));
   }
 
@@ -39,6 +29,7 @@ header .navigation {
   justify-content: space-between;
   padding-block: var(--header-block-padding);
   white-space: nowrap;
+	margin-inline: auto;
 }
 
 .navigation__left,
@@ -92,7 +83,7 @@ header .navigation {
 
 .navigation__right li a,
 .navigation__drawer li a {
-	padding-inline: var(--header-drawer-item-inline-padding);
+	padding-inline:  1.5ch;
 }
 
 .navigation__right > div,
@@ -100,7 +91,7 @@ header .navigation {
 .navigation__drawer > div,
 .navigation__drawer > a {
 	padding-inline: var(--size-3);
-	padding-block: var(--header-drawer-item-block-padding);
+	padding-block: .5ch;
 	position: relative;
 	border-radius: var(--header-item-radius) var(--header-item-radius) 0 0;
 	width: 100%;
@@ -206,6 +197,11 @@ header .navigation {
 .navigation__drawer[aria-hidden="false"] {
 	opacity: 1;
 }
+
+.navigation__drawer-header {
+	display: flex;
+	justify-content: space-between;
+} 
 
 .navigation__drawer button:not(.menu-button) {
   font-weight: var(--font-weight-4);

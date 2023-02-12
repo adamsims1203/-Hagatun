@@ -85,7 +85,9 @@ export const Footer = () => {
 							<address>
 								<p>{block.postalAddress}</p>
 							</address>
-							<button className='primary' onClick={() => location.href=`mailto:${block.email}`}>{block.email}</button>
+							<a href={`mailto:${block.email}`}>
+								<button className='primary'>{block.email}</button>
+							</a>
 						</div>
 					</div>
 

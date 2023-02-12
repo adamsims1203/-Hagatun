@@ -67,11 +67,13 @@ section.cta .card__thumbnail img {
 }
 
 section.cta .card__body {
+	--card-padding-block: var(--size-4);
+	
 	background-color: var(--_foreground);
 	min-height: var(--size-11);
 }
 
 section.cta .card__body h3 {
-	font-size: var(--font-size-4);
-	margin-block-end: .5ch;
+	font-size: var(--font-size-5);
+	text-align: center;
 }

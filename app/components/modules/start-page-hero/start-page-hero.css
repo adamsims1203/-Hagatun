@@ -44,10 +44,6 @@ section.start-page-hero {
 	padding: 0;
 }
 
-section:first-of-type.start-page-hero {
-	margin-block-start: unset;
-}
-
 .start-page-hero > div {
 	--link: var(--indigo-7);
 	--link-visited: var(--grape-7);
@@ -159,11 +155,6 @@ section:first-of-type.start-page-hero {
 	inline-size: var(--_svg-size);
 }
 
-@media (max-width: 768px) {
-	.start-page-hero {
-		margin-inline: calc(var(--layout-inline-padding) * -1);
-	}
-}
 @media (min-width: 768px) {
 	.start-page-hero-content {
 		justify-content: unset;

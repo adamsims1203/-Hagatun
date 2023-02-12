@@ -39,10 +39,6 @@
 	align-items: center;
 }
 
-section:first-of-type.hero {
-	margin-block-start: unset;
-}
-
 .hero > div {
 	position: relative;
 	z-index: 1;
@@ -58,6 +54,8 @@ section:first-of-type.hero {
 
 .hero img {
 	position: absolute;
+	top: 0;
+	left: 0;
 	object-fit: cover;
 	width: 100%;
 	height: 100%;

@@ -67,6 +67,7 @@ export const Header = () => {
 }
 
 const HeaderDrawer = ({ children }: React.PropsWithChildren) => {
+
 	return (
 		<>
 			<span hidden id="menu-label">Main menu</span>
@@ -85,14 +86,26 @@ const HeaderDrawer = ({ children }: React.PropsWithChildren) => {
 					closeOnEscape
 				>
 					<div className='navigation__drawer'>
-						<Drawer.CloseButton>
-							<button 
-								aria-label="Close menu"
-								className='menu-button'
-							><X /></button>
-						</Drawer.CloseButton>
+						<div className='navigation__drawer-header'>
+							<Drawer.CloseButton>
+								<div>
+									<Logo className='navigation__logo' titleType='short' />
+								</div>
+							</Drawer.CloseButton>
 
-						{children}
+							<Drawer.CloseButton>
+								<button 
+									aria-label="Close menu"
+									className='menu-button'
+								><X /></button>
+							</Drawer.CloseButton>
+						</div>
+
+						<Drawer.CloseButton>
+							<div>
+								{children}
+							</div>
+						</Drawer.CloseButton>
 					</div>
 				</Drawer.Target>
 			</Drawer.Drawer>
